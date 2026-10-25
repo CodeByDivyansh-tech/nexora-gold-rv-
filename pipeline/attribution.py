@@ -93,7 +93,7 @@ def compute_attribution_metrics(trades_df: pd.DataFrame) -> Dict[str, Any]:
             'net_bps': 0.0,
             'max_drawdown_rs': 0.0,
             'avg_holding_days': 0.0,
-            'sharpe': 'n/a (too few trades)',
+            'sharpe_per_trade': 'n/a (too few trades)',
             't_stat': 0.0,
             'ci_95': [0.0, 0.0],
         }
@@ -117,10 +117,11 @@ def compute_attribution_metrics(trades_df: pd.DataFrame) -> Dict[str, Any]:
     drawdowns = cum_max - cum_net
     max_dd = float(drawdowns.max()) if len(drawdowns) else 0.0
     
-    # Sharpe: only if n >= 20
+    # Per-trade mean / standard deviation of net bps (n >= 20). Deliberately NOT annualised: trades overlap and have
+    # different lengths, so this is not a daily portfolio Sharpe ratio (that one is in portfolio.json, Oct-2026 audit).
     if n >= 20:
         std_bps = trades_df['net_bps'].std(ddof=1)
-        sharpe = round(net_bps / std_bps * np.sqrt(252 / max(avg_days, 1)), 2) if std_bps > 0 else 0.0
+        sharpe = round(net_bps / std_bps, 3) if std_bps > 0 else 0.0
     else:
         sharpe = 'n/a (too few trades)'
         
@@ -138,7 +139,7 @@ def compute_attribution_metrics(trades_df: pd.DataFrame) -> Dict[str, Any]:
         'net_bps': round(net_bps, 1),
         'max_drawdown_rs': round(max_dd, 1),
         'avg_holding_days': round(avg_days, 1),
-        'sharpe': sharpe,
+        'sharpe_per_trade': sharpe,
         't_stat': round(t_stat, 2),
         'ci_95': [round(ci[0], 1), round(ci[1], 1)],
     }

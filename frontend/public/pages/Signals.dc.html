@@ -203,6 +203,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
             </sc-for>
           </div>
           <p style="margin: 0; font-size: 14px; line-height: 1.6">{{ft.note}}</p>
+          <sc-if value="{{ft.reconcile}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 12px; line-height: 1.6; color: var(--muted)">{{ft.reconcile}}</p></sc-if>
         </section>
         </sc-if>
 
@@ -300,7 +301,7 @@ class Component extends DCLogic {
     return GRVTheme.tokens(dark);
   }
 
-  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
+  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
   sgn(n, d) { return (n < 0 ? '−' : '+') + Math.abs(n).toFixed(d); }
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
   fs(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1]; }
@@ -328,7 +329,7 @@ class Component extends DCLogic {
     const TD = {}; D.today.forEach((x) => { TD[x.id] = x; });
     const pid = st.pair || this.props.startPair || 'M_TEN';
     const p = TD[pid];
-    // 'training' is the walk-forward switch, not one of the five market checks
+    // 'training' is the training-period switch, not one of the five market checks
     const checksFailed = (x) => x.failed.filter((f) => f !== 'training');
     const chips = ORDER.map((id) => {
       const on = id === pid, x = TD[id];
@@ -363,8 +364,9 @@ class Component extends DCLogic {
       mk(2, g.extreme, 'Extreme gap', 'The gap is ' + absz.toFixed(2) + ' standard deviations from normal. It needs at least ' + p.zNeed.toFixed(1) + ', and less than ' + p.stopZ.toFixed(1) + ', where the stop-loss sits.'),
       mk(3, g.edge_beats_cost, 'Beats costs', 'The gap from normal is ' + p.dev.toFixed(1) + ' bps. It must be at least ' + p.hurdle.toFixed(1) + ' bps, twice the round-trip cost.' +
         (p.canSignal ? '' : ' Gaps here are so calm right now that ' + p.hurdle.toFixed(1) + ' bps is ' + p.hurdleZ.toFixed(1) + ' standard deviations, past the stop-loss at ' + p.stopZ.toFixed(1) + ', so this pair cannot signal until it gets more volatile.')),
-      mk(4, g.liquidity, 'Liquidity', 'Traded ' + n0(p.volA) + ' and ' + n0(p.volB) + ' lots, with ' + n0(p.oiA) + ' and ' + n0(p.oiB) + ' open. Minimum: ' + D.minVol + ' traded and ' + D.minOi + ' open.'),
-      mk(5, g.lifecycle, 'Timing', (p.roll ? 'Today is a contract-roll day. ' : 'Not a roll day. ') + p.tdA + ' and ' + p.tdB + ' trading days left to expiry. Minimum: ' + D.minTd + ', to stay clear of the delivery period.')
+      mk(4, g.liquidity, 'Liquidity', 'Traded ' + n0(p.volA) + ' and ' + n0(p.volB) + ' lots, with ' + n0(p.oiA) + ' and ' + n0(p.oiB) + ' open. Minimum: ' + D.minVol + ' traded and ' + D.minOi + ' open.' +
+        (p.lotsA != null && D.lifecycleRule ? ' A trade here would be ' + n0(p.lotsA) + ' and ' + n0(p.lotsB) + ' lots: ' + (p.partA == null ? '–' : (p.partA * 100).toFixed(2) + '%') + ' and ' + (p.partB == null ? '–' : (p.partB * 100).toFixed(2) + '%') + ' of the day\'s volume (limit ' + Math.round(D.lifecycleRule.maxPart * 100) + '% per leg). Daily data cannot show order-book depth, so this is a screen, not a promise of a fill.' : '')),
+      mk(5, g.lifecycle, 'Timing', (p.roll ? 'Today is a contract-roll day. ' : 'Not a roll day. ') + p.tdA + ' and ' + p.tdB + ' trading days left to expiry. Minimum: ' + D.minTd + ' on each leg, so the position can be closed before either contract\'s ' + (D.lifecycleRule ? D.lifecycleRule.tenderTd + '-day ' : '') + 'tender (delivery) window.')
     ];
 
     const maxB = Math.max(60, Math.ceil(Math.max(p.dev, p.hurdle) * 1.2 / 10) * 10);
@@ -456,7 +458,7 @@ class Component extends DCLogic {
     };
 
     const R = (this.state || {}).R;
-    let ft = { show: false, rows: [], intro: '', note: '', cost: '' };
+    let ft = { show: false, rows: [], intro: '', note: '', cost: '', reconcile: '' };
     if (R && R.alerts && R.alerts.alert_test) {
       const A = R.alerts, cost = R.round_trip_cost_bps;
       const items = [
@@ -482,7 +484,9 @@ class Component extends DCLogic {
             aria: i.name + ': gap ' + (v < 0 ? 'grew ' : 'shrank ') + Math.abs(v).toFixed(1) + ' bps in ' + R.horizon_days + ' days, cost ' + cost.toFixed(1) + ' bps'
           };
         }),
-        note: (A.alert_clean && A.alert_clean.n ? 'In the clean test the gap after an alert shrank a median ' + A.alert_clean.median_closed_bps.toFixed(1) + ' bps, ' + (A.alert_clean.median_closed_bps >= cost ? 'more' : 'less') + ' than the ' + cost.toFixed(1) + ' bps cost, over ' + A.alert_clean.n + ' alerts. ' : '') + 'In the test year the gap after an alert shrank a median ' + A.alert_test.median_closed_bps.toFixed(1) + ' bps, more than the cost. In training it shrank only ' + A.alert_train.median_closed_bps.toFixed(1) + ' bps, less than the cost, which matches the training loss. Unusual gaps that did not pass every check shrank ' + A.unusual_small.median_closed_bps.toFixed(1) + ' bps, not enough to pay for a trade; that is what the cost line filters out. On ordinary days the gap does not close at all. So alerts point at real moves, but whether those moves pay depends on the period.'
+        note: (A.alert_clean && A.alert_clean.n ? 'In the clean test the gap after an alert shrank a median ' + A.alert_clean.median_closed_bps.toFixed(1) + ' bps, ' + (A.alert_clean.median_closed_bps >= cost ? 'more' : 'less') + ' than the ' + cost.toFixed(1) + ' bps cost, over ' + A.alert_clean.n + ' alerts. ' : '') + 'In the test year the gap after an alert ' + (A.alert_test.median_closed_bps < 0 ? 'grew' : 'shrank') + ' a median ' + Math.abs(A.alert_test.median_closed_bps).toFixed(1) + ' bps, ' + (A.alert_test.median_closed_bps >= cost ? 'more' : 'less') + ' than the cost. In training it ' + (A.alert_train.median_closed_bps < 0 ? 'grew' : 'shrank') + ' ' + Math.abs(A.alert_train.median_closed_bps).toFixed(1) + ' bps, ' + (A.alert_train.median_closed_bps >= cost ? 'more' : 'less') + ' than the cost. Unusual gaps that did not pass every check ' + (A.unusual_small.median_closed_bps < 0 ? 'grew ' : 'shrank ') + Math.abs(A.unusual_small.median_closed_bps).toFixed(1) + ' bps, ' + (A.unusual_small.median_closed_bps >= cost ? 'more' : 'less') + ' than the cost; that is what the cost line filters out. So alerts point at real moves, but whether those moves pay depends on the period.',
+        // alerts and trades are different populations (robustness.json -> reconcile)
+        reconcile: R.reconcile ? R.reconcile.definition + ' ' + R.reconcile.trades.toLocaleString('en-IN') + ' trades, ' + R.reconcile.alerts_measured.toLocaleString('en-IN') + ' alerts with a follow-through figure, ' + R.reconcile.not_measured + ' without one (' + Object.entries(R.reconcile.excluded.reduce((a, e) => { a[e.reason] = (a[e.reason] || 0) + 1; return a; }, {})).map(([k, v]) => v + ': ' + k).join('; ') + ').' : ''
       };
     }
 

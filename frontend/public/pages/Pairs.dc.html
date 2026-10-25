@@ -272,7 +272,7 @@ class Component extends DCLogic {
     this.setState({ hover: Math.max(0, Math.min(n - 1, i)) });
   }
 
-  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
+  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
   sgn(n, d) { return (n < 0 ? '−' : '+') + Math.abs(n).toFixed(d); }
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
 
@@ -485,7 +485,7 @@ class Component extends DCLogic {
     const segList = (k) => P0.trades.filter((x) => x.seg === k);
     const md = (d) => this.fd(d).replace(/^\d+ /, '');
     const periodsDef = [
-      { name: 'Clean test', when: md(st.HC ? st.HC.from : '2011-04-18') + ' – ' + md(st.HC ? st.HC.to : '2023-10-09') + ', years the rule never saw', list: CLEANPAIR ? (cleanList || []) : [], na: !CLEANPAIR, wait: pending },
+      { name: 'Clean test', when: md(st.HC ? st.HC.from : '2011-04-18') + ' – ' + md(st.HC ? st.HC.to : '2023-10-09') + ', years never used to choose the settings', list: CLEANPAIR ? (cleanList || []) : [], na: !CLEANPAIR, wait: pending },
       { name: 'Training', when: md(D.split.train_start) + ' – ' + md(D.split.train_end) + ', settings tuned here', list: segList('train') },
       { name: 'Test year', when: md(D.split.test_start) + ' – ' + md(D.split.test_end) + ', not a clean test', list: segList('test') }
     ];

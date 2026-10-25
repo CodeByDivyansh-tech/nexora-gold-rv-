@@ -8,12 +8,12 @@
     {
       "step": 2,
       "name": "Normalize",
-      "desc": "Divide close by quote grams and purity to get a price per gram of pure gold."
+      "desc": "Divide the Bhavcopy close by the grams it is quoted for and by its purity (from a date-effective specification table) to get a price per gram of pure gold."
     },
     {
       "step": 3,
       "name": "Implied Carry",
-      "desc": "Estimate the cost of carry from GOLDPETAL calendar spreads; forward-fill only."
+      "desc": "Estimate the cost of carry from GOLDPETAL calendar spreads, skipping contracts inside their tender window; forward-fill only. Estimates outside 0\u201315% a year are flagged as unstable."
     },
     {
       "step": 4,
@@ -23,22 +23,22 @@
     {
       "step": 5,
       "name": "Point-in-Time z-scores",
-      "desc": "Rolling mean and spread of each gap use only earlier days."
+      "desc": "One rolling mean and spread for alerts, charts and backtest, from earlier days only."
     },
     {
       "step": 6,
       "name": "One rule: five checks",
-      "desc": "The same five checks drive today's alerts and every backtest trade: enough history, an unusual gap that is not already past the stop-loss, a gap bigger than 2\u00d7 the round-trip cost, liquidity, and contract life."
+      "desc": "The same five checks drive today's alerts and every backtest trade: enough history, an unusual gap that is not already past the stop-loss, a gap bigger than 2\u00d7 the round-trip cost, liquidity sized to the trade (each leg at most 5% of that day's volume), and contract life (each leg clear of its own tender window)."
     },
     {
       "step": 7,
-      "name": "Walk-Forward Test",
-      "desc": "Settings tuned on Train (2023-10 to 2025-09) and frozen for Test (2025-10 to 2026-09). A pair is traded in Test only if training gave at least 10 trades and a profit. The same frozen rule is then run on 2011\u20132023, years it never saw: the clean test."
+      "name": "Train/test split and historical holdout",
+      "desc": "Settings chosen once on Train (2023-10 to 2025-09) by highest net after costs, then frozen for the test year (2025-10 to 2026-09) and for the historical holdout (2011\u20132023). There is no separate validation period and no rolling re-fit, so this is a single split, not a rolling walk-forward. A pair is traded in Test only if training gave at least 10 trades and a profit."
     },
     {
       "step": 8,
       "name": "Costs & Attribution",
-      "desc": "Each closed trade is split into spread and gold parts after statutory costs and slippage. No fills on days a leg moved 6% or more."
+      "desc": "Each closed trade is split into spread and gold parts after statutory costs and slippage; every trade is also marked to market daily for portfolio figures. No fills on days a leg moved 6% or more, except a flagged forced exit before a tender window."
     }
   ],
   "split_dates": {
@@ -53,22 +53,24 @@
     "Parameters tuned strictly on in-sample Train data and frozen; the on/off switch also uses Train only",
     "Signals generated at close t execute at close t+1; exits never fill at the signal's own close",
     "No fills on days either leg moved 6% or more (prices may be stuck at the daily limit)",
-    "Carry rate c_t is forward-filled only; never backward-filled"
+    "Carry rate c_t is forward-filled only; never backward-filled",
+    "A position opens only if both legs are at least 9 trading days from expiry on the signal day, and is closed by the last trading day before either leg's 5-day tender window (the calendar is known in advance, so this uses no future data)"
   ],
   "limitations": [
-    "EOD settlement close is an official reference, not an executable fill.",
-    "Bhavcopy volume indicates activity but does not measure order-book depth. Slippage is assumed at 5 bps per order: daily data cannot measure it (see the slippage check), only real broker fills can.",
-    "The 2025\u201326 test year is not a clean out-of-sample test: the five-check rule was written on 2026-10-04, after the original study's test-year results were known. The 2011\u20132023 check is the clean one.",
+    "Prices are the Bhavcopy close: a daily reference, not an executable fill. We have not verified that it equals MCX's official settlement price in every period.",
+    "Bhavcopy volume indicates activity but does not measure order-book depth or guarantee execution; the size check (each leg at most 5% of the day's volume) is a screen, not a fill model. Open interest is only a screen. Slippage is assumed at 5 bps per order: daily data cannot measure it (see the slippage check), only real broker fills can.",
+    "Tender periods: no MCX circular could be read directly (MCX refuses automated requests). Broker notices report 5 trading days (2025) and 3 days (from Feb 2026) for the smaller gold contracts; we apply the longer 5-day window to every contract and year. Contract specifications before Oct 2023 are assumed equal to today's (no source found).",
+    "The 2025\u201326 test year is not a clean out-of-sample test: the five-check rule was written on 2026-10-04, after the original study's test-year results were known. The 2011\u20132023 historical holdout was never used to choose settings, but the Oct-2026 lifecycle and liquidity correction was made after the earlier version's results there were known.",
     "GOLDTEN contracts listed only on 31-Mar-2025, offering limited historical depth.",
-    "Test period contains only 2 to 5 trades per pair (20 in total); small samples preclude high certainty.",
+    "Test period contains only 2 to 4 trades per pair (17 in total); small samples preclude high certainty.",
     "GOLDPETAL repriced against the other contracts: GOLDGUINEA \u2212 GOLDPETAL fell from +203 to +19 bps between 04 Nov 2024 and 11 Nov 2024, inside one contract (expiry Nov 2024). Against GOLDM over the same days, GOLDPETAL rose about 249 bps and GOLDGUINEA about 66 bps, so most of the move was GOLDPETAL repricing. The gap swung back part-way for a few weeks, then settled: median +255 bps from May 2024 to Nov 2024, \u221229 bps from Feb 2025 to Jul 2025. We found no MCX notice explaining it, so the cause is not confirmed.",
-    "Trades closed during the Jan\u2013Mar 2026 crash made \u20b91,37,985 of the test-year result (\u20b91,13,598 in total). The crash window was named after the results were seen, so this split is a check, not a test.",
-    "The training switch rests on thin evidence: GOLDM \u00b7 GOLDPETAL: training made +\u20b96,633 over 17 trades (t = 0.19; 61% of resamples above zero), close to a coin flip, so the switch is a weak filter, not proof.",
+    "Trades closed during the Jan\u2013Mar 2026 crash made \u2212\u20b933,564 of the test-year result (\u2212\u20b957,003 in total). The crash window was named after the results were seen, so this split is a check, not a test.",
+    "The training switch rests on thin evidence: GOLDM \u00b7 GOLDPETAL: training made +\u20b919,793 over 14 trades (t = 0.84; 83% of resamples above zero), close to a coin flip, so the switch is a weak filter, not proof.",
     "When the pair series switches to new contracts, open trades are closed; this adds cost.",
     "Exchange transaction charges and statutory rates should be regularly verified against MCX circulars."
   ],
-  "honest_conclusion": "Cross-contract gold gaps are real and measurable, but no persistent edge is proven after costs. The cleanest test is 2011\u20132023: the rule and its settings were frozen before that data was used. There it lost \u20b95,49,070 over 151 trades at 5 bps slippage (t = \u22123.63), and lost \u20b92,35,391 even with zero slippage. The 2025\u201326 test year made \u20b91,13,598 over 20 trades, but it is not a clean test: the five-check rule was written after that year's first results were seen. Its profit also rests on one episode (trades that closed during the Jan\u2013Mar 2026 crash made \u20b91,37,985; outside it the rule lost \u20b924,387), and it is not significant (t = 1.89, p = 0.07, or 0.22 allowing for the 3 rule versions scored on that year). In training the same rule lost \u20b916,514 over 38 trades, and training would have switched on only 1 of 6 pairs.",
-  "original_rule_note": "The original study used only four of the five checks (no cost line). Under it: 54 test-year trades, \u20b916,387 at 5 bps. It is kept on the site for comparison only.",
+  "honest_conclusion": "Cross-contract gold gaps are real and measurable, but no persistent edge is proven after costs. The historical holdout is 2011\u20132023: the settings were chosen on training data only and that period was never used to choose them. There the rule lost \u20b91,30,655 over 88 trades at 5 bps slippage (t = \u22122.04). The 2025\u201326 test year lost \u20b957,003 over 17 trades, but it is not a clean test: the five-check rule was written after that year's first results were seen. It is not significant either way (t = 0.40, p = 0.69, or 1.00 allowing for the 3 rule versions scored on that year). In training the same rule made \u20b93,775 over 33 trades, and training would have switched on only 1 of 6 pairs. In Oct 2026 the contract-lifecycle and liquidity rules were corrected (tender windows, size-aware volume checks); that was done after the earlier version's results on every period were known, to fix the rules, not to change the results.",
+  "original_rule_note": "The original study used only four of the five checks (no cost line). Under it: 51 test-year trades, \u20b937,318 at 5 bps. It is kept on the site for comparison only.",
   "retrieval_log": [
     {
       "symbol": "GOLDGUINEA",

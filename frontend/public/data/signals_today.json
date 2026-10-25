@@ -12,8 +12,8 @@
       "expiry_b": "2026-10-30",
       "spread_bps": -62.7,
       "spread_rs_10g": -915.3,
-      "mu": -30.4,
-      "sd": 23.2,
+      "mu": -30.3,
+      "sd": 23.4,
       "z": -1.39,
       "z_needed": 2.0,
       "stop_z": 3.5,
@@ -21,25 +21,32 @@
       "can_signal_now": true,
       "pair_on": true,
       "pair_switch_reason": "made money in training",
-      "deviation_bps": 32.3,
+      "deviation_bps": 32.5,
       "hurdle_bps": 48.8,
       "round_trip_cost_bps": 24.4,
       "status": "QUIET",
       "failed_gates": [
         "extreme",
-        "edge"
+        "edge",
+        "lifecycle"
       ],
       "gates": {
         "enough_history": true,
         "extreme": false,
         "edge_beats_cost": false,
         "liquidity": true,
-        "lifecycle": true
+        "lifecycle": false
       },
       "vol_a": 26349,
       "vol_b": 103087,
       "oi_a": 50749,
       "oi_b": 180244,
+      "lots_a": 1.0,
+      "lots_b": 100.0,
+      "part_a": 0.0,
+      "part_b": 0.001,
+      "min_entry_td_a": 9,
+      "min_entry_td_b": 9,
       "td_to_exp_a": 11,
       "td_to_exp_b": 7,
       "roll_flag": false
@@ -68,6 +75,7 @@
       "failed_gates": [
         "extreme",
         "edge",
+        "lifecycle",
         "training"
       ],
       "gates": {
@@ -75,12 +83,18 @@
         "extreme": false,
         "edge_beats_cost": false,
         "liquidity": true,
-        "lifecycle": true
+        "lifecycle": false
       },
       "vol_a": 11545,
       "vol_b": 103087,
       "oi_a": 27919,
       "oi_b": 180244,
+      "lots_a": 7.0,
+      "lots_b": 70.0,
+      "part_a": 0.0006,
+      "part_b": 0.0007,
+      "min_entry_td_a": 9,
+      "min_entry_td_b": 9,
       "td_to_exp_a": 7,
       "td_to_exp_b": 7,
       "roll_flag": false
@@ -109,6 +123,7 @@
       "failed_gates": [
         "extreme",
         "edge",
+        "lifecycle",
         "training"
       ],
       "gates": {
@@ -116,12 +131,18 @@
         "extreme": false,
         "edge_beats_cost": false,
         "liquidity": true,
-        "lifecycle": true
+        "lifecycle": false
       },
       "vol_a": 5329,
       "vol_b": 11545,
       "oi_a": 13034,
       "oi_b": 27919,
+      "lots_a": 10.0,
+      "lots_b": 8.0,
+      "part_a": 0.0019,
+      "part_b": 0.0007,
+      "min_entry_td_a": 9,
+      "min_entry_td_b": 9,
       "td_to_exp_a": 7,
       "td_to_exp_b": 7,
       "roll_flag": false
@@ -134,22 +155,23 @@
       "expiry_b": "2026-10-30",
       "spread_bps": -8.1,
       "spread_rs_10g": -118.1,
-      "mu": 5.1,
-      "sd": 10.8,
-      "z": -1.22,
+      "mu": 4.3,
+      "sd": 10.3,
+      "z": -1.21,
       "z_needed": 2.5,
       "stop_z": 4.0,
-      "hurdle_z": 4.5,
+      "hurdle_z": 4.7,
       "can_signal_now": false,
       "pair_on": false,
       "pair_switch_reason": "only 0 training trades, needs 10",
-      "deviation_bps": 13.2,
+      "deviation_bps": 12.5,
       "hurdle_bps": 48.8,
       "round_trip_cost_bps": 24.4,
       "status": "QUIET",
       "failed_gates": [
         "extreme",
         "edge",
+        "lifecycle",
         "training"
       ],
       "gates": {
@@ -157,12 +179,18 @@
         "extreme": false,
         "edge_beats_cost": false,
         "liquidity": true,
-        "lifecycle": true
+        "lifecycle": false
       },
       "vol_a": 26349,
       "vol_b": 11545,
       "oi_a": 50749,
       "oi_b": 27919,
+      "lots_a": 1.0,
+      "lots_b": 10.0,
+      "part_a": 0.0,
+      "part_b": 0.0009,
+      "min_entry_td_a": 9,
+      "min_entry_td_b": 9,
       "td_to_exp_a": 11,
       "td_to_exp_b": 7,
       "roll_flag": false
@@ -175,22 +203,23 @@
       "expiry_b": "2026-10-30",
       "spread_bps": -62.7,
       "spread_rs_10g": -915.3,
-      "mu": -44.8,
-      "sd": 17.0,
-      "z": -1.06,
+      "mu": -45.9,
+      "sd": 15.0,
+      "z": -1.12,
       "z_needed": 2.5,
       "stop_z": 4.0,
-      "hurdle_z": 2.9,
+      "hurdle_z": 3.3,
       "can_signal_now": true,
       "pair_on": false,
-      "pair_switch_reason": "only 9 training trades, needs 10",
-      "deviation_bps": 18.0,
+      "pair_switch_reason": "only 8 training trades, needs 10",
+      "deviation_bps": 16.8,
       "hurdle_bps": 48.8,
       "round_trip_cost_bps": 24.4,
       "status": "QUIET",
       "failed_gates": [
         "extreme",
         "edge",
+        "lifecycle",
         "training"
       ],
       "gates": {
@@ -198,12 +227,18 @@
         "extreme": false,
         "edge_beats_cost": false,
         "liquidity": true,
-        "lifecycle": true
+        "lifecycle": false
       },
       "vol_a": 26349,
       "vol_b": 5329,
       "oi_a": 50749,
       "oi_b": 13034,
+      "lots_a": 2.0,
+      "lots_b": 25.0,
+      "part_a": 0.0001,
+      "part_b": 0.0047,
+      "min_entry_td_a": 9,
+      "min_entry_td_b": 9,
       "td_to_exp_a": 11,
       "td_to_exp_b": 7,
       "roll_flag": false
@@ -224,7 +259,7 @@
       "hurdle_z": 12.5,
       "can_signal_now": false,
       "pair_on": false,
-      "pair_switch_reason": "lost money in training",
+      "pair_switch_reason": "only 9 training trades, needs 10",
       "deviation_bps": 1.2,
       "hurdle_bps": 48.8,
       "round_trip_cost_bps": 24.4,
@@ -232,6 +267,7 @@
       "failed_gates": [
         "extreme",
         "edge",
+        "lifecycle",
         "training"
       ],
       "gates": {
@@ -239,12 +275,18 @@
         "extreme": false,
         "edge_beats_cost": false,
         "liquidity": true,
-        "lifecycle": true
+        "lifecycle": false
       },
       "vol_a": 5329,
       "vol_b": 103087,
       "oi_a": 13034,
       "oi_b": 180244,
+      "lots_a": 9.0,
+      "lots_b": 72.0,
+      "part_a": 0.0017,
+      "part_b": 0.0007,
+      "min_entry_td_a": 9,
+      "min_entry_td_b": 9,
       "td_to_exp_a": 7,
       "td_to_exp_b": 7,
       "roll_flag": false

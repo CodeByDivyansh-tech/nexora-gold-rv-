@@ -95,7 +95,9 @@ def build_web_data(data_dir: str = 'frontend/public/data', out_path: str = None)
                                oiB=r['oi_b'], tdA=r['td_to_exp_a'], tdB=r['td_to_exp_b'], roll=r['roll_flag'],
                                expA=r['expiry_a'], expB=r['expiry_b'], status=r['status'], stopZ=r['stop_z'],
                                hurdleZ=r['hurdle_z'], canSignal=r['can_signal_now'], pairOn=r['pair_on'],
-                               switchWhy=r['pair_switch_reason']))
+                               switchWhy=r['pair_switch_reason'],
+                               # size-aware liquidity (Oct-2026 audit): the lots a trade would be, and their share of volume
+                               lotsA=r.get('lots_a'), lotsB=r.get('lots_b'), partA=r.get('part_a'), partB=r.get('part_b')))
 
     # ---- replay: weekly peak gap-from-normal per pair ------------------------------
     dev = {}
@@ -218,9 +220,13 @@ def build_web_data(data_dir: str = 'frontend/public/data', out_path: str = None)
         calendar=dict(clean=hist.get('calendar'), ours=contracts.get('calendar')),
         spec={s: dict(lot=v['lot_grams'], quote=v['quote_grams'], purity=v['purity']) for s, v in contracts['contract_master'].items()},
     )
+    # Contract lifecycle and size-aware liquidity settings of the current rule (config.py, contract_rules.py)
+    from pipeline.contract_rules import CONSERVATIVE_TENDER_TD, table_for_site
+    lifecycle_rule = dict(tenderTd=CONSERVATIVE_TENDER_TD, exitLeadTd=C.EXIT_LEAD_TD, minEntryTd=C.MIN_ENTRY_TD,
+                          maxPart=C.MAX_PARTICIPATION, tables=table_for_site())
 
     data = dict(costs=costs, costTotal=round(cost_total, 2), slip=SL, notional=N, events=events,
-        evidence=evidence, longrun=longrun, hindsight=hindsight, brief=brief,
+        evidence=evidence, longrun=longrun, hindsight=hindsight, brief=brief, lifecycleRule=lifecycle_rule,
                 minVol=C.MIN_VOLUME_LOTS, minOi=C.MIN_OI_LOTS, minTd=C.MIN_ENTRY_TD,
         asOf=meta['coverage_end'], start=meta['coverage_start'], split=meth['split_dates'],
         meta=dict(rows=meta['rows_count'], contracts=meta['contracts_count'], days=meta['trading_dates_count'],
@@ -245,4 +251,4 @@ def build_web_data(data_dir: str = 'frontend/public/data', out_path: str = None)
 
 if __name__ == '__main__':
     d = build_web_data()
-    print('site-data.json written:', d['meta']['rows'], 'rows,', d['pooled']['5']['n'], 'unseen-year trades')
+    print('site-data.json written:', d['meta']['rows'], 'rows,', d['pooled']['5']['n'], 'test-year trades')

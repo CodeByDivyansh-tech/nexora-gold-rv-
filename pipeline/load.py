@@ -3,7 +3,8 @@ import os
 import pandas as pd
 import numpy as np
 from typing import Tuple, Dict
-from pipeline.config import CONTRACT_SPECS, THIN_VOLUME_THRESHOLD, THIN_OI_THRESHOLD
+from pipeline.config import THIN_VOLUME_THRESHOLD, THIN_OI_THRESHOLD
+from pipeline.contract_rules import apply_specs
 
 def load_clean_bhavcopy(csv_path: str = 'data/raw/gold_bhavcopy_clean.csv', end: str = None,
                         original_only: bool = False) -> Tuple[pd.DataFrame, np.ndarray, Dict[pd.Timestamp, int]]:
@@ -49,12 +50,12 @@ def load_clean_bhavcopy(csv_path: str = 'data/raw/gold_bhavcopy_clean.csv', end:
         dup_rows = df[dups]
         raise ValueError(f"Found {len(dup_rows)} duplicate primary key rows in dataset: {pk_cols}")
 
-    # Standardize contract specs
-    df['lot_grams'] = df['symbol'].map(lambda s: CONTRACT_SPECS[s].lot_grams)
-    df['quote_grams'] = df['symbol'].map(lambda s: CONTRACT_SPECS[s].quote_grams)
-    df['purity'] = df['symbol'].map(lambda s: CONTRACT_SPECS[s].purity)
-    
-    # Normalized prices
+    # Contract specs in force on each row's date (contract_rules.SPEC_TABLE), with spec_status
+    # ('secondary' / 'assumed' / 'unavailable'). No row is dropped for an uncertain specification.
+    df = apply_specs(df)
+
+    # Normalized prices: rupees per gram of pure gold. The quoted price is for quote_grams of gold at the stated
+    # purity, so dividing by both gives the pure-gold price; purity is applied exactly once.
     df['px_per_g_pure'] = df['close'] / df['quote_grams'] / df['purity']
     df['px_per_10g_pure'] = df['px_per_g_pure'] * 10.0
     df['px'] = df['px_per_g_pure'] # alias matching reference

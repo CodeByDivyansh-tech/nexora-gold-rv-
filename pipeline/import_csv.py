@@ -42,7 +42,9 @@ def read_site_csv(path: str) -> pd.DataFrame:
     missing = [c for c in CSV_COLS if c not in d.columns]
     if missing:
         raise ValueError(f'{os.path.basename(path)}: not an MCX Bhavcopy CSV (missing {missing})')
-    d = d[d['Instrument Name'].str.strip() == 'FUTCOM'].copy()
+    fut = d['Instrument Name'].str.strip() == 'FUTCOM'
+    rejected = int((~fut).sum())                     # e.g. option rows in the same file: counted, not silently lost
+    d = d[fut].copy()
     d['Symbol'] = d['Symbol'].str.strip()
     syms = set(d['Symbol'])
     if len(syms) != 1 or not syms <= set(CONTRACT_SPECS):
@@ -58,12 +60,14 @@ def read_site_csv(path: str) -> pd.DataFrame:
     if (dates > expiry).any():
         raise ValueError(f'{os.path.basename(path)}: rows dated after the contract expired')
     fmt = lambda x: ('%.2f' % x).rstrip('0').rstrip('.')
-    return pd.DataFrame({
+    out = pd.DataFrame({
         'Date': dates.dt.strftime('%m/%d/%Y'), 'Symbol': d['Symbol'], 'ExpiryDate': expiry.dt.strftime('%d%b%Y').str.upper(),
         'Open': o.map(fmt), 'High': h.map(fmt), 'Low': l.map(fmt), 'Close': c.map(fmt), 'PreviousClose': num('Previous Close').map(fmt),
         'Volume': num('Volume(Lots)').astype(int).astype(str), 'VolumeInThousands': d["Volume(In 000's)"].str.strip(),
         'Value': num('Value(Lacs)').map(fmt), 'OpenInterest': num('Open Interest(Lots)').astype(int).astype(str),
     })[RAW_COLS].reset_index(drop=True)
+    out.attrs['rejected'] = rejected
+    return out
 
 
 def import_files(paths: List[str], retrieved: str = None, archive: bool = True) -> Tuple[int, int]:
@@ -87,7 +91,9 @@ def import_files(paths: List[str], retrieved: str = None, archive: bool = True) 
                      'params': f'InstrumentName=FUTCOM&Symbol={sym}&Expiry={exp}',
                      'requested_from': d.min().strftime('%d/%m/%Y'), 'requested_to': d.max().strftime('%d/%m/%Y'),
                      'retrieved_at_ist': retrieved, 'rows': len(r), 'first_date': d.min().strftime('%Y-%m-%d'),
-                     'last_date': d.max().strftime('%Y-%m-%d'), 'rows_outside_range_or_after_expiry': 0})
+                     # rows dated after expiry make the whole import fail (read_site_csv), so this is truly 0 here
+                     'last_date': d.max().strftime('%Y-%m-%d'), 'rows_outside_range_or_after_expiry': 0,
+                     'rows_rejected_not_futures': int(r.attrs.get('rejected', 0))})
     if not frames:
         return 0, 0
     new = pd.concat(frames, ignore_index=True)

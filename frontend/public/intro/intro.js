@@ -23,7 +23,7 @@ const STILL = root.classList.contains('still');
 const COL = { c1: '#BC8424', c2: '#2193E0', c3: '#CD6199', c4: '#7D4DAD', up: '#6FCF9A', hot: '#F3D184', gold: '#E5B04A' };   // the site's own contract colours (app/theme.js)
 const M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const fd = (s) => { const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; };
-const inr = (n) => '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN');
+const inr = (n) => '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN');
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 
@@ -46,7 +46,10 @@ const fill = {
   net: inr(L.net), net0: inr(L.net0), n: String(L.n), losing: L.losingYears + ' of ' + L.years,
   // the tested span: first day all three original contracts traded (L.start) to the latest settlement
   spanYears: String(Math.floor((Date.parse(D.asOf) - Date.parse(L.start)) / 3.15576e10)),
-  spanFrom: fd(L.start).replace(/^\d+ /, ''), spanTo: fd(D.asOf).replace(/^\d+ /, '')
+  spanFrom: fd(L.start).replace(/^\d+ /, ''), spanTo: fd(D.asOf).replace(/^\d+ /, ''),
+  // the sentence follows the sign of each number (Oct-2026: after the lifecycle correction the zero-slippage result is a profit)
+  netVerb: L.net < 0 ? 'lost' : 'made',
+  zeroClause: L.net0 < 0 ? ', and ' + inr(L.net0) + ' even with zero slippage' : ', though with zero slippage it would have made ' + inr(L.net0) + ': costs decide it'
 };
 document.querySelectorAll('[data-k]').forEach((el) => { const v = fill[el.dataset.k]; if (v != null) el.textContent = v; });
 if (STILL) await new Promise(() => {});   // reduced motion or no WebGL: the text above is the whole page

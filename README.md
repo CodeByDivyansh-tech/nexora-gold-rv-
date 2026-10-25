@@ -17,13 +17,16 @@ A relative-value (RV) research terminal across MCX Gold derivatives (`GOLDM`, `G
 ## 1. Key Analytical Findings
 
 **Verdict: the gaps between the four contracts are real, but no persistent edge is proven after costs.**
-Every number below is computed by the pipeline (`frontend/public/data/`), not typed in.
+Every number below is computed by the pipeline (`frontend/public/data/`), not typed in. The figures are from the
+corrected rule (October 2026 compliance audit, section 1.6); the earlier figures are kept in Git history.
 
-### 1.1 The clean test: 2011–2023, rule frozen (151 trades)
+### 1.1 The clean test (historical holdout): 2011–2023 (88 trades)
 
-The rule and its settings were frozen before this data was used, and nothing was changed afterwards
-(data: official MCX Bhavcopy settlements we downloaded from MCX's Bhavcopy service, one request per contract).
-Only the three pairs that existed then can be tested.
+The settings were chosen on training data only and were never chosen on these years (data: official MCX
+Bhavcopy settlements we downloaded from MCX's Bhavcopy service, one request per contract). Only the three pairs
+that existed then can be tested. One caveat we state openly: the October 2026 lifecycle and liquidity correction
+was made after the earlier version's results on these years were known (to fix the contract rules, not to change
+the result), so this holdout is no longer strictly unseen.
 
 How we know the data is right: every request is logged (`data/raw/retrieval_log.csv`) and each request's row
 count matches the rows we keep. As an extra check, a second copy of the same MCX rows, which another team shared
@@ -32,33 +35,35 @@ That check is separate from the raw-vs-clean check of our Oct 2023 onward downlo
 
 | At 5 bps slippage | Trades | Net after costs | t-stat | Losing years |
 |---|---|---|---|---|
-| GOLDM − GOLDPETAL, GOLDM − GOLDGUINEA, GOLDGUINEA − GOLDPETAL | 151 | **−₹5,49,070** | −3.63 | 11 of 13 |
+| GOLDM − GOLDPETAL, GOLDM − GOLDGUINEA, GOLDGUINEA − GOLDPETAL | 88 | **−₹1,30,655** | −2.04 | 9 of 12 |
 
-With **zero** slippage it still loses ₹2,35,391. This is the result to lead with (`history.json`).
+With **zero** slippage it would have made ₹51,534; it breaks even at about 1.4 bps of slippage per order, so costs
+decide it (`history.json`, `evidence.json → slippage.breakeven`).
 
-Even with hindsight: at 5 bps slippage, only **6 of 216** settings in the explorer grid make money on 2011–2023
+Even with hindsight: at 5 bps slippage, only **8 of 216** settings in the explorer grid make money on 2011–2023
 (the three pairs × 72 settings each; `site-data.json → hindsight`, computed from `explore.json`).
 
 ### 1.2 The 2025–26 test year: not a clean test
 
-Settings were tuned on Train (10-Oct-2023 → 30-Sep-2025) and frozen for Test (01-Oct-2025 → 30-Sep-2026),
-₹10 lakh per leg, every MCX cost, next-day fills.
-**But** the original study's test-year results were known by 2 Oct 2026, and the five-check rule was written on
-4 Oct 2026, after that. So the test year helped shape the rule and is **not** a clean out-of-sample test
+Settings were chosen once on Train (10-Oct-2023 → 30-Sep-2025, highest net after costs at 5 bps) and frozen for
+Test (01-Oct-2025 → 30-Sep-2026), ₹10 lakh per leg, every MCX cost, next-day fills. This is **one train/test
+split plus a historical holdout, not a rolling walk-forward**: settings are never re-fitted and there is no
+separate validation period. **And** the original study's test-year results were known by 2 Oct 2026, before the
+five-check rule was written on 4 Oct 2026, so the test year is **not** a clean out-of-sample test
 (`evidence.json → test_year`).
 
 | Rule (5 bps slippage) | Train trades | Train net | Test trades | Test net | t-stat | Closed in Jan–Mar 2026 crash | Test outside crash |
 |---|---|---|---|---|---|---|---|
-| Five checks (what the site shows) | 38 | −₹16,514 | 20 | +₹1,13,598 | 1.89 | +₹1,37,985 | −₹24,387 |
-| Original study (4 checks, no cost line) | 60 | −₹63,801 | 54 | +₹16,387 | −0.08 | +₹1,70,806 | −₹1,54,419 |
-| Five checks + training switch | — | — | 4 | +₹22,916 | — | — | — |
+| Five checks, corrected (what the site shows) | 33 | +₹3,775 | 17 | −₹57,003 | 0.40 | −₹33,564 (7 trades) | −₹23,439 (10 trades) |
+| Original study (4 checks, no cost line) | 60 | −₹63,801 | 51 | +₹37,318 | 0.09 | +₹1,70,806 | −₹1,33,487 |
+| Five checks + training switch | — | — | 3 | +₹14,850 | — | — | — |
 
-- **Significance**: t = 1.89 on 20 trades gives p = 0.07; allowing for the 3 rule versions scored on the test year,
-  p = 0.22. 108 settings (18 per pair) were tried on training only, which is tuning, not testing.
-- **One crash**: trades that closed in Jan–Mar 2026 made more than the whole test-year profit. That window was named
-  after the results were seen, so the split is a check, not a test.
-- **Resampling** (10,000 draws): 94% of test-year totals stay above ₹0, 14% without the crash, 30% in training.
-- **Training switch**: only GOLDM − GOLDPETAL qualifies, on +₹6,633 over 17 training trades (t = 0.19): close to a coin flip.
+- **Significance**: t = 0.40 on 17 trades gives p = 0.69. 108 settings (18 per pair) were tried on training only,
+  which is tuning, not testing.
+- **Resampling** (10,000 draws): 32% of test-year totals stay above ₹0, 10% without the crash trades, 56% in
+  training, 1% in the clean test.
+- **Training switch**: only GOLDM − GOLDPETAL qualifies, on +₹19,793 over 14 training trades (t = 0.84): close to a
+  coin flip.
 
 ### 1.3 Slippage: the number that decides it, and daily data cannot measure it
 
@@ -66,28 +71,32 @@ Slippage (5 bps per order, assumed) is 82% of the 24.4 bps round-trip cost. `pip
 measure it from the daily data with two standard estimators (Roll 1984; Corwin & Schultz 2012). Both find no
 spread on most contracts and months (it is smaller than a day's price noise); with negative readings set to zero
 they give 26–31 bps for every contract alike, which is volatility, not a spread. The hard floor is half a tick,
-at most 0.34 bps. Our trades were a median 0.07% of the day's volume.
+at most 0.34 bps. Our fills were a median 0.06% of the day's volume (largest 3.1%; none over the 5% cap).
 
-Break-even slippage per order: **training 4.0 bps · test year 14.3 bps · 2011–2023 never (loses at 0)**.
+Break-even slippage per order: **training 5.3 bps · test year never (loses at 0) · 2011–2023 1.4 bps**.
 Only real broker fills (a forward test) can settle it.
 
 ### 1.4 Market structure
 
-- **Normalization**: lot sizes 1 g / 8 g / 10 g / 100 g and purities (GOLDM 995; the others 999) are normalized to
-  ₹ per gram of pure gold: `px_per_g_pure = close / quote_grams / purity`. Purities match public contract
-  descriptions (GOLDTEN 999, GOLDM 995; MCX's 2019 circular prices Gold Guinea on 999); confirm against MCX's own
-  spec sheets when possible.
+- **Normalization**: `₹ per 10 g pure = Bhavcopy close ÷ grams quoted ÷ purity × 10`, purity applied once, using the
+  specification in force on each row's date (`pipeline/contract_rules.py`). Lot sizes 1 / 8 / 10 / 100 g;
+  purities GOLDM 995, the others 999. These come from broker and exchange-summary sources, **not** an MCX
+  document (mcxindia.com refuses automated requests), and before Oct 2023 they are assumed unchanged.
 - **GOLDPETAL repriced in November 2024**: GOLDGUINEA − GOLDPETAL fell from +203 to +19 bps between 4 and 11 Nov 2024,
   inside one contract (Nov-2024 expiry). Against GOLDM, GOLDPETAL rose about 249 bps and GOLDGUINEA about 66 bps,
   so most of the move was GOLDPETAL. Median gap +255 bps (May–Nov 2024) vs −29 bps (Feb–Jul 2025). Located by a
-  level-shift test in `pipeline/evidence.py`; **cause not confirmed** (no MCX notice found). Because the "normal"
-  level moves, signals use a rolling point-in-time window, never a fixed zero or full-sample mean.
-- **Carry**: GOLDPETAL calendar spreads imply a median 8.03% a year (IQR 6.18–10.86%).
-- **Gold exposure**: equal grams on both legs; over all 209 trades, 2011–2026 (5 bps), gold-price P&L is 2.9% of
-  the gross result and the spread is the rest. In the test year alone, the correlation of trade returns with gold
-  moves is −0.10 (20 trades).
-- **Contract calendar**: every trade, 2011–2026, sits inside both contracts' calendars (listed on entry, closed
-  before either stopped trading); `history.json → calendar`, `contracts.json → calendar`.
+  level-shift test in `pipeline/evidence.py`; **cause not confirmed** (no MCX notice found, and no specification
+  change was found that would explain it). Because the "normal" level moves, signals use a rolling point-in-time
+  window, never a fixed zero or full-sample mean.
+- **Carry and term structure**: GOLDPETAL calendar spreads (contracts inside their tender window skipped) imply a
+  median 8.0% a year (middle half 6.35–10.51%); 104 of 781 daily estimates are outside 0–15% and flagged unstable.
+  The Market page shows the futures curve (latest vs about a month earlier) and the daily decomposition of each
+  contract's price change into gold, roll-down, curve change and residual. It is an accounting identity (the parts
+  add back exactly), so it shows where a move came from, not why.
+- **Gold exposure**: equal grams on both legs. Over all 138 trades, 2011–2026 (5 bps), the gold part is −₹417 against
+  +₹1,85,394 gross; the daily portfolio's correlation with gold returns is −0.04 (`portfolio.json`).
+- **Contract calendar**: every trade, 2011–2026, sits inside both contracts' calendars and is closed before either
+  leg's tender window (`history.json → calendar`, `contracts.json → calendar`).
 
 ### 1.5 The data: what we have, what was missing, what we still need
 
@@ -101,6 +110,30 @@ Only real broker fills (a forward test) can settle it.
 | **Exchange quirk** | 169 rows where MCX's "previous close" differs from the prior day's close, mostly thin contracts and no-trade days; the pipeline never uses that field for signals |
 | **Still missing** | 22 Oct 2026 onward. MCX blocks scripted downloads, so new rows come from Bhavcopy CSVs downloaded by hand (see "Refreshing the data") |
 | **Would help most** | Real broker fills or intraday bid/ask, to measure slippage (82% of the cost, and the number that decides the verdict); MCX circulars for Nov 2024 (the GOLDPETAL repricing); MCX's official contract spec sheets (purities, delivery centres) |
+
+
+### 1.6 October 2026 compliance corrections (and what they changed)
+
+A compliance review against the problem statement found rules that were weaker than they looked. They were fixed in
+the pipeline, not in the presentation, and every figure above was rebuilt:
+
+| Correction | Where | Effect on the 2011–2023 holdout (same settings, 5 bps) |
+|---|---|---|
+| Tender periods: each leg has its own window (`contract_rules.tender_rule`; the conservative 5 trading days incl. expiry, never shorter than any source reports). No entry within 9 trading days of expiry; positions closed by the last day before either leg's window | `contract_rules.py`, `backtest.py`, `alerts.py`, `lifecycle.py` | 151 → 128 trades |
+| Size-aware liquidity: each leg's intended lots ≤ 5% of that contract's volume, on the signal day and on every fill day (open interest is only a screen) | `config.MAX_PARTICIPATION`, `lifecycle.size_liquidity_ok` | 151 → 103 trades |
+| Carry reference skips GOLDPETAL contracts inside their tender window; estimates outside 0–15% a year flagged | `carry.py` | 151 → 153 trades |
+| All corrections together | | 151 trades, −₹5,49,070 → **88 trades, −₹1,30,655**; at zero slippage −₹2,35,391 → **+₹51,534** |
+
+Also: one rolling z-score definition for alerts, charts and backtest (`pairs.rolling_stats`; identical numbers, as
+the data has no gap over 10 days); date-effective contract specifications with a verification status per row; a
+daily mark-to-market portfolio across all pairs (`portfolio.py`: drawdown, daily Sharpe, Newey–West t, exposure,
+gold benchmark); the per-trade "Sharpe" is no longer annualised; a SHA-256 manifest of `data/raw` and real
+ingestion drop counts (`provenance.py`); and the site's wording now says "Bhavcopy close", "train/test split" and
+"historical holdout" instead of "official settlement", "walk-forward" and "years the rule never saw".
+
+**Not verified**: no MCX circular or specification sheet could be read directly (MCX refuses automated requests).
+Tender windows and specifications come from broker notices and exchange summaries; no trade is marked as fully
+lifecycle-verified. Margin is not modelled, so no return on capital is reported.
 
 ---
 
@@ -140,7 +173,7 @@ gold-rv/
 │   ├── build_site_data.py      # runs everything, writes frontend/public/data/*.json
 │   ├── build_web_data.py       # site-data.json, the one file the pages read
 │   ├── check_data.py           # committed data == a fresh build (CI)
-│   └── tests/                  # 52 pytest tests
+│   └── tests/                  # 78 pytest tests
 └── frontend/
     ├── index.html · build.mjs · tests/pages.test.mjs
     └── public/
@@ -165,7 +198,7 @@ Prerequisites: Python 3.11+, Node.js 18+ (no npm packages needed to build or tes
 pip install -r requirements.txt
 python -m pipeline.build_site_data      # writes frontend/public/data/ (5–10 min or more; the explorer grid is most of it)
 python -m pipeline.check_data           # committed data == fresh build
-python -m pytest pipeline/tests/        # 52 tests
+python -m pytest pipeline/tests/        # 78 tests
 cd frontend
 npm test                                # page logic against the real data
 npm run build                           # writes dist/
@@ -213,7 +246,7 @@ does not match what the pipeline produces from the committed code.
 
 ---
 
-## 5. Verification (pytest, 52 tests)
+## 5. Verification (pytest, 78 tests)
 
 | Requirement | Test module |
 |---|---|
@@ -228,6 +261,10 @@ does not match what the pipeline produces from the committed code.
 | Verdict leads with the clean test and never calls the test year "unseen"; p-values computed; break-evens fit the scenarios; GOLDPETAL break located from data | `test_evidence.py` |
 | Raw MCX file rebuilds the clean CSV and calendar byte for byte; merge refuses conflicts; forward trades never join the test year | `test_download.py` |
 | Prohibited strings (`COMEX`, `USD/INR`, `Confidence`, …) absent from the site | `test_frontend_acceptance.py` |
+| No position opens or closes inside either leg's tender window; both legs checked independently; forced exits pay exit costs; live gates = backtest; reproducible; carry skips tender-window contracts; one rolling-statistics definition | `test_lifecycle_liquidity.py` |
+| Every fill ≤ 5% of each leg's volume; low-volume, missing-volume, low-OI and failed-fill-day cases | `test_lifecycle_liquidity.py` |
+| Date-effective specifications (boundaries, unavailable/assumed rows), normalization formula; daily marks add up to each trade; Newey–West; portfolio reconciles; raw-file hashes match Git | `test_specs_portfolio_provenance.py` |
+| One published trade (gross, gold part, costs, net, participation) and today's displayed signal (spread, normal level, z) recomputed by hand from the raw MCX rows | `test_reproduce_from_raw.py` |
 | "6 of 216" hindsight count matches the explorer grid it summarises | `test_hindsight.py` |
 
 Plus `npm test` (`frontend/tests/pages.test.mjs`): 183 page and menu states rendered against the real data, then
@@ -238,13 +275,15 @@ the Brief page (every row links to a section that exists; every number comes fro
 
 ## 6. Research Limitations
 
-1. **Settlement closes vs fills**: EOD settlement prices are official references, not executable fills.
+1. **Closes vs fills**: prices are the Bhavcopy Close field, a daily reference, not an executable fill; we have not verified that it equals the official settlement price in every period.
 2. **Volume vs depth**: traded lots show activity, not order-book depth.
 3. **Slippage is assumed, not measured** (82% of round-trip cost); daily data cannot measure it (section 1.3).
 4. **The test year is not clean**: the five-check rule was written after its first results were seen. The clean test is 2011–2023.
-5. **Small test sample**: 20 test-year trades (2–5 per pair).
-6. **One crash dominates the test year**: trades closed in Jan–Mar 2026 made more than the whole test-year profit.
+5. **Small test sample**: 17 test-year trades (2–4 per pair that traded).
+6. **One crash looms over the test year**: 7 of its 17 trades closed in the Jan–Mar 2026 crash (−₹33,564). The crash window was named after the results were seen, so the split is a check, not a test.
 7. **GOLDTEN history**: listed 31-Mar-2025; only 6 months in training, and absent from the 2011–2023 check.
 8. **GOLDPETAL repricing (Nov 2024)**: located precisely, cause unconfirmed.
 9. **Past fee rates**: the 2011–2023 check charges today's MCX fee rates.
 10. **Forced exits on contract switches** add cost.
+11. **Tender periods and specifications not verified from MCX documents** (section 1.6); a conservative 5-day window is applied.
+12. **No rolling walk-forward**: one train/test split plus a historical holdout; the Oct-2026 correction came after the earlier results were known.

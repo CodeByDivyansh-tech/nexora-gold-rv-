@@ -79,6 +79,8 @@ const speakerNotes = {
   16: "Slide 16 summarizes our key takeaways and engineering roadmap. The four core principles: normalize first, respect costs, attribute profits honestly, and automate tests. Our roadmap outlines immediate live paper trading, near-term tick-level slippage measurement, and later cross-commodity expansion to silver.",
   17: "Thank you judges for your time and thoughtful evaluation. We invite you to explore the live Gold RV Intelligence terminal or review our audited codebase on GitHub. We are now open for your questions.",
 };
+// pitch/data.js rewrites the result lines from the pipeline's JSON, so the deck never contradicts the site
+window.GRV_PITCH = { spokenLines, speakerNotes };
 
 // 4 Contracts Data
 const contractData = {
@@ -126,7 +128,7 @@ const contractData = {
 
 // Helper: Indian numbering format (1,13,598)
 function formatIndian(val) {
-  const absVal = Math.abs(Math.round(val));
+  const absVal = Math.round(Math.abs(val));
   const str = absVal.toString();
   const lastThree = str.substring(str.length - 3);
   const otherNumbers = str.substring(0, str.length - 3);
@@ -589,44 +591,54 @@ class CrashColumnsRenderer {
     gsap.killTweensOf(this.colCrash.scale);
     gsap.killTweensOf(this.colOther.scale);
 
-    const targetCrashH = 2.0;
-    const targetOtherH = 0.355;
+    const t = this.targets();
+    this.colCrash.scale.set(1.0, t.crashH, 1.0);
+    this.colCrash.position.y = t.crashSign * t.crashH * 0.5;
+    this.colOther.scale.set(1.0, t.otherH, 1.0);
+    this.colOther.position.y = t.otherSign * t.otherH * 0.5;
+  }
 
-    this.colCrash.scale.set(1.0, targetCrashH, 1.0);
-    this.colCrash.position.y = targetCrashH * 0.5;
-
-    this.colOther.scale.set(1.0, targetOtherH, 1.0);
-    this.colOther.position.y = -(targetOtherH * 0.5);
+  // heights and directions from the data (pitch/data.js sets window.GRV_CRASH); up = profit, down = loss
+  targets() {
+    const v = window.GRV_CRASH || { crash: 137985, other: -24387 };
+    const mx = Math.max(1, Math.abs(v.crash), Math.abs(v.other));
+    const paint = (mesh, val) => {
+      const up = val >= 0;
+      mesh.material.color.setHex(up ? 0x4FD1A1 : 0xFF8F85);
+      mesh.material.emissive.setHex(up ? 0x228B5E : 0xFF4D3D);
+    };
+    paint(this.colCrash, v.crash); paint(this.colOther, v.other);
+    return { crashH: Math.max(0.04, 2.0 * Math.abs(v.crash) / mx), crashSign: v.crash >= 0 ? 1 : -1,
+             otherH: Math.max(0.04, 2.0 * Math.abs(v.other) / mx), otherSign: v.other >= 0 ? 1 : -1 };
   }
 
   triggerAnimation() {
     if (!this.colCrash || !this.colOther) return;
 
-    const targetCrashH = 2.0;
-    const targetOtherH = 0.355; // 17.75% to scale
+    const t = this.targets();
 
     this.colCrash.scale.set(1.0, 0.001, 1.0);
-    this.colCrash.position.y = 0.001;
+    this.colCrash.position.y = 0.001 * t.crashSign;
 
     this.colOther.scale.set(1.0, 0.001, 1.0);
-    this.colOther.position.y = -0.001;
+    this.colOther.position.y = 0.001 * t.otherSign;
 
     gsap.to(this.colCrash.scale, {
-      y: targetCrashH,
+      y: t.crashH,
       duration: 1.5,
       ease: 'power3.out',
       onUpdate: () => {
-        this.colCrash.position.y = this.colCrash.scale.y * 0.5;
+        this.colCrash.position.y = t.crashSign * this.colCrash.scale.y * 0.5;
       }
     });
 
     gsap.to(this.colOther.scale, {
-      y: targetOtherH,
+      y: t.otherH,
       duration: 1.3,
       delay: 0.25,
       ease: 'power3.out',
       onUpdate: () => {
-        this.colOther.position.y = -(this.colOther.scale.y * 0.5);
+        this.colOther.position.y = t.otherSign * this.colOther.scale.y * 0.5;
       }
     });
   }
@@ -1449,18 +1461,11 @@ class PitchDeckManager {
       const counters = panel.querySelectorAll('.counter-stat');
       counters.forEach((el) => {
         gsap.killTweensOf(el);
-        const target = el.dataset.target;
-        if (target === '20') {
-          el.textContent = '20';
-        } else if (target === '113598') {
-          el.textContent = '+₹1,13,598';
-        } else if (target === '1.89') {
-          el.textContent = '1.89';
-        } else if (target === '19056') {
-          el.textContent = '-₹19,056';
-        } else if (target === '549070') {
-          el.textContent = '-₹5,49,070';
-        }
+        // final value straight from the element's data attributes (pitch/data.js fills them from the pipeline's JSON)
+        const v = parseFloat(el.dataset.target);
+        const dec = parseInt(el.dataset.decimals || '0', 10);
+        const body = el.dataset.indian === 'true' ? Math.round(v).toLocaleString('en-IN') : v.toFixed(dec);
+        el.textContent = (el.dataset.prefix || '') + body;
       });
     }
 

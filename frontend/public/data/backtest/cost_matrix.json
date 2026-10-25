@@ -2,42 +2,42 @@
   {
     "pair_id": "M_PETAL",
     "slip_bps": 0,
-    "trades": 4,
-    "gross_bps": 67.8,
-    "net_bps": 63.6,
-    "net_rs": 33510.9,
-    "hit_rate": 0.75,
-    "breakeven_slip_bps": 15.8
+    "trades": 3,
+    "gross_bps": 60.3,
+    "net_bps": 56.1,
+    "net_rs": 22970.7,
+    "hit_rate": 0.667,
+    "breakeven_slip_bps": 14.1
   },
   {
     "pair_id": "M_PETAL",
     "slip_bps": 2,
-    "trades": 4,
-    "gross_bps": 67.8,
-    "net_bps": 55.5,
-    "net_rs": 29272.9,
-    "hit_rate": 0.75,
-    "breakeven_slip_bps": 15.8
+    "trades": 3,
+    "gross_bps": 60.3,
+    "net_bps": 48.1,
+    "net_rs": 19722.3,
+    "hit_rate": 0.667,
+    "breakeven_slip_bps": 14.1
   },
   {
     "pair_id": "M_PETAL",
     "slip_bps": 5,
-    "trades": 4,
-    "gross_bps": 67.8,
-    "net_bps": 43.4,
-    "net_rs": 22915.9,
-    "hit_rate": 0.5,
-    "breakeven_slip_bps": 15.8
+    "trades": 3,
+    "gross_bps": 60.3,
+    "net_bps": 36.0,
+    "net_rs": 14849.9,
+    "hit_rate": 0.333,
+    "breakeven_slip_bps": 14.1
   },
   {
     "pair_id": "M_PETAL",
     "slip_bps": 10,
-    "trades": 4,
-    "gross_bps": 67.8,
-    "net_bps": 23.3,
-    "net_rs": 12320.9,
-    "hit_rate": 0.5,
-    "breakeven_slip_bps": 15.8
+    "trades": 3,
+    "gross_bps": 60.3,
+    "net_bps": 15.8,
+    "net_rs": 6729.1,
+    "hit_rate": 0.333,
+    "breakeven_slip_bps": 14.1
   },
   {
     "pair_id": "TEN_PETAL",
@@ -82,42 +82,42 @@
   {
     "pair_id": "GUINEA_TEN",
     "slip_bps": 0,
-    "trades": 5,
-    "gross_bps": 95.4,
-    "net_bps": 91.1,
-    "net_rs": 38821.5,
-    "hit_rate": 0.8,
-    "breakeven_slip_bps": 18.5
+    "trades": 4,
+    "gross_bps": 104.2,
+    "net_bps": 99.8,
+    "net_rs": 31696.5,
+    "hit_rate": 0.75,
+    "breakeven_slip_bps": 19.9
   },
   {
     "pair_id": "GUINEA_TEN",
     "slip_bps": 2,
-    "trades": 5,
-    "gross_bps": 95.4,
-    "net_bps": 83.1,
-    "net_rs": 34632.3,
-    "hit_rate": 0.8,
-    "breakeven_slip_bps": 18.5
+    "trades": 4,
+    "gross_bps": 104.2,
+    "net_bps": 91.9,
+    "net_rs": 28513.9,
+    "hit_rate": 0.75,
+    "breakeven_slip_bps": 19.9
   },
   {
     "pair_id": "GUINEA_TEN",
     "slip_bps": 5,
-    "trades": 5,
-    "gross_bps": 95.4,
-    "net_bps": 71.2,
-    "net_rs": 28348.4,
-    "hit_rate": 0.8,
-    "breakeven_slip_bps": 18.5
+    "trades": 4,
+    "gross_bps": 104.2,
+    "net_bps": 80.0,
+    "net_rs": 23740.0,
+    "hit_rate": 0.75,
+    "breakeven_slip_bps": 19.9
   },
   {
     "pair_id": "GUINEA_TEN",
     "slip_bps": 10,
-    "trades": 5,
-    "gross_bps": 95.4,
-    "net_bps": 51.4,
-    "net_rs": 17875.4,
-    "hit_rate": 0.6,
-    "breakeven_slip_bps": 18.5
+    "trades": 4,
+    "gross_bps": 104.2,
+    "net_bps": 60.1,
+    "net_rs": 15783.5,
+    "hit_rate": 0.5,
+    "breakeven_slip_bps": 19.9
   },
   {
     "pair_id": "M_TEN",
@@ -162,42 +162,42 @@
   {
     "pair_id": "M_GUINEA",
     "slip_bps": 0,
-    "trades": 5,
-    "gross_bps": 56.5,
-    "net_bps": 52.7,
-    "net_rs": 80845.6,
-    "hit_rate": 0.6,
-    "breakeven_slip_bps": 14.5
+    "trades": 4,
+    "gross_bps": -61.4,
+    "net_bps": -65.2,
+    "net_rs": -83347.5,
+    "hit_rate": 0.5,
+    "breakeven_slip_bps": 0.0
   },
   {
     "pair_id": "M_GUINEA",
     "slip_bps": 2,
-    "trades": 5,
-    "gross_bps": 56.5,
-    "net_bps": 44.6,
-    "net_rs": 69660.5,
-    "hit_rate": 0.6,
-    "breakeven_slip_bps": 14.5
+    "trades": 4,
+    "gross_bps": -61.4,
+    "net_bps": -73.3,
+    "net_rs": -92025.8,
+    "hit_rate": 0.5,
+    "breakeven_slip_bps": 0.0
   },
   {
     "pair_id": "M_GUINEA",
     "slip_bps": 5,
-    "trades": 5,
-    "gross_bps": 56.5,
-    "net_bps": 32.4,
-    "net_rs": 52882.8,
-    "hit_rate": 0.4,
-    "breakeven_slip_bps": 14.5
+    "trades": 4,
+    "gross_bps": -61.4,
+    "net_bps": -85.5,
+    "net_rs": -105043.2,
+    "hit_rate": 0.25,
+    "breakeven_slip_bps": 0.0
   },
   {
     "pair_id": "M_GUINEA",
     "slip_bps": 10,
-    "trades": 5,
-    "gross_bps": 56.5,
-    "net_bps": 12.2,
-    "net_rs": 24919.9,
-    "hit_rate": 0.2,
-    "breakeven_slip_bps": 14.5
+    "trades": 4,
+    "gross_bps": -61.4,
+    "net_bps": -105.8,
+    "net_rs": -126738.9,
+    "hit_rate": 0.0,
+    "breakeven_slip_bps": 0.0
   },
   {
     "pair_id": "GUINEA_PETAL",
