@@ -63,14 +63,14 @@
   </header>
 
   <h1>Pitch video</h1>
-  <p class="sub">The real site as of 22 Oct 2026: the problem, the data, every page and the verdict, with captions and background music.</p>
+  <p class="sub">The real site as of 25 Oct 2026, with the stricter rules and rebuilt results: the problem, the data, every page and the verdict, with captions and background music.</p>
 
   <div class="grid">
     <div class="glass player">
       <video id="v" controls preload="metadata" playsinline>
-        <source src="gold-rv-pitch-video-2026-10-22.mp4" type="video/mp4">
-        <source src="gold-rv-pitch-video-2026-10-22.webm" type="video/webm">
-        Your browser can't play this video. <a href="gold-rv-pitch-video-2026-10-22.mp4">Download it</a> instead.
+        <source src="gold-rv-pitch-video-2026-10-25.mp4" type="video/mp4">
+        <source src="gold-rv-pitch-video-2026-10-25.webm" type="video/webm">
+        Your browser can't play this video. <a href="gold-rv-pitch-video-2026-10-25.mp4">Download it</a> instead.
       </video>
     </div>
     <aside class="glass chapters" aria-label="Chapters">
@@ -86,8 +86,8 @@
   </div>
 </div>
 <script>
-  // chapter start times (seconds), from the recording script (pitch video, 22 Oct 2026)
-  var CH = [[0, 'Gold RV Intelligence'], [5, 'The problem'], [13, 'The data: MCX Bhavcopy'], [21, 'Home'], [33, 'Today'], [45, 'Market'], [57, 'Pair Explorer'], [72, 'Signals'], [85, 'Backtesting'], [102, 'Try your own rule'], [116, 'Data'], [128, 'The brief, answered'], [133, 'Tools on every page'], [149, 'What changed this week'], [157, 'The verdict'], [165, 'Team NEXORA']];
+  // chapter start times (seconds), from the recording script (pitch video, 25 Oct 2026)
+  var CH = [[0, 'Gold RV Intelligence'], [5, 'The problem'], [13, 'The data: MCX Bhavcopy'], [21, 'Home'], [33, 'Today'], [45, 'Market'], [61, 'Pair Explorer'], [77, 'Signals'], [90, 'Backtesting'], [114, 'Try your own rule'], [127, 'Data'], [145, 'The brief, answered'], [150, 'Tools on every page'], [166, 'What changed'], [174, 'The verdict'], [182, 'Team NEXORA']];
   var v = document.getElementById('v'), ol = document.getElementById('ch');
   function mmss(s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
   CH.forEach(function (c, i) {
