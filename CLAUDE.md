@@ -23,7 +23,7 @@ The README explains the research; SPEC.md is the original build spec (data, form
 | `data/raw/` | `mcx_bhavcopy_raw_api.csv` (our MCX rows, source of truth), `gold_bhavcopy_clean.csv`, `contract_calendar.csv`, `retrieval_log.csv`, archived MCX CSVs (`mcx_csv/`), `mcx_bhavcopy_2003_2023.csv` (our MCX download of every 2004–2023 contract; used for 2011–2023 and the long charts), `mcx_bhavcopy_supplement.csv` (rows our first download missed, downloaded from MCX later), `mcx_bhavcopy_archive.csv` (a second copy of MCX rows, shared by another team; used only as a check) |
 | `frontend/public/` | The static site: `pages/*.dc.html` (one per page), `app/*.js`, `data/*.json` (built by the pipeline) |
 | `frontend/public/app/` | `dc.js` renderer, `theme.js` colours, `keys.js` shortcuts, `prefs.js`, `pdf.js` PDF writer, `rail.js` lit-glass menu, `glossary.js`, `explain.js` (Goldie) |
-| `frontend/public/demo/` | Pitch video page (`gold-rv-pitch-video-2026-10-22.mp4` + `.webm`, captions and music) with chapters; the older walkthrough (`gold-rv-demo-video.*`) is kept |
+| `frontend/public/demo/` | Pitch video page (`gold-rv-pitch-video-2026-10-25.mp4` + `.webm`, captions and music) with chapters; the older walkthrough (`gold-rv-demo-video.*`) is kept |
 | `frontend/public/intro/` | 3D intro (three.js r160 + GSAP, vendored in `public/pitch/vendor/`) and the halftone footer |
 | `frontend/tests/pages.test.mjs` | Page logic tests against the real data (incl. the partial-period guard) |
 | `frontend/build.mjs` | Copies `index.html` + `public/` into `dist/` (no bundler, no runtime dependencies) |

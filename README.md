@@ -183,7 +183,7 @@ gold-rv/
         ├── pages/*.dc.html     # one file per page; Rail.dc.html and TabBar.dc.html are the shared menus
         ├── pages/Brief.dc.html # "The brief, answered": each line of Problem 03, its status and the page that proves it
         ├── intro/              # the 3D intro shown on a first visit
-        ├── demo/               # the pitch video page (gold-rv-pitch-video-2026-10-22.mp4 + .webm, with chapters; the older walkthrough video is kept)
+        ├── demo/               # the pitch video page (gold-rv-pitch-video-2026-10-25.mp4 + .webm, with chapters; the older walkthrough video is kept)
         ├── pitch/              # the 3D pitch deck
         └── data/               # JSON written by the pipeline (committed)
 ```
