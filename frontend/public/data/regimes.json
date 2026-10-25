@@ -43,12 +43,12 @@
     "pair": "GOLDM \u2212 GOLDPETAL",
     "pre_break_mean": 143.5,
     "pre_break_text": "+143.5 bps",
-    "post_break_mean": -90.8,
-    "post_break_text": "-90.8 bps",
-    "q1_mean": -261.2,
+    "post_break_mean": -90.7,
+    "post_break_text": "-90.7 bps",
+    "q1_mean": -261.3,
     "q1_min": -741.6,
-    "q1_max": -0.8,
-    "q1_text": "Mean -261.2 bps [min -741.6, max -0.8]",
+    "q1_max": 3.4,
+    "q1_text": "Mean -261.3 bps [min -741.6, max +3.4]",
     "comment": "Level shift: GOLDPETAL repriced from cheap to slightly rich, sharpest 04 Nov\u201311 Nov 2024. Cause not confirmed; no MCX notice found."
   },
   {
@@ -56,12 +56,12 @@
     "pair": "GOLDM \u2212 GOLDTEN",
     "pre_break_mean": null,
     "pre_break_text": "No contract (listed 31-Mar-2025)",
-    "post_break_mean": -8.1,
-    "post_break_text": "-8.1 bps",
+    "post_break_mean": -8.4,
+    "post_break_text": "-8.4 bps",
     "q1_mean": -84.0,
     "q1_min": -587.9,
-    "q1_max": 23.3,
-    "q1_text": "Mean -84.0 bps [min -587.9, max +23.3]",
+    "q1_max": 22.5,
+    "q1_text": "Mean -84.0 bps [min -587.9, max +22.5]",
     "comment": "Listed Mar-2025; no pre-break history"
   },
   {
@@ -69,12 +69,12 @@
     "pair": "GOLDM \u2212 GOLDGUINEA",
     "pre_break_mean": -66.7,
     "pre_break_text": "-66.7 bps",
-    "post_break_mean": -76.5,
-    "post_break_text": "-76.5 bps",
-    "q1_mean": -237.3,
+    "post_break_mean": -76.7,
+    "post_break_text": "-76.7 bps",
+    "q1_mean": -237.2,
     "q1_min": -555.6,
     "q1_max": -6.6,
-    "q1_text": "Mean -237.3 bps [min -555.6, max -6.6]",
-    "comment": "Fairly stable: GOLDM averaged -71.8 bps vs GOLDGUINEA (carry-adjusted) over the whole period."
+    "q1_text": "Mean -237.2 bps [min -555.6, max -6.6]",
+    "comment": "Fairly stable: GOLDM averaged -71.9 bps vs GOLDGUINEA (carry-adjusted) over the whole period."
   }
 ]

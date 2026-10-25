@@ -18,22 +18,22 @@
     "reason": "only 0 training trades, needs 10"
   },
   "metrics_all": {
-    "n_trades": 5,
-    "hit_rate": 0.6,
-    "gross_rs": 41094.0,
-    "cost_rs": 23218.6,
-    "net_rs": 17875.4,
-    "spread_rs": 41094.0,
+    "n_trades": 4,
+    "hit_rate": 0.5,
+    "gross_rs": 33442.0,
+    "cost_rs": 17658.5,
+    "net_rs": 15783.5,
+    "spread_rs": 33442.0,
     "gold_rs": 0.0,
-    "gross_bps": 95.4,
-    "net_bps": 51.4,
+    "gross_bps": 104.2,
+    "net_bps": 60.1,
     "max_drawdown_rs": 5763.8,
-    "avg_holding_days": 3.0,
-    "sharpe": "n/a (too few trades)",
-    "t_stat": 0.94,
+    "avg_holding_days": 3.2,
+    "sharpe_per_trade": "n/a (too few trades)",
+    "t_stat": 0.86,
     "ci_95": [
-      -18.9,
-      162.1
+      -27.7,
+      194.8
     ]
   },
   "metrics_train": {
@@ -48,7 +48,7 @@
     "net_bps": 0.0,
     "max_drawdown_rs": 0.0,
     "avg_holding_days": 0.0,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 0.0,
     "ci_95": [
       0.0,
@@ -56,22 +56,22 @@
     ]
   },
   "metrics_test": {
-    "n_trades": 5,
-    "hit_rate": 0.6,
-    "gross_rs": 41094.0,
-    "cost_rs": 23218.6,
-    "net_rs": 17875.4,
-    "spread_rs": 41094.0,
+    "n_trades": 4,
+    "hit_rate": 0.5,
+    "gross_rs": 33442.0,
+    "cost_rs": 17658.5,
+    "net_rs": 15783.5,
+    "spread_rs": 33442.0,
     "gold_rs": 0.0,
-    "gross_bps": 95.4,
-    "net_bps": 51.4,
+    "gross_bps": 104.2,
+    "net_bps": 60.1,
     "max_drawdown_rs": 5763.8,
-    "avg_holding_days": 3.0,
-    "sharpe": "n/a (too few trades)",
-    "t_stat": 0.94,
+    "avg_holding_days": 3.2,
+    "sharpe_per_trade": "n/a (too few trades)",
+    "t_stat": 0.86,
     "ci_95": [
-      -18.9,
-      162.1
+      -27.7,
+      194.8
     ]
   },
   "trades": [
@@ -95,7 +95,19 @@
       "net_bps": -41.3,
       "reason": "revert",
       "days": 3,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 2213.69,
+      "cost_exit": 2214.11,
+      "lots_a": 10.0,
+      "lots_b": 8.0,
+      "part_entry": 0.00062,
+      "part_exit": 0.00055,
+      "forced_fill": false,
+      "td_exit_a": 23,
+      "td_exit_b": 23,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-secondary"
     },
     {
       "pair": "GUINEA_TEN",
@@ -117,7 +129,19 @@
       "net_bps": -14.1,
       "reason": "roll",
       "days": 1,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 2536.51,
+      "cost_exit": 2537.49,
+      "lots_a": 10.0,
+      "lots_b": 8.0,
+      "part_entry": 0.00088,
+      "part_exit": 0.0009,
+      "forced_fill": false,
+      "td_exit_a": 11,
+      "td_exit_b": 11,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-unverified"
     },
     {
       "pair": "GUINEA_TEN",
@@ -139,29 +163,19 @@
       "net_bps": 264.5,
       "reason": "revert",
       "days": 2,
-      "seg": "test"
-    },
-    {
-      "pair": "GUINEA_TEN",
-      "sig": "2026-02-17",
-      "entry": "2026-02-18",
-      "exit": "2026-02-20",
-      "expA": "2026-02-27",
-      "expB": "2026-02-27",
-      "z": 3.23,
-      "side": -1,
-      "grams": 80,
-      "notional": 1273140,
-      "gross": 7652.0,
-      "gold": 0.0,
-      "spread_pnl": 7652.0,
-      "cost": 5560.1,
-      "net": 2091.9,
-      "gross_bps": 60.1,
-      "net_bps": 16.4,
-      "reason": "revert",
-      "days": 2,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 1490.85,
+      "cost_exit": 1488.98,
+      "lots_a": 5.0,
+      "lots_b": 4.0,
+      "part_entry": 0.00016,
+      "part_exit": 0.00011,
+      "forced_fill": false,
+      "td_exit_a": 23,
+      "td_exit_b": 23,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-secondary"
     },
     {
       "pair": "GUINEA_TEN",
@@ -183,7 +197,19 @@
       "net_bps": 31.4,
       "reason": "revert",
       "days": 7,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 2588.42,
+      "cost_exit": 2588.43,
+      "lots_a": 10.0,
+      "lots_b": 8.0,
+      "part_entry": 0.00043,
+      "part_exit": 0.00051,
+      "forced_fill": false,
+      "td_exit_a": 16,
+      "td_exit_b": 16,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-unverified"
     }
   ],
   "equity_curve": [
@@ -221,42 +247,31 @@
       "trade_net_bps": 264.5
     },
     {
-      "date": "2026-02-18",
-      "exit_date": "2026-02-20",
-      "seg": "test",
-      "net": 14206.3,
-      "gross": 32248.0,
-      "cost": 18041.7,
-      "gold": 0.0,
-      "spread": 32248.0,
-      "trade_net_bps": 16.4
-    },
-    {
       "date": "2026-03-27",
       "exit_date": "2026-04-08",
       "seg": "test",
-      "net": 17875.4,
-      "gross": 41094.0,
-      "cost": 23218.6,
+      "net": 15783.5,
+      "gross": 33442.0,
+      "cost": 17658.5,
       "gold": 0.0,
-      "spread": 41094.0,
+      "spread": 33442.0,
       "trade_net_bps": 31.4
     }
   ],
   "attribution": {
-    "gross_rs": 41094.0,
-    "costs_rs": 23218.6,
-    "net_rs": 17875.4,
-    "spread_rs": 41094.0,
+    "gross_rs": 33442.0,
+    "costs_rs": 17658.5,
+    "net_rs": 15783.5,
+    "spread_rs": 33442.0,
     "gold_rs": 0.0,
     "direct_gold_pnl_pct": 0.0,
     "pair_correlation_to_gold": 0.89,
-    "pair_beta_to_gold": 0.35,
-    "pair_n_trades": 5,
-    "pair_note": "5 trades \u2014 unstable",
-    "pooled_correlation_to_gold": -0.1,
+    "pair_beta_to_gold": 0.38,
+    "pair_n_trades": 4,
+    "pair_note": "4 trades \u2014 unstable",
+    "pooled_correlation_to_gold": -0.05,
     "pooled_beta_to_gold": -0.02,
-    "pooled_n_trades": 20,
-    "summary_text": "Equal grams on both legs, so direct gold P&L is small (1.4% of gross across all pairs in Test). Correlation of trade returns with gold moves: -0.10 (pooled)."
+    "pooled_n_trades": 17,
+    "summary_text": "Equal grams on both legs, so direct gold P&L is small (1.5% of gross across all pairs in Test). Correlation of trade returns with gold moves: -0.05 (pooled)."
   }
 }

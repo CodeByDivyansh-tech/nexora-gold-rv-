@@ -51,9 +51,14 @@ def test_no_fills_on_extreme_move_days_and_no_same_close_exits():
         a, b, _ = PAIR_DEFINITIONS[tr['pair']]
         for sym, exp in ((a, pd.Timestamp(tr['expA'])), (b, pd.Timestamp(tr['expB']))):
             assert abs(P.loc[(sym, exp, tr['entry']), 'day_move']) < MAX_FILL_MOVE
-            assert abs(P.loc[(sym, exp, tr['exit']), 'day_move']) < MAX_FILL_MOVE
+            # Exception (Oct-2026 lifecycle fix): a position that must be closed before a tender window is closed on
+            # the last allowed day even after a big move, and the trade is flagged forced_fill
+            if not tr['forced_fill']:
+                assert abs(P.loc[(sym, exp, tr['exit']), 'day_move']) < MAX_FILL_MOVE
         assert tr['exit'] > tr['exit_sig'], 'exit filled at the signal close'
         assert tr['entry'] > tr['sig']
+    forced = t[t['forced_fill']]
+    assert (forced['reason'] == 'tender').all() and len(forced) <= max(1, len(t) // 20), 'forced exits must be rare and calendar-driven'
 
 def test_max_drawdown_counts_an_opening_loss():
     t = pd.DataFrame({'net': [-100.0, 50.0], 'gross': [0.0, 60.0], 'cost': [100.0, 10.0],

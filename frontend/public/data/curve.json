@@ -1,8 +1,8 @@
 {
-  "median_carry_pct": 8.04,
+  "median_carry_pct": 8.01,
   "iqr_carry_pct": [
-    6.37,
-    10.64
+    6.36,
+    10.57
   ],
   "reference_carry_series": [
     {
@@ -311,7 +311,7 @@
     },
     {
       "date": "2024-01-24",
-      "carry_pct": 7.432
+      "carry_pct": 9.134
     },
     {
       "date": "2024-01-25",
@@ -563,7 +563,7 @@
     },
     {
       "date": "2024-04-24",
-      "carry_pct": 11.587
+      "carry_pct": 1.849
     },
     {
       "date": "2024-04-25",
@@ -655,7 +655,7 @@
     },
     {
       "date": "2024-05-27",
-      "carry_pct": 11.163
+      "carry_pct": 6.782
     },
     {
       "date": "2024-05-28",
@@ -735,7 +735,7 @@
     },
     {
       "date": "2024-06-24",
-      "carry_pct": 19.397
+      "carry_pct": 6.804
     },
     {
       "date": "2024-06-25",
@@ -2451,11 +2451,11 @@
     },
     {
       "date": "2026-02-23",
-      "carry_pct": 17.554
+      "carry_pct": 18.004
     },
     {
       "date": "2026-02-24",
-      "carry_pct": 14.13
+      "carry_pct": 18.034
     },
     {
       "date": "2026-02-25",
@@ -2539,7 +2539,7 @@
     },
     {
       "date": "2026-03-25",
-      "carry_pct": 23.574
+      "carry_pct": 18.384
     },
     {
       "date": "2026-03-26",
@@ -2623,11 +2623,11 @@
     },
     {
       "date": "2026-04-24",
-      "carry_pct": 14.031
+      "carry_pct": 12.356
     },
     {
       "date": "2026-04-27",
-      "carry_pct": 18.372
+      "carry_pct": 12.955
     },
     {
       "date": "2026-04-28",
@@ -2707,11 +2707,11 @@
     },
     {
       "date": "2026-05-25",
-      "carry_pct": 13.656
+      "carry_pct": 12.703
     },
     {
       "date": "2026-05-26",
-      "carry_pct": 22.138
+      "carry_pct": 14.361
     },
     {
       "date": "2026-05-27",
@@ -2795,11 +2795,11 @@
     },
     {
       "date": "2026-06-24",
-      "carry_pct": 14.621
+      "carry_pct": 14.768
     },
     {
       "date": "2026-06-25",
-      "carry_pct": 19.918
+      "carry_pct": 16.843
     },
     {
       "date": "2026-06-26",
@@ -2887,11 +2887,11 @@
     },
     {
       "date": "2026-07-27",
-      "carry_pct": 11.837
+      "carry_pct": 10.28
     },
     {
       "date": "2026-07-28",
-      "carry_pct": 13.896
+      "carry_pct": 11.164
     },
     {
       "date": "2026-07-29",
@@ -2971,11 +2971,11 @@
     },
     {
       "date": "2026-08-25",
-      "carry_pct": 11.886
+      "carry_pct": 10.887
     },
     {
       "date": "2026-08-26",
-      "carry_pct": 10.665
+      "carry_pct": 10.948
     },
     {
       "date": "2026-08-27",
@@ -3059,11 +3059,11 @@
     },
     {
       "date": "2026-09-24",
-      "carry_pct": 11.926
+      "carry_pct": 10.513
     },
     {
       "date": "2026-09-25",
-      "carry_pct": 12.789
+      "carry_pct": 10.8
     },
     {
       "date": "2026-09-28",
@@ -3138,862 +3138,1939 @@
     {
       "date": "2024-03-28",
       "reference_carry_pct": 5.18,
+      "carry_from": {
+        "near": "2024-04-30",
+        "far": "2024-05-31",
+        "unstable": false
+      },
       "contracts": [
         {
           "symbol": "GOLDGUINEA",
           "expiry": "2024-03-28",
           "days_to_exp": 0,
+          "td_to_exp": 0,
           "px_per_g_pure": 6701.08,
           "px_per_10g_pure": 67010.76,
-          "oi": 66
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2024-04-30",
-          "days_to_exp": 33,
-          "px_per_g_pure": 6739.49,
-          "px_per_10g_pure": 67394.89,
-          "oi": 4177
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2024-05-31",
-          "days_to_exp": 64,
-          "px_per_g_pure": 6763.14,
-          "px_per_10g_pure": 67631.38,
-          "oi": 963
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2024-06-28",
-          "days_to_exp": 92,
-          "px_per_g_pure": 6812.44,
-          "px_per_10g_pure": 68124.37,
-          "oi": 157
-        },
-        {
-          "symbol": "GOLDM",
-          "expiry": "2024-04-05",
-          "days_to_exp": 8,
-          "px_per_g_pure": 6793.17,
-          "px_per_10g_pure": 67931.66,
-          "oi": 3452
-        },
-        {
-          "symbol": "GOLDM",
-          "expiry": "2024-05-03",
-          "days_to_exp": 36,
-          "px_per_g_pure": 6763.62,
-          "px_per_10g_pure": 67636.18,
-          "oi": 16566
-        },
-        {
-          "symbol": "GOLDM",
-          "expiry": "2024-06-05",
-          "days_to_exp": 69,
-          "px_per_g_pure": 6788.54,
-          "px_per_10g_pure": 67885.43,
-          "oi": 6099
+          "close": 53555.0,
+          "oi": 66,
+          "vol": 28,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-03-28",
           "days_to_exp": 0,
+          "td_to_exp": 0,
           "px_per_g_pure": 6558.56,
           "px_per_10g_pure": 65585.59,
-          "oi": 423
+          "close": 6552.0,
+          "oi": 423,
+          "vol": 275,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2024-04-05",
+          "days_to_exp": 8,
+          "td_to_exp": 5,
+          "px_per_g_pure": 6793.17,
+          "px_per_10g_pure": 67931.66,
+          "close": 67592.0,
+          "oi": 3452,
+          "vol": 14137,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2024-04-30",
+          "days_to_exp": 33,
+          "td_to_exp": 22,
+          "px_per_g_pure": 6739.49,
+          "px_per_10g_pure": 67394.89,
+          "close": 53862.0,
+          "oi": 4177,
+          "vol": 2253,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-04-30",
           "days_to_exp": 33,
+          "td_to_exp": 22,
           "px_per_g_pure": 6577.58,
           "px_per_10g_pure": 65775.78,
-          "oi": 42110
+          "close": 6571.0,
+          "oi": 42110,
+          "vol": 21262,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2024-05-03",
+          "days_to_exp": 36,
+          "td_to_exp": 25,
+          "px_per_g_pure": 6763.62,
+          "px_per_10g_pure": 67636.18,
+          "close": 67298.0,
+          "oi": 16566,
+          "vol": 19123,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2024-05-31",
+          "days_to_exp": 64,
+          "td_to_exp": 45,
+          "px_per_g_pure": 6763.14,
+          "px_per_10g_pure": 67631.38,
+          "close": 54051.0,
+          "oi": 963,
+          "vol": 696,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-05-31",
           "days_to_exp": 64,
+          "td_to_exp": 45,
           "px_per_g_pure": 6606.61,
           "px_per_10g_pure": 66066.07,
-          "oi": 10920
+          "close": 6600.0,
+          "oi": 10920,
+          "vol": 6155,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2024-06-05",
+          "days_to_exp": 69,
+          "td_to_exp": 48,
+          "px_per_g_pure": 6788.54,
+          "px_per_10g_pure": 67885.43,
+          "close": 67546.0,
+          "oi": 6099,
+          "vol": 5097,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2024-06-28",
+          "days_to_exp": 92,
+          "td_to_exp": 65,
+          "px_per_g_pure": 6812.44,
+          "px_per_10g_pure": 68124.37,
+          "close": 54445.0,
+          "oi": 157,
+          "vol": 134,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-06-28",
           "days_to_exp": 92,
+          "td_to_exp": 65,
           "px_per_g_pure": 6634.63,
           "px_per_10g_pure": 66346.35,
-          "oi": 1867
+          "close": 6628.0,
+          "oi": 1867,
+          "vol": 788,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         }
       ]
     },
     {
       "date": "2024-09-30",
       "reference_carry_pct": 9.1,
+      "carry_from": {
+        "near": "2024-10-31",
+        "far": "2024-11-29",
+        "unstable": false
+      },
       "contracts": [
         {
           "symbol": "GOLDGUINEA",
           "expiry": "2024-09-30",
           "days_to_exp": 0,
+          "td_to_exp": 0,
           "px_per_g_pure": 7677.68,
           "px_per_10g_pure": 76776.78,
-          "oi": 252
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2024-10-31",
-          "days_to_exp": 31,
-          "px_per_g_pure": 7631.13,
-          "px_per_10g_pure": 76311.31,
-          "oi": 3743
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2024-11-29",
-          "days_to_exp": 60,
-          "px_per_g_pure": 7684.18,
-          "px_per_10g_pure": 76841.84,
-          "oi": 1592
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2024-12-31",
-          "days_to_exp": 92,
-          "px_per_g_pure": 7708.96,
-          "px_per_10g_pure": 77089.59,
-          "oi": 191
-        },
-        {
-          "symbol": "GOLDM",
-          "expiry": "2024-10-04",
-          "days_to_exp": 4,
-          "px_per_g_pure": 7522.01,
-          "px_per_10g_pure": 75220.1,
-          "oi": 1152
-        },
-        {
-          "symbol": "GOLDM",
-          "expiry": "2024-10-31",
-          "days_to_exp": 31,
-          "px_per_g_pure": 7563.12,
-          "px_per_10g_pure": 75631.16,
-          "oi": 14885
-        },
-        {
-          "symbol": "GOLDM",
-          "expiry": "2024-12-05",
-          "days_to_exp": 66,
-          "px_per_g_pure": 7601.71,
-          "px_per_10g_pure": 76017.09,
-          "oi": 7195
+          "close": 61360.0,
+          "oi": 252,
+          "vol": 10,
+          "no_trade": false,
+          "thin": true,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-09-30",
           "days_to_exp": 0,
+          "td_to_exp": 0,
           "px_per_g_pure": 7428.43,
           "px_per_10g_pure": 74284.28,
-          "oi": 3056
+          "close": 7421.0,
+          "oi": 3056,
+          "vol": 583,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2024-10-04",
+          "days_to_exp": 4,
+          "td_to_exp": 3,
+          "px_per_g_pure": 7522.01,
+          "px_per_10g_pure": 75220.1,
+          "close": 74844.0,
+          "oi": 1152,
+          "vol": 1377,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2024-10-31",
+          "days_to_exp": 31,
+          "td_to_exp": 22,
+          "px_per_g_pure": 7631.13,
+          "px_per_10g_pure": 76311.31,
+          "close": 60988.0,
+          "oi": 3743,
+          "vol": 1834,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2024-10-31",
+          "days_to_exp": 31,
+          "td_to_exp": 22,
+          "px_per_g_pure": 7563.12,
+          "px_per_10g_pure": 75631.16,
+          "close": 75253.0,
+          "oi": 14885,
+          "vol": 13595,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-10-31",
           "days_to_exp": 31,
+          "td_to_exp": 22,
           "px_per_g_pure": 7448.45,
           "px_per_10g_pure": 74484.48,
-          "oi": 48055
+          "close": 7441.0,
+          "oi": 48055,
+          "vol": 25143,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2024-11-29",
+          "days_to_exp": 60,
+          "td_to_exp": 43,
+          "px_per_g_pure": 7684.18,
+          "px_per_10g_pure": 76841.84,
+          "close": 61412.0,
+          "oi": 1592,
+          "vol": 633,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-11-29",
           "days_to_exp": 60,
+          "td_to_exp": 43,
           "px_per_g_pure": 7502.5,
           "px_per_10g_pure": 75025.03,
-          "oi": 23693
+          "close": 7495.0,
+          "oi": 23693,
+          "vol": 10842,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2024-12-05",
+          "days_to_exp": 66,
+          "td_to_exp": 47,
+          "px_per_g_pure": 7601.71,
+          "px_per_10g_pure": 76017.09,
+          "close": 75637.0,
+          "oi": 7195,
+          "vol": 5206,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2024-12-31",
+          "days_to_exp": 92,
+          "td_to_exp": 64,
+          "px_per_g_pure": 7708.96,
+          "px_per_10g_pure": 77089.59,
+          "close": 61610.0,
+          "oi": 191,
+          "vol": 198,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2024-12-31",
           "days_to_exp": 92,
+          "td_to_exp": 64,
           "px_per_g_pure": 7559.56,
           "px_per_10g_pure": 75595.6,
-          "oi": 2742
+          "close": 7552.0,
+          "oi": 2742,
+          "vol": 821,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         }
       ]
     },
     {
       "date": "2025-03-31",
       "reference_carry_pct": 4.13,
+      "carry_from": {
+        "near": "2025-04-30",
+        "far": "2025-05-30",
+        "unstable": false
+      },
       "contracts": [
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2025-04-30",
-          "days_to_exp": 30,
-          "px_per_g_pure": 9063.81,
-          "px_per_10g_pure": 90638.14,
-          "oi": 5504
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2025-05-30",
-          "days_to_exp": 60,
-          "px_per_g_pure": 9102.98,
-          "px_per_10g_pure": 91029.78,
-          "oi": 2007
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2025-06-30",
-          "days_to_exp": 91,
-          "px_per_g_pure": 9155.78,
-          "px_per_10g_pure": 91557.81,
-          "oi": 437
-        },
         {
           "symbol": "GOLDM",
           "expiry": "2025-04-04",
           "days_to_exp": 4,
+          "td_to_exp": 4,
           "px_per_g_pure": 9059.1,
           "px_per_10g_pure": 90590.95,
-          "oi": 3841
+          "close": 90138.0,
+          "oi": 3841,
+          "vol": 3264,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2025-04-30",
+          "days_to_exp": 30,
+          "td_to_exp": 21,
+          "px_per_g_pure": 9063.81,
+          "px_per_10g_pure": 90638.14,
+          "close": 72438.0,
+          "oi": 5504,
+          "vol": 3611,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2025-04-30",
+          "days_to_exp": 30,
+          "td_to_exp": 21,
+          "px_per_g_pure": 9122.12,
+          "px_per_10g_pure": 91221.22,
+          "close": 9113.0,
+          "oi": 54746,
+          "vol": 44730,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2025-04-30",
+          "days_to_exp": 30,
+          "td_to_exp": 21,
+          "px_per_g_pure": 8994.29,
+          "px_per_10g_pure": 89942.94,
+          "close": 89853.0,
+          "oi": 0,
+          "vol": 0,
+          "no_trade": true,
+          "thin": true,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2025-05-05",
           "days_to_exp": 35,
+          "td_to_exp": 24,
           "px_per_g_pure": 9066.93,
           "px_per_10g_pure": 90669.35,
-          "oi": 20406
+          "close": 90216.0,
+          "oi": 20406,
+          "vol": 20169,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2025-05-30",
+          "days_to_exp": 60,
+          "td_to_exp": 43,
+          "px_per_g_pure": 9102.98,
+          "px_per_10g_pure": 91029.78,
+          "close": 72751.0,
+          "oi": 2007,
+          "vol": 1700,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2025-05-30",
+          "days_to_exp": 60,
+          "td_to_exp": 43,
+          "px_per_g_pure": 9153.15,
+          "px_per_10g_pure": 91531.53,
+          "close": 9144.0,
+          "oi": 22646,
+          "vol": 10615,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2025-05-30",
+          "days_to_exp": 60,
+          "td_to_exp": 43,
+          "px_per_g_pure": 9050.55,
+          "px_per_10g_pure": 90505.51,
+          "close": 90415.0,
+          "oi": 0,
+          "vol": 0,
+          "no_trade": true,
+          "thin": true,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2025-06-05",
           "days_to_exp": 66,
+          "td_to_exp": 47,
           "px_per_g_pure": 9109.65,
           "px_per_10g_pure": 91096.48,
-          "oi": 7964
+          "close": 90641.0,
+          "oi": 7964,
+          "vol": 5538,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDPETAL",
-          "expiry": "2025-04-30",
-          "days_to_exp": 30,
-          "px_per_g_pure": 9122.12,
-          "px_per_10g_pure": 91221.22,
-          "oi": 54746
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2025-05-30",
-          "days_to_exp": 60,
-          "px_per_g_pure": 9153.15,
-          "px_per_10g_pure": 91531.53,
-          "oi": 22646
+          "symbol": "GOLDGUINEA",
+          "expiry": "2025-06-30",
+          "days_to_exp": 91,
+          "td_to_exp": 64,
+          "px_per_g_pure": 9155.78,
+          "px_per_10g_pure": 91557.81,
+          "close": 73173.0,
+          "oi": 437,
+          "vol": 374,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
           "expiry": "2025-06-30",
           "days_to_exp": 91,
+          "td_to_exp": 64,
           "px_per_g_pure": 9189.19,
           "px_per_10g_pure": 91891.89,
-          "oi": 7017
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2025-04-30",
-          "days_to_exp": 30,
-          "px_per_g_pure": 8994.29,
-          "px_per_10g_pure": 89942.94,
-          "oi": 0
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2025-05-30",
-          "days_to_exp": 60,
-          "px_per_g_pure": 9050.55,
-          "px_per_10g_pure": 90505.51,
-          "oi": 0
+          "close": 9180.0,
+          "oi": 7017,
+          "vol": 3176,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDTEN",
           "expiry": "2025-06-30",
           "days_to_exp": 91,
+          "td_to_exp": 64,
           "px_per_g_pure": 9107.01,
           "px_per_10g_pure": 91070.07,
-          "oi": 0
+          "close": 90979.0,
+          "oi": 0,
+          "vol": 0,
+          "no_trade": true,
+          "thin": true,
+          "spec_status": "secondary"
         }
       ]
     },
     {
       "date": "2025-09-30",
       "reference_carry_pct": 8.74,
+      "carry_from": {
+        "near": "2025-10-31",
+        "far": "2025-11-28",
+        "unstable": false
+      },
       "contracts": [
         {
           "symbol": "GOLDGUINEA",
           "expiry": "2025-09-30",
           "days_to_exp": 0,
+          "td_to_exp": 0,
           "px_per_g_pure": 11649.65,
           "px_per_10g_pure": 116496.5,
-          "oi": 259
+          "close": 93104.0,
+          "oi": 259,
+          "vol": 112,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2025-10-31",
-          "days_to_exp": 31,
-          "px_per_g_pure": 11774.77,
-          "px_per_10g_pure": 117747.75,
-          "oi": 8361
+          "symbol": "GOLDPETAL",
+          "expiry": "2025-09-30",
+          "days_to_exp": 0,
+          "td_to_exp": 0,
+          "px_per_g_pure": 11641.64,
+          "px_per_10g_pure": 116416.42,
+          "close": 11630.0,
+          "oi": 40,
+          "vol": 913,
+          "no_trade": false,
+          "thin": true,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2025-11-28",
-          "days_to_exp": 59,
-          "px_per_g_pure": 11853.1,
-          "px_per_10g_pure": 118531.03,
-          "oi": 9022
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2025-12-31",
-          "days_to_exp": 92,
-          "px_per_g_pure": 11929.3,
-          "px_per_10g_pure": 119293.04,
-          "oi": 3025
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-01-30",
-          "days_to_exp": 122,
-          "px_per_g_pure": 12018.27,
-          "px_per_10g_pure": 120182.68,
-          "oi": 495
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-02-27",
-          "days_to_exp": 150,
-          "px_per_g_pure": 12105.61,
-          "px_per_10g_pure": 121056.06,
-          "oi": 24
+          "symbol": "GOLDTEN",
+          "expiry": "2025-09-30",
+          "days_to_exp": 0,
+          "td_to_exp": 0,
+          "px_per_g_pure": 11673.57,
+          "px_per_10g_pure": 116735.74,
+          "close": 116619.0,
+          "oi": 27,
+          "vol": 170,
+          "no_trade": false,
+          "thin": true,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2025-10-03",
           "days_to_exp": 3,
+          "td_to_exp": 2,
           "px_per_g_pure": 11668.74,
           "px_per_10g_pure": 116687.44,
-          "oi": 1992
+          "close": 116104.0,
+          "oi": 1992,
+          "vol": 2018,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2025-10-31",
+          "days_to_exp": 31,
+          "td_to_exp": 22,
+          "px_per_g_pure": 11757.76,
+          "px_per_10g_pure": 117577.58,
+          "close": 11746.0,
+          "oi": 114370,
+          "vol": 281952,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2025-10-31",
+          "days_to_exp": 31,
+          "td_to_exp": 22,
+          "px_per_g_pure": 11697.8,
+          "px_per_10g_pure": 116977.98,
+          "close": 116861.0,
+          "oi": 10085,
+          "vol": 19106,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2025-10-31",
+          "days_to_exp": 31,
+          "td_to_exp": 22,
+          "px_per_g_pure": 11774.77,
+          "px_per_10g_pure": 117747.75,
+          "close": 94104.0,
+          "oi": 8361,
+          "vol": 17958,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2025-11-05",
           "days_to_exp": 36,
+          "td_to_exp": 25,
           "px_per_g_pure": 11715.88,
           "px_per_10g_pure": 117158.79,
-          "oi": 38256
+          "close": 116573.0,
+          "oi": 38256,
+          "vol": 88813,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2025-11-28",
+          "days_to_exp": 59,
+          "td_to_exp": 42,
+          "px_per_g_pure": 11853.1,
+          "px_per_10g_pure": 118531.03,
+          "close": 94730.0,
+          "oi": 9022,
+          "vol": 11570,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2025-11-28",
+          "days_to_exp": 59,
+          "td_to_exp": 42,
+          "px_per_g_pure": 11836.84,
+          "px_per_10g_pure": 118368.37,
+          "close": 11825.0,
+          "oi": 91492,
+          "vol": 135744,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2025-11-28",
+          "days_to_exp": 59,
+          "td_to_exp": 42,
+          "px_per_g_pure": 11777.38,
+          "px_per_10g_pure": 117773.77,
+          "close": 117656.0,
+          "oi": 9073,
+          "vol": 15546,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2025-12-05",
           "days_to_exp": 66,
+          "td_to_exp": 47,
           "px_per_g_pure": 11788.04,
           "px_per_10g_pure": 117880.4,
-          "oi": 14145
+          "close": 117291.0,
+          "oi": 14145,
+          "vol": 28259,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2025-12-31",
+          "days_to_exp": 92,
+          "td_to_exp": 64,
+          "px_per_g_pure": 11929.3,
+          "px_per_10g_pure": 119293.04,
+          "close": 95339.0,
+          "oi": 3025,
+          "vol": 3994,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2025-12-31",
+          "days_to_exp": 92,
+          "td_to_exp": 64,
+          "px_per_g_pure": 11906.91,
+          "px_per_10g_pure": 119069.07,
+          "close": 11895.0,
+          "oi": 50688,
+          "vol": 65330,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2025-12-31",
+          "days_to_exp": 92,
+          "td_to_exp": 64,
+          "px_per_g_pure": 11863.56,
+          "px_per_10g_pure": 118635.64,
+          "close": 118517.0,
+          "oi": 5962,
+          "vol": 9208,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-01-05",
           "days_to_exp": 97,
+          "td_to_exp": 67,
           "px_per_g_pure": 11881.71,
           "px_per_10g_pure": 118817.09,
-          "oi": 2448
+          "close": 118223.0,
+          "oi": 2448,
+          "vol": 4552,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-01-30",
+          "days_to_exp": 122,
+          "td_to_exp": 85,
+          "px_per_g_pure": 12018.27,
+          "px_per_10g_pure": 120182.68,
+          "close": 96050.0,
+          "oi": 495,
+          "vol": 430,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-01-30",
+          "days_to_exp": 122,
+          "td_to_exp": 85,
+          "px_per_g_pure": 11955.46,
+          "px_per_10g_pure": 119554.55,
+          "close": 119435.0,
+          "oi": 365,
+          "vol": 441,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-01-30",
+          "days_to_exp": 122,
+          "td_to_exp": 85,
+          "px_per_g_pure": 12000.0,
+          "px_per_10g_pure": 120000.0,
+          "close": 11988.0,
+          "oi": 4604,
+          "vol": 7149,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-02-05",
           "days_to_exp": 128,
+          "td_to_exp": 90,
           "px_per_g_pure": 11944.02,
           "px_per_10g_pure": 119440.2,
-          "oi": 345
+          "close": 118843.0,
+          "oi": 345,
+          "vol": 565,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-02-27",
+          "days_to_exp": 150,
+          "td_to_exp": 106,
+          "px_per_g_pure": 12050.05,
+          "px_per_10g_pure": 120500.5,
+          "close": 120380.0,
+          "oi": 99,
+          "vol": 124,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-02-27",
+          "days_to_exp": 150,
+          "td_to_exp": 106,
+          "px_per_g_pure": 12105.61,
+          "px_per_10g_pure": 121056.06,
+          "close": 96748.0,
+          "oi": 24,
+          "vol": 31,
+          "no_trade": false,
+          "thin": true,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-02-27",
+          "days_to_exp": 150,
+          "td_to_exp": 106,
+          "px_per_g_pure": 12090.09,
+          "px_per_10g_pure": 120900.9,
+          "close": 12078.0,
+          "oi": 2870,
+          "vol": 5214,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-03-05",
           "days_to_exp": 156,
+          "td_to_exp": 110,
           "px_per_g_pure": 12019.3,
           "px_per_10g_pure": 120192.96,
-          "oi": 96
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2025-09-30",
-          "days_to_exp": 0,
-          "px_per_g_pure": 11641.64,
-          "px_per_10g_pure": 116416.42,
-          "oi": 40
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2025-10-31",
-          "days_to_exp": 31,
-          "px_per_g_pure": 11757.76,
-          "px_per_10g_pure": 117577.58,
-          "oi": 114370
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2025-11-28",
-          "days_to_exp": 59,
-          "px_per_g_pure": 11836.84,
-          "px_per_10g_pure": 118368.37,
-          "oi": 91492
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2025-12-31",
-          "days_to_exp": 92,
-          "px_per_g_pure": 11906.91,
-          "px_per_10g_pure": 119069.07,
-          "oi": 50688
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2026-01-30",
-          "days_to_exp": 122,
-          "px_per_g_pure": 12000.0,
-          "px_per_10g_pure": 120000.0,
-          "oi": 4604
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2026-02-27",
-          "days_to_exp": 150,
-          "px_per_g_pure": 12090.09,
-          "px_per_10g_pure": 120900.9,
-          "oi": 2870
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2025-09-30",
-          "days_to_exp": 0,
-          "px_per_g_pure": 11673.57,
-          "px_per_10g_pure": 116735.74,
-          "oi": 27
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2025-10-31",
-          "days_to_exp": 31,
-          "px_per_g_pure": 11697.8,
-          "px_per_10g_pure": 116977.98,
-          "oi": 10085
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2025-11-28",
-          "days_to_exp": 59,
-          "px_per_g_pure": 11777.38,
-          "px_per_10g_pure": 117773.77,
-          "oi": 9073
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2025-12-31",
-          "days_to_exp": 92,
-          "px_per_g_pure": 11863.56,
-          "px_per_10g_pure": 118635.64,
-          "oi": 5962
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-01-30",
-          "days_to_exp": 122,
-          "px_per_g_pure": 11955.46,
-          "px_per_10g_pure": 119554.55,
-          "oi": 365
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-02-27",
-          "days_to_exp": 150,
-          "px_per_g_pure": 12050.05,
-          "px_per_10g_pure": 120500.5,
-          "oi": 99
+          "close": 119592.0,
+          "oi": 96,
+          "vol": 131,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         }
       ]
     },
     {
       "date": "2026-03-31",
       "reference_carry_pct": 17.37,
+      "carry_from": {
+        "near": "2026-04-30",
+        "far": "2026-05-29",
+        "unstable": true
+      },
       "contracts": [
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-04-30",
-          "days_to_exp": 30,
-          "px_per_g_pure": 15014.26,
-          "px_per_10g_pure": 150142.64,
-          "oi": 16110
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-05-29",
-          "days_to_exp": 59,
-          "px_per_g_pure": 15208.71,
-          "px_per_10g_pure": 152087.09,
-          "oi": 6129
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-06-30",
-          "days_to_exp": 91,
-          "px_per_g_pure": 15447.32,
-          "px_per_10g_pure": 154473.22,
-          "oi": 3017
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-07-31",
-          "days_to_exp": 122,
-          "px_per_g_pure": 15624.37,
-          "px_per_10g_pure": 156243.74,
-          "oi": 663
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-08-31",
-          "days_to_exp": 153,
-          "px_per_g_pure": 15823.07,
-          "px_per_10g_pure": 158230.73,
-          "oi": 332
-        },
         {
           "symbol": "GOLDM",
           "expiry": "2026-04-03",
           "days_to_exp": 3,
+          "td_to_exp": 2,
           "px_per_g_pure": 14843.32,
           "px_per_10g_pure": 148433.17,
-          "oi": 7830
+          "close": 147691.0,
+          "oi": 7830,
+          "vol": 3959,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-04-30",
+          "days_to_exp": 30,
+          "td_to_exp": 21,
+          "px_per_g_pure": 15014.26,
+          "px_per_10g_pure": 150142.64,
+          "close": 119994.0,
+          "oi": 16110,
+          "vol": 13812,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-04-30",
+          "days_to_exp": 30,
+          "td_to_exp": 21,
+          "px_per_g_pure": 15051.05,
+          "px_per_10g_pure": 150510.51,
+          "close": 15036.0,
+          "oi": 195066,
+          "vol": 215641,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-04-30",
+          "days_to_exp": 30,
+          "td_to_exp": 21,
+          "px_per_g_pure": 14975.48,
+          "px_per_10g_pure": 149754.75,
+          "close": 149605.0,
+          "oi": 32761,
+          "vol": 27417,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-05-05",
           "days_to_exp": 35,
+          "td_to_exp": 24,
           "px_per_g_pure": 14997.39,
           "px_per_10g_pure": 149973.87,
-          "oi": 31707
+          "close": 149224.0,
+          "oi": 31707,
+          "vol": 34559,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-05-29",
+          "days_to_exp": 59,
+          "td_to_exp": 42,
+          "px_per_g_pure": 15169.47,
+          "px_per_10g_pure": 151694.69,
+          "close": 151543.0,
+          "oi": 11779,
+          "vol": 6321,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-05-29",
+          "days_to_exp": 59,
+          "td_to_exp": 42,
+          "px_per_g_pure": 15208.71,
+          "px_per_10g_pure": 152087.09,
+          "close": 121548.0,
+          "oi": 6129,
+          "vol": 3851,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-05-29",
+          "days_to_exp": 59,
+          "td_to_exp": 42,
+          "px_per_g_pure": 15260.26,
+          "px_per_10g_pure": 152602.6,
+          "close": 15245.0,
+          "oi": 81072,
+          "vol": 80316,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-06-05",
           "days_to_exp": 66,
+          "td_to_exp": 47,
           "px_per_g_pure": 15150.85,
           "px_per_10g_pure": 151508.54,
-          "oi": 10208
+          "close": 150751.0,
+          "oi": 10208,
+          "vol": 8507,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-06-30",
+          "days_to_exp": 91,
+          "td_to_exp": 64,
+          "px_per_g_pure": 15325.53,
+          "px_per_10g_pure": 153255.26,
+          "close": 153102.0,
+          "oi": 4933,
+          "vol": 3082,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-06-30",
+          "days_to_exp": 91,
+          "td_to_exp": 64,
+          "px_per_g_pure": 15447.32,
+          "px_per_10g_pure": 154473.22,
+          "close": 123455.0,
+          "oi": 3017,
+          "vol": 1394,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-06-30",
+          "days_to_exp": 91,
+          "td_to_exp": 64,
+          "px_per_g_pure": 15467.47,
+          "px_per_10g_pure": 154674.67,
+          "close": 15452.0,
+          "oi": 44709,
+          "vol": 19425,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-07-03",
           "days_to_exp": 94,
+          "td_to_exp": 67,
           "px_per_g_pure": 15267.24,
           "px_per_10g_pure": 152672.36,
-          "oi": 2866
+          "close": 151909.0,
+          "oi": 2866,
+          "vol": 1693,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-07-31",
+          "days_to_exp": 122,
+          "td_to_exp": 87,
+          "px_per_g_pure": 15464.96,
+          "px_per_10g_pure": 154649.65,
+          "close": 154495.0,
+          "oi": 1470,
+          "vol": 1123,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-07-31",
+          "days_to_exp": 122,
+          "td_to_exp": 87,
+          "px_per_g_pure": 15608.61,
+          "px_per_10g_pure": 156086.09,
+          "close": 15593.0,
+          "oi": 13514,
+          "vol": 6155,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-07-31",
+          "days_to_exp": 122,
+          "td_to_exp": 87,
+          "px_per_g_pure": 15624.37,
+          "px_per_10g_pure": 156243.74,
+          "close": 124870.0,
+          "oi": 663,
+          "vol": 274,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-08-05",
           "days_to_exp": 127,
+          "td_to_exp": 90,
           "px_per_g_pure": 15365.53,
           "px_per_10g_pure": 153655.28,
-          "oi": 1849
+          "close": 152887.0,
+          "oi": 1849,
+          "vol": 1533,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-08-31",
+          "days_to_exp": 153,
+          "td_to_exp": 108,
+          "px_per_g_pure": 15642.14,
+          "px_per_10g_pure": 156421.42,
+          "close": 156265.0,
+          "oi": 488,
+          "vol": 184,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-08-31",
+          "days_to_exp": 153,
+          "td_to_exp": 108,
+          "px_per_g_pure": 15823.07,
+          "px_per_10g_pure": 158230.73,
+          "close": 126458.0,
+          "oi": 332,
+          "vol": 86,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-08-31",
+          "days_to_exp": 153,
+          "td_to_exp": 108,
+          "px_per_g_pure": 15789.79,
+          "px_per_10g_pure": 157897.9,
+          "close": 15774.0,
+          "oi": 7665,
+          "vol": 2584,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-09-04",
           "days_to_exp": 157,
+          "td_to_exp": 112,
           "px_per_g_pure": 15514.87,
           "px_per_10g_pure": 155148.74,
-          "oi": 182
+          "close": 154373.0,
+          "oi": 182,
+          "vol": 135,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-21",
+      "reference_carry_pct": 9.58,
+      "carry_from": {
+        "near": "2026-09-30",
+        "far": "2026-11-30",
+        "unstable": false
+      },
+      "contracts": [
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-09-30",
+          "days_to_exp": 9,
+          "td_to_exp": 7,
+          "px_per_g_pure": 15399.27,
+          "px_per_10g_pure": 153992.74,
+          "close": 123071.0,
+          "oi": 9694,
+          "vol": 7565,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
-          "expiry": "2026-04-30",
-          "days_to_exp": 30,
-          "px_per_g_pure": 15051.05,
-          "px_per_10g_pure": 150510.51,
-          "oi": 195066
+          "expiry": "2026-09-30",
+          "days_to_exp": 9,
+          "td_to_exp": 7,
+          "px_per_g_pure": 15388.39,
+          "px_per_10g_pure": 153883.88,
+          "close": 15373.0,
+          "oi": 173815,
+          "vol": 202166,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-09-30",
+          "days_to_exp": 9,
+          "td_to_exp": 7,
+          "px_per_g_pure": 15357.36,
+          "px_per_10g_pure": 153573.57,
+          "close": 153420.0,
+          "oi": 20914,
+          "vol": 22460,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2026-10-05",
+          "days_to_exp": 14,
+          "td_to_exp": 9,
+          "px_per_g_pure": 15394.57,
+          "px_per_10g_pure": 153945.73,
+          "close": 153176.0,
+          "oi": 37638,
+          "vol": 45475,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
-          "expiry": "2026-05-29",
-          "days_to_exp": 59,
-          "px_per_g_pure": 15260.26,
-          "px_per_10g_pure": 152602.6,
-          "oi": 81072
+          "expiry": "2026-10-30",
+          "days_to_exp": 39,
+          "td_to_exp": 28,
+          "px_per_g_pure": 15531.53,
+          "px_per_10g_pure": 155315.32,
+          "close": 15516.0,
+          "oi": 124922,
+          "vol": 95888,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-10-30",
+          "days_to_exp": 39,
+          "td_to_exp": 28,
+          "px_per_g_pure": 15470.97,
+          "px_per_10g_pure": 154709.71,
+          "close": 154555.0,
+          "oi": 17264,
+          "vol": 13909,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-10-30",
+          "days_to_exp": 39,
+          "td_to_exp": 28,
+          "px_per_g_pure": 15547.8,
+          "px_per_10g_pure": 155477.98,
+          "close": 124258.0,
+          "oi": 7369,
+          "vol": 5091,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2026-11-05",
+          "days_to_exp": 45,
+          "td_to_exp": 32,
+          "px_per_g_pure": 15501.31,
+          "px_per_10g_pure": 155013.07,
+          "close": 154238.0,
+          "oi": 12395,
+          "vol": 9751,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-11-30",
+          "days_to_exp": 70,
+          "td_to_exp": 49,
+          "px_per_g_pure": 15660.04,
+          "px_per_10g_pure": 156600.35,
+          "close": 125155.0,
+          "oi": 4917,
+          "vol": 2132,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
-          "expiry": "2026-06-30",
-          "days_to_exp": 91,
-          "px_per_g_pure": 15467.47,
-          "px_per_10g_pure": 154674.67,
-          "oi": 44709
+          "expiry": "2026-11-30",
+          "days_to_exp": 70,
+          "td_to_exp": 49,
+          "px_per_g_pure": 15636.64,
+          "px_per_10g_pure": 156366.37,
+          "close": 15621.0,
+          "oi": 118695,
+          "vol": 42513,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-11-30",
+          "days_to_exp": 70,
+          "td_to_exp": 49,
+          "px_per_g_pure": 15572.57,
+          "px_per_10g_pure": 155725.73,
+          "close": 155570.0,
+          "oi": 9826,
+          "vol": 4853,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2026-12-04",
+          "days_to_exp": 74,
+          "td_to_exp": 53,
+          "px_per_g_pure": 15590.75,
+          "px_per_10g_pure": 155907.54,
+          "close": 155128.0,
+          "oi": 9069,
+          "vol": 4398,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-12-31",
+          "days_to_exp": 101,
+          "td_to_exp": 72,
+          "px_per_g_pure": 15820.95,
+          "px_per_10g_pure": 158209.46,
+          "close": 126441.0,
+          "oi": 2195,
+          "vol": 547,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
-          "expiry": "2026-07-31",
-          "days_to_exp": 122,
-          "px_per_g_pure": 15608.61,
-          "px_per_10g_pure": 156086.09,
-          "oi": 13514
+          "expiry": "2026-12-31",
+          "days_to_exp": 101,
+          "td_to_exp": 72,
+          "px_per_g_pure": 15780.78,
+          "px_per_10g_pure": 157807.81,
+          "close": 15765.0,
+          "oi": 41363,
+          "vol": 11079,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-12-31",
+          "days_to_exp": 101,
+          "td_to_exp": 72,
+          "px_per_g_pure": 15699.9,
+          "px_per_10g_pure": 156999.0,
+          "close": 156842.0,
+          "oi": 4514,
+          "vol": 1324,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2027-01-05",
+          "days_to_exp": 106,
+          "td_to_exp": 75,
+          "px_per_g_pure": 15721.81,
+          "px_per_10g_pure": 157218.09,
+          "close": 156432.0,
+          "oi": 2192,
+          "vol": 574,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2027-01-29",
+          "days_to_exp": 130,
+          "td_to_exp": 93,
+          "px_per_g_pure": 15971.85,
+          "px_per_10g_pure": 159718.47,
+          "close": 127647.0,
+          "oi": 1103,
+          "vol": 281,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2027-01-29",
+          "days_to_exp": 130,
+          "td_to_exp": 93,
+          "px_per_g_pure": 15850.65,
+          "px_per_10g_pure": 158506.51,
+          "close": 158348.0,
+          "oi": 2297,
+          "vol": 684,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDPETAL",
-          "expiry": "2026-08-31",
-          "days_to_exp": 153,
-          "px_per_g_pure": 15789.79,
-          "px_per_10g_pure": 157897.9,
-          "oi": 7665
+          "expiry": "2027-01-29",
+          "days_to_exp": 130,
+          "td_to_exp": 93,
+          "px_per_g_pure": 15921.92,
+          "px_per_10g_pure": 159219.22,
+          "close": 15906.0,
+          "oi": 33268,
+          "vol": 6081,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDM",
+          "expiry": "2027-02-05",
+          "days_to_exp": 137,
+          "td_to_exp": 98,
+          "px_per_g_pure": 15849.95,
+          "px_per_10g_pure": 158499.5,
+          "close": 157707.0,
+          "oi": 1315,
+          "vol": 332,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDTEN",
-          "expiry": "2026-04-30",
-          "days_to_exp": 30,
-          "px_per_g_pure": 14975.48,
-          "px_per_10g_pure": 149754.75,
-          "oi": 32761
+          "expiry": "2027-02-26",
+          "days_to_exp": 158,
+          "td_to_exp": 113,
+          "px_per_g_pure": 15961.76,
+          "px_per_10g_pure": 159617.62,
+          "close": 159458.0,
+          "oi": 401,
+          "vol": 331,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-05-29",
-          "days_to_exp": 59,
-          "px_per_g_pure": 15169.47,
-          "px_per_10g_pure": 151694.69,
-          "oi": 11779
+          "symbol": "GOLDGUINEA",
+          "expiry": "2027-02-26",
+          "days_to_exp": 158,
+          "td_to_exp": 113,
+          "px_per_g_pure": 16109.86,
+          "px_per_10g_pure": 161098.6,
+          "close": 128750.0,
+          "oi": 205,
+          "vol": 44,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-06-30",
-          "days_to_exp": 91,
-          "px_per_g_pure": 15325.53,
-          "px_per_10g_pure": 153255.26,
-          "oi": 4933
+          "symbol": "GOLDPETAL",
+          "expiry": "2027-02-26",
+          "days_to_exp": 158,
+          "td_to_exp": 113,
+          "px_per_g_pure": 16058.06,
+          "px_per_10g_pure": 160580.58,
+          "close": 16042.0,
+          "oi": 5200,
+          "vol": 2801,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-07-31",
-          "days_to_exp": 122,
-          "px_per_g_pure": 15464.96,
-          "px_per_10g_pure": 154649.65,
-          "oi": 1470
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-08-31",
-          "days_to_exp": 153,
-          "px_per_g_pure": 15642.14,
-          "px_per_10g_pure": 156421.42,
-          "oi": 488
+          "symbol": "GOLDM",
+          "expiry": "2027-03-05",
+          "days_to_exp": 165,
+          "td_to_exp": 118,
+          "px_per_g_pure": 15969.25,
+          "px_per_10g_pure": 159692.46,
+          "close": 158894.0,
+          "oi": 39,
+          "vol": 19,
+          "no_trade": false,
+          "thin": true,
+          "spec_status": "secondary"
         }
       ]
     },
     {
       "date": "2026-10-21",
       "reference_carry_pct": 11.25,
+      "carry_from": {
+        "near": "2026-10-30",
+        "far": "2026-11-30",
+        "unstable": false
+      },
       "contracts": [
         {
           "symbol": "GOLDGUINEA",
           "expiry": "2026-10-30",
           "days_to_exp": 9,
+          "td_to_exp": 7,
           "px_per_g_pure": 14595.6,
           "px_per_10g_pure": 145955.96,
-          "oi": 13034
+          "close": 116648.0,
+          "oi": 13034,
+          "vol": 5329,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-11-30",
-          "days_to_exp": 40,
-          "px_per_g_pure": 14737.74,
-          "px_per_10g_pure": 147377.38,
-          "oi": 9539
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-10-30",
+          "days_to_exp": 9,
+          "td_to_exp": 7,
+          "px_per_g_pure": 14595.6,
+          "px_per_10g_pure": 145955.96,
+          "close": 14581.0,
+          "oi": 180244,
+          "vol": 103087,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2026-12-31",
-          "days_to_exp": 71,
-          "px_per_g_pure": 14870.37,
-          "px_per_10g_pure": 148703.7,
-          "oi": 4168
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2027-01-29",
-          "days_to_exp": 100,
-          "px_per_g_pure": 15023.77,
-          "px_per_10g_pure": 150237.74,
-          "oi": 1957
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2027-02-26",
-          "days_to_exp": 128,
-          "px_per_g_pure": 15165.92,
-          "px_per_10g_pure": 151659.16,
-          "oi": 580
-        },
-        {
-          "symbol": "GOLDGUINEA",
-          "expiry": "2027-03-31",
-          "days_to_exp": 161,
-          "px_per_g_pure": 15304.43,
-          "px_per_10g_pure": 153044.29,
-          "oi": 90
+          "symbol": "GOLDTEN",
+          "expiry": "2026-10-30",
+          "days_to_exp": 9,
+          "td_to_exp": 7,
+          "px_per_g_pure": 14516.02,
+          "px_per_10g_pure": 145160.16,
+          "close": 145015.0,
+          "oi": 27919,
+          "vol": 11545,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-11-05",
           "days_to_exp": 15,
+          "td_to_exp": 11,
           "px_per_g_pure": 14531.06,
           "px_per_10g_pure": 145310.55,
-          "oi": 50749
+          "close": 144584.0,
+          "oi": 50749,
+          "vol": 26349,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-11-30",
+          "days_to_exp": 40,
+          "td_to_exp": 28,
+          "px_per_g_pure": 14735.74,
+          "px_per_10g_pure": 147357.36,
+          "close": 14721.0,
+          "oi": 161389,
+          "vol": 59972,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-11-30",
+          "days_to_exp": 40,
+          "td_to_exp": 28,
+          "px_per_g_pure": 14658.26,
+          "px_per_10g_pure": 146582.58,
+          "close": 146436.0,
+          "oi": 20525,
+          "vol": 7075,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-11-30",
+          "days_to_exp": 40,
+          "td_to_exp": 28,
+          "px_per_g_pure": 14737.74,
+          "px_per_10g_pure": 147377.38,
+          "close": 117784.0,
+          "oi": 9539,
+          "vol": 3080,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2026-12-04",
           "days_to_exp": 44,
+          "td_to_exp": 32,
           "px_per_g_pure": 14681.51,
           "px_per_10g_pure": 146815.08,
-          "oi": 21942
+          "close": 146081.0,
+          "oi": 21942,
+          "vol": 8663,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2026-12-31",
+          "days_to_exp": 71,
+          "td_to_exp": 51,
+          "px_per_g_pure": 14870.37,
+          "px_per_10g_pure": 148703.7,
+          "close": 118844.0,
+          "oi": 4168,
+          "vol": 1158,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2026-12-31",
+          "days_to_exp": 71,
+          "td_to_exp": 51,
+          "px_per_g_pure": 14875.88,
+          "px_per_10g_pure": 148758.76,
+          "close": 14861.0,
+          "oi": 76424,
+          "vol": 23194,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2026-12-31",
+          "days_to_exp": 71,
+          "td_to_exp": 51,
+          "px_per_g_pure": 14816.02,
+          "px_per_10g_pure": 148160.16,
+          "close": 148012.0,
+          "oi": 9020,
+          "vol": 2598,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2027-01-05",
           "days_to_exp": 76,
+          "td_to_exp": 54,
           "px_per_g_pure": 14825.73,
           "px_per_10g_pure": 148257.29,
-          "oi": 4529
+          "close": 147516.0,
+          "oi": 4529,
+          "vol": 1109,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2027-01-29",
+          "days_to_exp": 100,
+          "td_to_exp": 72,
+          "px_per_g_pure": 15023.77,
+          "px_per_10g_pure": 150237.74,
+          "close": 120070.0,
+          "oi": 1957,
+          "vol": 530,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2027-01-29",
+          "days_to_exp": 100,
+          "td_to_exp": 72,
+          "px_per_g_pure": 15021.02,
+          "px_per_10g_pure": 150210.21,
+          "close": 15006.0,
+          "oi": 39228,
+          "vol": 10867,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2027-01-29",
+          "days_to_exp": 100,
+          "td_to_exp": 72,
+          "px_per_g_pure": 14953.25,
+          "px_per_10g_pure": 149532.53,
+          "close": 149383.0,
+          "oi": 4501,
+          "vol": 961,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2027-02-05",
           "days_to_exp": 107,
+          "td_to_exp": 77,
           "px_per_g_pure": 14963.82,
           "px_per_10g_pure": 149638.19,
-          "oi": 2376
+          "close": 148890.0,
+          "oi": 2376,
+          "vol": 449,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2027-02-26",
+          "days_to_exp": 128,
+          "td_to_exp": 92,
+          "px_per_g_pure": 15165.92,
+          "px_per_10g_pure": 151659.16,
+          "close": 121206.0,
+          "oi": 580,
+          "vol": 154,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2027-02-26",
+          "days_to_exp": 128,
+          "td_to_exp": 92,
+          "px_per_g_pure": 15095.2,
+          "px_per_10g_pure": 150951.95,
+          "close": 150801.0,
+          "oi": 1119,
+          "vol": 706,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2027-02-26",
+          "days_to_exp": 128,
+          "td_to_exp": 92,
+          "px_per_g_pure": 15168.17,
+          "px_per_10g_pure": 151681.68,
+          "close": 15153.0,
+          "oi": 14938,
+          "vol": 7000,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2027-03-05",
           "days_to_exp": 135,
+          "td_to_exp": 97,
           "px_per_g_pure": 15109.25,
           "px_per_10g_pure": 151092.46,
-          "oi": 420
+          "close": 150337.0,
+          "oi": 420,
+          "vol": 108,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDTEN",
+          "expiry": "2027-03-31",
+          "days_to_exp": 161,
+          "td_to_exp": 115,
+          "px_per_g_pure": 15225.53,
+          "px_per_10g_pure": 152255.26,
+          "close": 152103.0,
+          "oi": 187,
+          "vol": 104,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDGUINEA",
+          "expiry": "2027-03-31",
+          "days_to_exp": 161,
+          "td_to_exp": 115,
+          "px_per_g_pure": 15304.43,
+          "px_per_10g_pure": 153044.29,
+          "close": 122313.0,
+          "oi": 90,
+          "vol": 59,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
+        },
+        {
+          "symbol": "GOLDPETAL",
+          "expiry": "2027-03-31",
+          "days_to_exp": 161,
+          "td_to_exp": 115,
+          "px_per_g_pure": 15305.31,
+          "px_per_10g_pure": 153053.05,
+          "close": 15290.0,
+          "oi": 4601,
+          "vol": 4120,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         },
         {
           "symbol": "GOLDM",
           "expiry": "2027-04-05",
           "days_to_exp": 166,
+          "td_to_exp": 118,
           "px_per_g_pure": 15229.25,
           "px_per_10g_pure": 152292.46,
-          "oi": 51
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2026-10-30",
-          "days_to_exp": 9,
-          "px_per_g_pure": 14595.6,
-          "px_per_10g_pure": 145955.96,
-          "oi": 180244
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2026-11-30",
-          "days_to_exp": 40,
-          "px_per_g_pure": 14735.74,
-          "px_per_10g_pure": 147357.36,
-          "oi": 161389
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2026-12-31",
-          "days_to_exp": 71,
-          "px_per_g_pure": 14875.88,
-          "px_per_10g_pure": 148758.76,
-          "oi": 76424
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2027-01-29",
-          "days_to_exp": 100,
-          "px_per_g_pure": 15021.02,
-          "px_per_10g_pure": 150210.21,
-          "oi": 39228
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2027-02-26",
-          "days_to_exp": 128,
-          "px_per_g_pure": 15168.17,
-          "px_per_10g_pure": 151681.68,
-          "oi": 14938
-        },
-        {
-          "symbol": "GOLDPETAL",
-          "expiry": "2027-03-31",
-          "days_to_exp": 161,
-          "px_per_g_pure": 15305.31,
-          "px_per_10g_pure": 153053.05,
-          "oi": 4601
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-10-30",
-          "days_to_exp": 9,
-          "px_per_g_pure": 14516.02,
-          "px_per_10g_pure": 145160.16,
-          "oi": 27919
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-11-30",
-          "days_to_exp": 40,
-          "px_per_g_pure": 14658.26,
-          "px_per_10g_pure": 146582.58,
-          "oi": 20525
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2026-12-31",
-          "days_to_exp": 71,
-          "px_per_g_pure": 14816.02,
-          "px_per_10g_pure": 148160.16,
-          "oi": 9020
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2027-01-29",
-          "days_to_exp": 100,
-          "px_per_g_pure": 14953.25,
-          "px_per_10g_pure": 149532.53,
-          "oi": 4501
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2027-02-26",
-          "days_to_exp": 128,
-          "px_per_g_pure": 15095.2,
-          "px_per_10g_pure": 150951.95,
-          "oi": 1119
-        },
-        {
-          "symbol": "GOLDTEN",
-          "expiry": "2027-03-31",
-          "days_to_exp": 161,
-          "px_per_g_pure": 15225.53,
-          "px_per_10g_pure": 152255.26,
-          "oi": 187
+          "close": 151531.0,
+          "oi": 51,
+          "vol": 26,
+          "no_trade": false,
+          "thin": false,
+          "spec_status": "secondary"
         }
       ]
     }
-  ]
+  ],
+  "latest": "2026-10-21",
+  "month_ago": "2026-09-21",
+  "carry_unstable_days": 104,
+  "carry_days": 781,
+  "carry_sane_pct": [
+    0.0,
+    15.0
+  ],
+  "decomposition": {
+    "GOLDM": {
+      "rows": 3132,
+      "mean_abs_bps": {
+        "total": 92.99,
+        "gold": 84.16,
+        "rolldown": 4.08,
+        "curve": 19.23,
+        "residual": 27.44
+      },
+      "sum_bps": {
+        "total": 27943.0,
+        "gold": 34697.4,
+        "rolldown": -12629.4,
+        "curve": 1565.1,
+        "residual": 4309.9
+      },
+      "max_identity_gap_bps": 0.0
+    },
+    "GOLDTEN": {
+      "rows": 2018,
+      "mean_abs_bps": {
+        "total": 110.8,
+        "gold": 103.68,
+        "rolldown": 4.84,
+        "curve": 22.43,
+        "residual": 24.4
+      },
+      "sum_bps": {
+        "total": 13962.8,
+        "gold": 21654.5,
+        "rolldown": -9761.2,
+        "curve": 556.4,
+        "residual": 1513.1
+      },
+      "max_identity_gap_bps": 0.0
+    },
+    "GOLDGUINEA": {
+      "rows": 3634,
+      "mean_abs_bps": {
+        "total": 79.64,
+        "gold": 79.3,
+        "rolldown": 3.87,
+        "curve": 20.49,
+        "residual": 24.65
+      },
+      "sum_bps": {
+        "total": 30222.7,
+        "gold": 41243.7,
+        "rolldown": -13885.7,
+        "curve": 347.1,
+        "residual": 2517.5
+      },
+      "max_identity_gap_bps": 0.0
+    },
+    "GOLDPETAL": {
+      "rows": 3634,
+      "mean_abs_bps": {
+        "total": 77.14,
+        "gold": 79.3,
+        "rolldown": 3.87,
+        "curve": 20.49,
+        "residual": 12.77
+      },
+      "sum_bps": {
+        "total": 30598.6,
+        "gold": 41243.7,
+        "rolldown": -13885.7,
+        "curve": 347.1,
+        "residual": 2893.4
+      },
+      "max_identity_gap_bps": 0.0
+    }
+  }
 }

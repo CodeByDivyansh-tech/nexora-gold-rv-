@@ -56,33 +56,32 @@ def build_pair_series(df: pd.DataFrame,
     
     return chosen
 
-def compute_rolling_z(pair_df: pd.DataFrame, W: int = 20) -> pd.DataFrame:
+def rolling_stats(pair_df: pd.DataFrame, W: int, gap_days: Optional[int] = None) -> Tuple[pd.Series, pd.Series, pd.Series]:
+    """The one rolling-statistics definition used by the alerts, the charts and the backtest (Section 4.5).
+
+    mu_t = mean(spread_{t-W} ... spread_{t-1}),  sd_t = std (ddof=1) of the same window,  z_t = (spread_t - mu_t) / sd_t.
+    Day t is never in its own window (shift(1)), so nothing from the future is used.
+    Policy (config.ROLLING_GAP_DAYS): a gap of more than gap_days calendar days between observations starts a new
+    window; the window otherwise runs across contract rolls. gap_days=-1 disables the gap rule (reference study only).
     """
-    Computes rolling point-in-time mean, std, and z-score for window W (Section 4.5).
-    mu_t = mean(spread_{t-W} ... spread_{t-1})
-    sd_t = std(spread_{t-W} ... spread_{t-1})
-    z_t  = (spread_t - mu_t) / sd_t
-    Strictly excludes day t (uses shift(1)).
-    """
-    df = pair_df.copy()
-    
-    # Check for date gaps > 10 calendar days
-    date_diff = (df['date'] - df['date'].shift(1)).dt.days
-    gap_break = (date_diff > 10).fillna(False)
-    
-    if gap_break.any():
-        # If there is a gap > 10 days, split into contiguous chunks
-        group_id = gap_break.cumsum()
-        mu = df.groupby(group_id)['spread'].transform(lambda s: s.rolling(W, min_periods=W).mean().shift(1))
-        sd = df.groupby(group_id)['spread'].transform(lambda s: s.rolling(W, min_periods=W).std().shift(1))
+    from pipeline.config import ROLLING_GAP_DAYS
+    gap = ROLLING_GAP_DAYS if gap_days is None else gap_days
+    s = pair_df['spread']
+    breaks = (pair_df['date'].diff().dt.days > gap).fillna(False) if gap_days != -1 else pd.Series(False, index=s.index)
+    if breaks.any():
+        g = breaks.cumsum()
+        mu = s.groupby(g).transform(lambda v: v.rolling(W, min_periods=W).mean().shift(1))
+        sd = s.groupby(g).transform(lambda v: v.rolling(W, min_periods=W).std().shift(1))
     else:
-        mu = df['spread'].rolling(W, min_periods=W).mean().shift(1)
-        sd = df['spread'].rolling(W, min_periods=W).std().shift(1)
-        
-    df['mu'] = mu
-    df['sd'] = sd
-    df['z'] = (df['spread'] - mu) / sd
-    
+        mu = s.rolling(W, min_periods=W).mean().shift(1)
+        sd = s.rolling(W, min_periods=W).std().shift(1)
+    return mu, sd, (s - mu) / sd
+
+
+def compute_rolling_z(pair_df: pd.DataFrame, W: int = 20) -> pd.DataFrame:
+    """Adds mu, sd and z (rolling_stats) to a copy of the pair series."""
+    df = pair_df.copy()
+    df['mu'], df['sd'], df['z'] = rolling_stats(df, W)
     return df
 
 def build_all_pairs(df: pd.DataFrame, carry_series: pd.Series) -> Dict[str, pd.DataFrame]:

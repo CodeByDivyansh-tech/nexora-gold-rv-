@@ -44,7 +44,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 20px">
         <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
           <h1 class="grv-foil" style="margin: 0; font-size: clamp(30px, 4vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Did it make money?</h1>
-          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 62ch">One frozen rule, tested on every year of MCX gold prices since 2011: tuned on Oct 2023 – Sep 2025, then run on the earlier years it never saw (2011–2023, the clean test) and on the 12 months after training (the test year). Every MCX cost and slippage is included.</p>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 62ch">One frozen rule, tested on every year of MCX gold prices since 2011: tuned on Oct 2023 – Sep 2025, then run on earlier years never used to choose the settings (2011–2023, the clean test or historical holdout) and on the 12 months after training (the test year). Every MCX cost and slippage is included.</p>
         </div>
         <div class="headmeta" style="align-items: center; gap: 12px">
           <button type="button" data-dl="1" onClick="{{openDl}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); font: 600 14px 'Geist', system-ui, sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>Download</button>
@@ -126,6 +126,48 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
         </section>
         </sc-if>
 
+
+          <section class="grv-card" id="portfolio" aria-labelledby="pf-h" style="scroll-margin-top: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 2.5vw, 26px); display: flex; flex-direction: column; gap: 14px">
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <h2 id="pf-h" style="margin: 0; font-size: 18px; font-weight: 600">All pairs together, marked to market every day</h2>
+              <span style="font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 90ch">{{pf.intro}}</span>
+            </div>
+            <sc-if value="{{pf.show}}" hint-placeholder-val="{{ true }}">
+              <dc-import name="LineChart" dates="{{pf.dates}}" series="{{pf.series}}" bands="{{pf.bands}}" fmt="rs" height="220" zero="{{ true }}" label="{{pf.aria}}" hint-size="100%,300px"></dc-import>
+              <div style="overflow-x: auto; border: 1px solid var(--line); border-radius: 14px">
+                <table style="width: 100%; min-width: 980px; border-collapse: collapse; font-size: 13px">
+                  <caption class="sr">Portfolio results by period: trades, win rate, gross and net P&amp;L, costs, gold and spread parts, drawdown, daily Sharpe ratio, exposure and the gold benchmark</caption>
+                  <thead>
+                    <tr style="text-align: right; color: var(--muted); font-size: 12px">
+                      <th style="text-align: left; padding: 10px 12px; font-weight: 500">Period</th>
+                      <th style="padding: 10px 6px; font-weight: 500">Trades</th><th style="padding: 10px 6px; font-weight: 500">Won</th>
+                      <th style="padding: 10px 6px; font-weight: 500">Gross</th><th style="padding: 10px 6px; font-weight: 500">Costs</th><th style="padding: 10px 6px; font-weight: 500">Net</th>
+                      <th style="padding: 10px 6px; font-weight: 500">Gold part</th><th style="padding: 10px 6px; font-weight: 500">Max drawdown</th>
+                      <th style="padding: 10px 6px; font-weight: 500">Daily Sharpe</th><th style="padding: 10px 6px; font-weight: 500">t (Newey–West)</th>
+                      <th style="padding: 10px 6px; font-weight: 500">Most open</th><th style="padding: 10px 6px; font-weight: 500">Peak notional</th>
+                      <th style="padding: 10px 12px; font-weight: 500">Gold itself</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{pf.rows}}" as="r" hint-placeholder-count="5">
+                      <tr style="border-top: 1px solid var(--line); text-align: right; font-family: 'Geist Mono', ui-monospace, monospace; font-weight: {{r.weight}}">
+                        <td style="text-align: left; padding: 9px 12px; font-family: 'Geist', system-ui, sans-serif"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">{{r.name}}</span><span style="font-size: 11px; color: var(--muted); font-weight: 400">{{r.span}}</span></span></td>
+                        <td style="padding: 9px 6px">{{r.n}}</td><td style="padding: 9px 6px">{{r.won}}</td>
+                        <td style="padding: 9px 6px">{{r.gross}}</td><td style="padding: 9px 6px">{{r.cost}}</td><td style="padding: 9px 6px; color: {{r.netColor}}">{{r.net}}</td>
+                        <td style="padding: 9px 6px">{{r.gold}}</td><td style="padding: 9px 6px">{{r.dd}}</td>
+                        <td style="padding: 9px 6px">{{r.sharpe}}</td><td style="padding: 9px 6px">{{r.t}}</td>
+                        <td style="padding: 9px 6px">{{r.open}}</td><td style="padding: 9px 6px">{{r.peak}}</td>
+                        <td style="padding: 9px 12px">{{r.goldRet}}</td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+              <ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.55; color: var(--muted)">
+                <sc-for list="{{pf.notes}}" as="x" hint-placeholder-count="4"><li>{{x}}</li></sc-for>
+              </ul>
+            </sc-if>
+          </section>
 
           <section class="grv-card" id="test-year" aria-labelledby="slip-h" style="scroll-margin-top: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 2.5vw, 26px); display: flex; flex-direction: column; gap: 14px">
             <div style="display: flex; flex-direction: column; gap: 4px">
@@ -453,6 +495,10 @@ class Component extends DCLogic {
       .then((r) => r.json())
       .then((r) => this.setState({ R: r }))
       .catch(() => {});
+    fetch('data/portfolio.json')
+      .then((r) => r.json())
+      .then((p) => this.setState({ PF: p }))
+      .catch(() => this.setState({ PFfail: true }));
     fetch('data/history.json')
       .then((r) => r.json())
       .then((h) => this.setState({ H: h }))
@@ -483,7 +529,7 @@ class Component extends DCLogic {
     this.setState({ hover: Math.max(0, Math.min(n - 1, i)) });
   }
 
-  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
+  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
   sgn(n, d) { return (n < 0 ? '−' : '+') + Math.abs(n).toFixed(d); }
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
 
@@ -523,7 +569,7 @@ class Component extends DCLogic {
         crash: spLakh(spRC[s].crash_net_rs), rest: spLakh(spRC[s].ex_crash_net_rs), restColor: spRC[s].ex_crash_net_rs >= 0 ? 'var(--up)' : 'var(--down)'
       };
     });
-    const spRsA = (n) => '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN');
+    const spRsA = (n) => '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN');
     const spB5 = spRC['5'];
     const fwDays = D.pure4.d.filter((d) => d > D.split.test_end).length;
     const fwText = spB5.forward_n === 0 && fwDays > 0 ? ' Since the test year ended (' + this.fd(D.split.test_end) + '), the frozen rule has made no trades in ' + fwDays + ' trading days of new data: no pair passed all five checks.' : spB5.forward_n > 0 ? ' Since the test year ended (' + this.fd(D.split.test_end) + '), the frozen rule has ' + (spB5.forward_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.forward_net_rs) + ' over ' + spB5.forward_n + ' trades: data nobody had when the rule was written.' : '';
@@ -631,7 +677,7 @@ class Component extends DCLogic {
     const crashTrades = cur.filter((c) => c[1] >= EV.crashStart && c[1] <= EV.crashEnd);
     const crashSum = crashTrades.reduce((a, c) => a + c[2], 0);
     const testNet = cur.filter((c) => c[5] === 'test').reduce((a, c) => a + c[2], 0);
-    const abs = (n) => '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN');
+    const abs = (n) => '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN');
     const crashPart = crashTrades.length
       ? 'Trades closed during the ' + EV.crashLabel + ' ' + (crashSum >= 0 ? 'made ' : 'lost ') + abs(crashSum) + '.'
       : 'No trades closed during the ' + EV.crashLabel + '.';
@@ -755,7 +801,8 @@ class Component extends DCLogic {
       ['train', 'Training', () => ours.filter((t) => t.seg === 'train')],
       ['test', 'Test year', () => ours.filter((t) => t.seg === 'test')],
       ['exc', 'Test year without the crash', () => ours.filter((t) => t.seg === 'test' && !(t.x >= EVc.crashStart && t.x <= EVc.crashEnd))],
-      ['fwd', 'After the test year (from ' + this.fd(D.split.test_end).replace(/^\d+ /, '') + ')', () => ours.filter((t) => t.seg === 'forward')],
+      // the forward period starts the day after the test year ends (Oct-2026 audit: it used to show the end month)
+      ['fwd', 'After the test year (from ' + this.fd(new Date(Date.parse(D.split.test_end + 'T00:00:00Z') + 864e5).toISOString().slice(0, 10)) + ')', () => ours.filter((t) => t.seg === 'forward')],
       ['all', 'All years ' + D.longrun.start.slice(0, 4) + '–' + D.asOf.slice(0, 4), () => (cleanAll ? cleanAll.concat(ours) : null)]
     ];
     const pa = PER.find((x) => x[0] === st.cmpA) || PER[0], pb = PER.find((x) => x[0] === st.cmpB) || PER[2];
@@ -831,7 +878,7 @@ class Component extends DCLogic {
           aria: i.name + ': ' + this.srs(i.x.total) + ', 95% range ' + this.srs(i.x.lo) + ' to ' + this.srs(i.x.hi)
         })),
         axisLo: lakh(a), axisHi: lakh(z),
-        note: (bc ? 'The clean test, the biggest sample, stays below zero in ' + (100 - bc.above_zero_pct) + '% of resamples. ' : '') + 'The full test year looks safely positive (' + b5.all.above_zero_pct + '% of resamples above zero), but that comes from ' + b5.crash.n + ' crash trades. Without them only ' + b5.without_crash.above_zero_pct + '% of resamples stay above zero, and in training ' + bt.above_zero_pct + '%. Same verdict as above: no persistent edge.'
+        note: (bc ? 'The clean test, the biggest sample, stays below zero in ' + (100 - bc.above_zero_pct) + '% of resamples. ' : '') + 'The full test year is above zero in ' + b5.all.above_zero_pct + '% of resamples (' + b5.crash.n + ' of its trades closed in the crash); without those, ' + b5.without_crash.above_zero_pct + '%, and in training ' + bt.above_zero_pct + '%. Same verdict as above: no persistent edge.'
       };
     }
 
@@ -847,7 +894,7 @@ class Component extends DCLogic {
       hist = {
         show: true, slipText: w.slip + ' bps', nYears: r.years.length, zeroY: pc(top),
         intro: 'We ran the exact rule from this page, with the same frozen settings, the same five checks and the same costs, on ' + this.fd(w.from) + ' to ' + this.fd(w.to) + ': years no version of the rule had seen. Only the three pairs that existed then can be tested; GOLDTEN was listed on ' + this.fd(D.events.goldtenListed) + '.',
-        head: 'The clean test: ' + r.years_count + ' years the rule never saw',
+        head: 'The clean test: ' + r.years_count + ' years never used to choose the settings',
         kpis: [
           { label: 'Trades', value: String(s.n), note: this.fd(w.from) + ' – ' + this.fd(w.to), color: 'var(--fg)' },
           { label: 'After costs', value: this.srs(s.net_rs), note: 'at ' + w.slip + ' bps slippage, ' + Math.round(s.hit * 100) + '% won', color: s.net_rs >= 0 ? 'var(--up)' : 'var(--down)' },
@@ -868,7 +915,7 @@ class Component extends DCLogic {
         note: (s.gross_bps >= 0
             ? 'Before costs, the average trade made ' + this.sgn(s.gross_bps, 1) + ' bps: the gaps do come back, but not by enough to pay for trading.'
             : 'Before costs, the average trade already lost ' + Math.abs(s.gross_bps).toFixed(1) + ' bps: over these years the unusual gaps did not close on average.')
-          + ' Even with zero slippage the rule ' + (s0.net_rs < 0 ? 'loses ' : 'makes ') + this.srs(Math.abs(s0.net_rs)).slice(1) + '. The rule and its settings were frozen before this data was used, so this is the cleanest test we have. Past years are charged today\'s MCX fee rates.',
+          + ' Even with zero slippage the rule ' + (s0.net_rs < 0 ? 'loses ' : 'makes ') + this.srs(Math.abs(s0.net_rs)).slice(1) + '. The settings were never chosen on these years, but the tender and liquidity rules were tightened on 25 Oct 2026, after these years\' first results were known, so this is a historical holdout rather than a strictly unseen test. Past years are charged today\'s MCX fee rates.',
         source: 'Prices: official MCX Bhavcopy rows, downloaded by us from MCX one contract at a time. A second copy of the same MCX rows agrees on all ' + HX.check.shared_rows.toLocaleString('en-IN') + ' rows both have (' + HX.check.mismatches + ' mismatches).'
       };
     }
@@ -904,14 +951,50 @@ class Component extends DCLogic {
       };
     }
     const jumps = [
-      { href: '#clean-test', label: 'Clean test: 2011–2023' }, { href: '#test-year', label: 'Test year' }, { href: '#compare', label: 'Compare periods' },
+      { href: '#clean-test', label: 'Clean test: 2011–2023' }, { href: '#portfolio', label: 'All pairs, daily' }, { href: '#test-year', label: 'Test year' }, { href: '#compare', label: 'Compare periods' },
       { href: '#luck', label: 'Luck check' }, { href: '#slippage', label: 'Slippage' }, { href: '#rule', label: 'One rule' }, { href: '#pairs', label: 'Each pair' }
     ].map((j) => ({ label: j.label, cls: ['#luck', '#slippage', '#rule'].indexOf(j.href) >= 0 ? 'grv-detail' : '', go: () => { const el = document.getElementById(j.href.slice(1)); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }));
 
     return {
       ...shell, loading: false, ready: true, conclusion: D.conclusion, testCaveat, multiNote, switchNote, slipEv, jumps, pooledN: D.pooled['5'].n, slipBars, zeroY, splitText,
       crashShort: D.events.crashShort, ruleRows, ruleIntro, switchIntro, switchChips, chips, slips, kpis, mismatch, eq, hover, stress, stressNote, attr, attrNote, attrSub, settings, cmp, mp,
-      slipText: slip + ' bps', rob, hist, hindsight
+      slipText: slip + ' bps', rob, hist, hindsight, pf: this.portfolioView(st.PF, st.PFfail, D)
+    };
+  }
+
+  // Portfolio (portfolio.json, pipeline/portfolio.py): daily marks of every trade, all pairs together, 5 bps slippage
+  portfolioView(PF, failed, D) {
+    const base = 'Every trade of all six pairs is valued each day from the Bhavcopy closes of the two contracts it held, so overlapping trades in different pairs count together. ';
+    if (!PF || !PF.periods) return { show: false, intro: base + (failed ? 'The portfolio file did not load.' : 'Loading…'), rows: [], notes: [], dates: [], series: [], bands: [] };
+    const rs = (v) => (v == null ? '–' : (v < 0 ? '−' : '') + '₹' + Math.round(Math.abs(v)).toLocaleString('en-IN'));
+    const lakh = (v) => (v == null ? '–' : '₹' + (v / 1e5).toFixed(1) + 'L');
+    const f2 = (v) => (v == null ? '–' : (v < 0 ? '−' : '') + Math.abs(v).toFixed(2));
+    const names = { clean: 'Clean test (historical holdout)', train: 'Training', test: 'Test year', forward: 'After the test year', all: 'All years' };
+    const rows = ['clean', 'train', 'test', 'forward', 'all'].filter((k) => PF.periods[k] && PF.periods[k].days).map((k) => {
+      const p = PF.periods[k];
+      return { name: names[k], span: this.fd(p.from) + ' – ' + this.fd(p.to) + ' · ' + p.days.toLocaleString('en-IN') + ' days', weight: k === 'all' ? '700' : '400',
+        n: String(p.n_trades), won: p.n_trades ? p.wins + ' (' + Math.round(p.win_rate * 100) + '%)' : '–',
+        gross: rs(p.gross_rs), cost: rs(-p.cost_rs), net: rs(p.net_rs), netColor: p.net_rs >= 0 ? 'var(--up)' : 'var(--down)',
+        gold: rs(p.gold_part_rs), dd: rs(-p.max_drawdown_rs), sharpe: f2(p.sharpe_daily_annualised), t: f2(p.nw_t),
+        open: String(p.max_open_trades), peak: lakh(p.peak_gross_notional_rs), goldRet: (p.gold_return_pct >= 0 ? '+' : '−') + Math.abs(p.gold_return_pct).toFixed(1) + '%' };
+    });
+    const A = PF.periods.all;
+    const dl = PF.daily;
+    return {
+      show: true,
+      intro: base + PF.basis + ' At ' + PF.slip_bps + ' bps slippage per order.',
+      dates: dl.d, series: [{ key: 'pf', label: 'All pairs, running total after costs', color: 'var(--gold)', values: dl.cum, width: 2, area: false }],
+      bands: [{ from: D.longrun.start, to: D.longrun.end, label: 'Clean test', fill: 'var(--hover)', ink: 'var(--muted)' },
+        { from: D.split.test_start, to: D.split.test_end, label: 'Test year', fill: 'var(--glow)', ink: 'var(--gold)' }],
+      aria: 'Running total after costs of every trade, all pairs together, marked to market daily from ' + this.fd(dl.d[0]) + ' to ' + this.fd(dl.d[dl.d.length - 1]),
+      rows,
+      notes: [
+        'Won = trades that made money after costs, out of the trades ENTERED in that period (a trade-level count). Every other column is from the daily portfolio.',
+        'Daily Sharpe = mean ÷ standard deviation of daily P&L × √252, over every trading day in the period (days with no position count as zero). It is not a per-trade figure annualised.',
+        't (Newey–West) tests whether average daily P&L differs from zero while allowing for the day-to-day dependence that multi-day and overlapping positions create; beyond ±2 is more than luck.',
+        'Gold part = P&L from gold price moves (the two legs\' small purity difference); gold itself = the price change of gold (GOLDM, most-held contract) over the same days, for comparison. Correlation of daily P&L with gold over all years: ' + (A.corr_daily_pnl_gold == null ? '–' : f2(A.corr_daily_pnl_gold)) + '.',
+        'Most open = the most trades open on one day (' + A.days_two_or_more_open.toLocaleString('en-IN') + ' days had two or more). Peak notional = largest gross notional open at once (both legs). Margin is not modelled, so no return on capital is shown.'
+      ]
     };
   }
 }

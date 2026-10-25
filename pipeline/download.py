@@ -147,7 +147,9 @@ def fetch(session, symbol: str, expiry: str, start: dt.date, end: dt.date) -> pd
     d = pd.to_datetime(df['Date'], format='%m/%d/%Y')
     exp = pd.to_datetime(expiry, format='%d%b%Y')
     keep = (d >= pd.Timestamp(start)) & (d <= pd.Timestamp(end)) & (d <= exp)     # drop rows outside the request
-    return df.loc[keep, RAW_COLS].reset_index(drop=True)
+    out = df.loc[keep, RAW_COLS].reset_index(drop=True)
+    out.attrs['dropped'] = int((~keep).sum())       # recorded in the retrieval log (it used to say 0 regardless)
+    return out
 
 
 def plan_requests(raw: pd.DataFrame, expiries: Dict[str, List[str]], today: dt.date) -> List[Tuple[str, str, dt.date, dt.date]]:
@@ -183,7 +185,8 @@ def update(today: Optional[dt.date] = None) -> int:
                     'requested_to': b.strftime('%d/%m/%Y'),
                     'retrieved_at_ist': (dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)).strftime('%Y-%m-%d %H:%M'),
                     'rows': len(df), 'first_date': d.min().strftime('%Y-%m-%d') if len(df) else '',
-                    'last_date': d.max().strftime('%Y-%m-%d') if len(df) else '', 'rows_outside_range_or_after_expiry': 0})
+                    'last_date': d.max().strftime('%Y-%m-%d') if len(df) else '',
+                    'rows_outside_range_or_after_expiry': int(df.attrs.get('dropped', 0))})
         time.sleep(PAUSE_S)
     new = pd.concat(got, ignore_index=True).astype(str) if got else pd.DataFrame(columns=RAW_COLS)
     merged = merge_raw(raw, new)

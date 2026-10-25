@@ -55,7 +55,7 @@
     [/^After an alert, does the gap close\?/, 'Do alerts work?', 'After an alert, did the gap really shrink? Green means it shrank by more than the cost.'],
     [/^Every trade the backtest took for this pair/, 'Past trades', 'All the practice trades this pair made in the past, with the result of each.'],
     // Backtesting
-    [/^Did it make money\?/, 'The test', 'We practised on two years of real prices, froze the rules and tested on the next year. The clean test is 13 earlier years the rule never saw.'],
+    [/^Did it make money\?/, 'The test', 'We practised on two years of real prices, froze the rules and tested on the next year. The clean test is the earlier years 2011–2023, never used to choose the settings.'],
     [/^The verdict|^No persistent edge proven after costs/, 'The final answer', 'We could not prove the idea makes money reliably. Saying "no" honestly, with proof, is a real result.'],
     [/^Test year: take out one crash and it loses/, 'The storm', 'Gold bars are trades during the Jan–Mar 2026 gold crash; grey bars are all the others. At our 5 bps cost, everything outside the crash adds up to a loss.'],
     [/^How sure can we be\?/, 'Luck check', 'We reshuffled the trades 10,000 times to see how much luck matters. A long bar means "not sure".'],
@@ -65,14 +65,14 @@
     [/^GOLD\S+ · GOLD\S+ at \d+ bps slippage/, 'Money over time', 'The running total, trade after trade. The shaded part is the test year.'],
     [/^Same trades, different costs/, 'Cheaper or dearer trading', 'The same trades with cheaper or dearer trading. More slippage means less profit.'],
     [/^Where the result came from/, 'Where the money came from', 'Did it come from the gap closing (what we bet on) or from gold\'s price moving? Almost all of it came from the gap.'],
-    [/^The clean test: 13 years the rule never saw/, 'The clean test', 'The same frozen rule tested on 2011–2023, years no version of it had seen. Far more trades than the test year, and it loses money after costs, so the test-year profit was not a lasting edge.'],
+    [/^The clean test: \d+ years never used to choose the settings/, 'The clean test', 'The same frozen settings run on 2011–2023, years never used to choose them. Far more trades than the test year, and it loses money after costs: no lasting edge.'],
     [/^Can daily data measure slippage\?/, 'Slippage', 'Slippage is the price you lose each time you buy or sell. It is most of our cost, but daily prices are too coarse to measure it, so the real number needs real broker fills.'],
     [/^Read this year with care/, 'Why the test year is not clean', 'We looked at this year\'s results before we wrote the final rule. A clean test uses data nobody has looked at yet, which is why 2011–2023 counts for more.'],
     [/^How many looks\?/, 'Many tries', 'The more versions of a rule you score on the same data, the more likely one looks good by luck. This adjusts for that.'],
     [/^Settings for /, 'The frozen settings', 'The exact rules this pair used, fixed before the test year started.'],
     // Data
     [/^Where the numbers come from/, 'Our data', 'Every number on this site comes from MCX\'s official end-of-day price files.'],
-    [/^([\d,]+)\s*\n\s*(daily settlements|contracts|trading days|mismatches)/, 'Data in numbers', 'Quick facts about our data. "0 mismatches" means our copy matches MCX\'s files exactly.'],
+    [/^([\d,]+)\s*\n\s*(daily prices|daily closes|contracts|trading days|mismatches)/, 'Data in numbers', 'Quick facts about our data. "0 mismatches" means our copy matches MCX\'s files exactly.'],
     [/^How we cleaned it/, 'Cleaning', 'Days with no trading were removed, thin days were flagged, and special weekend sessions were kept.'],
     [/^From raw files to this website/, 'Eight steps', 'The eight steps our Python code follows, from MCX files to the charts you see.'],
     [/^How we avoid peeking at the future/, 'A fair exam', 'The model only uses past days, never tomorrow\'s answers, like an exam without the answer key.'],
@@ -119,7 +119,7 @@
     '4': 'Build the six pairs and the price gap (spread) of each one.',
     '5': 'Measure how unusual each gap is (the z-score), using only earlier days.',
     '6': 'Apply the five checks that decide both the alerts and the backtest trades.',
-    '7': 'Tune on two years, freeze the settings, test on the next year, then check 2011–2023, which the rule never saw.',
+    '7': 'Tune on two years, freeze the settings, test on the next year, then check 2011–2023, which was never used to choose the settings.',
     '8': 'Subtract every MCX cost, then split the result into spread moves, gold price moves and costs.'
   };
   var GROUP = {
@@ -148,7 +148,7 @@
       return [m[1], m[2].charAt(0).toUpperCase() + m[2].slice(1) + '. With these settings the rule made ' + m[4] + ' trades here and ' + money(m[3]) + ' after costs; ' + m[5] + '% of trades made money.'];
     }],
     // Long history (Backtesting) and the 2004-2023 download (Data)
-    [/^Trades (\d+) (\d+ \w+ \d{4}) – (\d+ \w+ \d{4})$/, function (m) { return ['13 more years', 'The same frozen rule made ' + m[1] + ' trades between ' + m[2] + ' and ' + m[3] + ', years the model never saw. That is far more than the 20 in our test year, so the answer is much more certain.']; }],
+    [/^Trades (\d+) (\d+ \w+ \d{4}) – (\d+ \w+ \d{4})$/, function (m) { return ['A longer history', 'The same rule, with its settings fixed in training, made ' + m[1] + ' trades between ' + m[2] + ' and ' + m[3] + ', years never used to choose the settings. That is many more trades than our test year, so the answer is much more certain.']; }],
     [/^After costs ([−+-]₹[\d,]+) at (\d+) bps slippage, (\d+)% won$/, function (m) { return ['After costs, 13 years', 'Added up over all those trades, the rule ' + money(m[1]) + ' after paying every cost, at ' + m[2] + ' bps slippage. Only ' + m[3] + '% of trades made money.']; }],
     [/^Losing years (\d+) of (\d+) (.+)$/, function (m) { return ['Losing years', 'The rule lost money in ' + m[1] + ' of ' + m[2] + ' years; it ' + m[3] + '. A real edge would win in most years.']; }],
     [/^(\d{4}): ([−+-]₹[\d,]+), (\d+) trades$/, function (m) { return ['The year ' + m[1], 'In ' + m[1] + ' the rule made ' + m[3] + ' trades and ' + money(m[2]) + ' after costs. Green bars are years that made money; red bars lost.']; }],
@@ -244,7 +244,7 @@
     [/^(\d+) days with no trades removed/, function (m) { return [m[1] + ' days removed', 'On these days a contract had zero trades, so its "price" was not real. We left them out.']; }],
     [/^(\d+) thin days flagged/, function (m) { return [m[1] + ' thin days', 'Very little trading on these days. We take no new signals then, and assume 3× slippage if a trade is already open.']; }],
     [/^(\d+) weekend sessions kept (.+)$/, function (m) { return [m[1] + ' weekend sessions', 'MCX sometimes opens at the weekend: every Saturday until early 2014, and later only for Diwali Muhurat and Union Budget days. Those were real trading days, so we kept them. ' + m[2]]; }],
-    [/^([1-8]) (Load & Validate|Normalize|Implied Carry|Pair Construction|Point-in-Time z-scores|One rule: five checks|Walk-Forward Test|Costs & Attribution)( .*)?$/, function (m) { return ['Step ' + m[1] + ': ' + m[2], STEP[m[1]]]; }],
+    [/^([1-8]) (Load & Validate|Normalize|Implied Carry|Pair Construction|Point-in-Time z-scores|One rule: five checks|Walk-Forward Test|Train\/test split and historical holdout|Costs & Attribution)( .*)?$/, function (m) { return ['Step ' + m[1] + ': ' + m[2], STEP[m[1]]]; }],
     [/^(GOLD\w+) (\d+ \w+ \d{4}) (\d+ \w+ \d{4}) to (\d+ \w+ \d{4}) (\d+) (\d+ \w+ \d{4}) to (\d+ \w+ \d{4})$/, function (m) { return ['One download', 'The ' + m[1] + ' contract that expired on ' + m[2] + '. We asked MCX for ' + m[3] + ' to ' + m[4] + ' and got ' + m[5] + ' daily prices, from ' + m[6] + ' to ' + m[7] + '.']; }],
     [/^Contract Expiry Requested range Rows First to last trading day$/, function () { return ['The columns', 'One row per file we downloaded from MCX: which contract, what dates we asked for, and how many daily prices came back.']; }]
   ];

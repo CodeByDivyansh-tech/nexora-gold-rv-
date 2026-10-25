@@ -29,7 +29,7 @@
     "net_bps": 0.0,
     "max_drawdown_rs": 0.0,
     "avg_holding_days": 0.0,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 0.0,
     "ci_95": [
       0.0,
@@ -48,7 +48,7 @@
     "net_bps": 0.0,
     "max_drawdown_rs": 0.0,
     "avg_holding_days": 0.0,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 0.0,
     "ci_95": [
       0.0,
@@ -67,7 +67,7 @@
     "net_bps": 0.0,
     "max_drawdown_rs": 0.0,
     "avg_holding_days": 0.0,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 0.0,
     "ci_95": [
       0.0,
@@ -87,9 +87,9 @@
     "pair_beta_to_gold": 0.0,
     "pair_n_trades": 0,
     "pair_note": "0 trades \u2014 unstable",
-    "pooled_correlation_to_gold": -0.1,
+    "pooled_correlation_to_gold": -0.05,
     "pooled_beta_to_gold": -0.02,
-    "pooled_n_trades": 20,
-    "summary_text": "Equal grams on both legs, so direct gold P&L is small (1.4% of gross across all pairs in Test). Correlation of trade returns with gold moves: -0.10 (pooled)."
+    "pooled_n_trades": 17,
+    "summary_text": "Equal grams on both legs, so direct gold P&L is small (1.5% of gross across all pairs in Test). Correlation of trade returns with gold moves: -0.05 (pooled)."
   }
 }

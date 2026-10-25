@@ -138,7 +138,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
             </section>
 
             <section class="grv-card" aria-labelledby="fit-h" style="background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 2.5vw, 26px); display: flex; flex-direction: column; gap: 10px">
-              <h2 id="fit-h" style="margin: 0; font-size: 16px; font-weight: 600">Does any setting work?<button type="button" class="grv-q" data-term="Walk-forward test" aria-label="What does 'Walk-forward test' mean?" title="What does this mean?">?</button></h2>
+              <h2 id="fit-h" style="margin: 0; font-size: 16px; font-weight: 600">Does any setting work?<button type="button" class="grv-q" data-term="Train/test split" aria-label="What does 'Train/test split' mean?" title="What does this mean?">?</button></h2>
               <p style="margin: 0; font-size: 15px; line-height: 1.6">{{fit.losing}}</p>
               <p style="margin: 0; font-size: 15px; line-height: 1.6">{{fit.best}}</p>
               <button type="button" onClick="{{fit.tryBest}}" style="align-self: flex-start; min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--raised); color: var(--fg); font: 600 14px 'Geist', system-ui, sans-serif; cursor: pointer">{{fit.tryLabel}}</button>
@@ -186,8 +186,8 @@ class Component extends DCLogic {
   }
 
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
-  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
-  rsA(n) { return '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
+  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
+  rsA(n) { return '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
   verb(n) { return (n < 0 ? 'lost ' : 'made ') + this.rsA(n); }
 
   // choices kept in the address bar and remembered between pages (app/prefs.js)
@@ -270,7 +270,7 @@ class Component extends DCLogic {
       detail: n ? n + (n === 1 ? ' trade' : ' trades') + ', ' + Math.round(w / n * 100) + '% made money' : '', bg: name === 'Clean test' ? 'var(--glow)' : 'transparent'
     });
     const periods = [
-      per('Clean test', this.fd(E.cleanFrom).replace(/^\d+ /, '') + ' – ' + this.fd(E.cleanTo).replace(/^\d+ /, '') + ', years the rule never saw', R[F.cn], R[F.cnet], R[F.cw], hasClean ? '' : 'GOLDTEN not listed yet'),
+      per('Clean test', this.fd(E.cleanFrom).replace(/^\d+ /, '') + ' – ' + this.fd(E.cleanTo).replace(/^\d+ /, '') + ', years never used to choose the settings', R[F.cn], R[F.cnet], R[F.cw], hasClean ? '' : 'GOLDTEN not listed yet'),
       per('Training', this.fd(D.split.train_start).replace(/^\d+ /, '') + ' – ' + this.fd(D.split.train_end).replace(/^\d+ /, ''), R[F.tn], R[F.tnet], R[F.tw]),
       per('Test year', this.fd(D.split.test_start).replace(/^\d+ /, '') + ' – ' + this.fd(D.split.test_end).replace(/^\d+ /, '') + ', not a clean test', R[F.en], R[F.enet], R[F.ew])
     ];

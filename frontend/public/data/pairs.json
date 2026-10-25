@@ -28,6 +28,7 @@
     "failed_gates": [
       "extreme",
       "edge",
+      "lifecycle",
       "training"
     ],
     "gates": {
@@ -35,7 +36,7 @@
       "extreme": false,
       "edge_beats_cost": false,
       "liquidity": true,
-      "lifecycle": true
+      "lifecycle": false
     },
     "vol_a": 5329,
     "vol_b": 103087,
@@ -133,12 +134,12 @@
       }
     ],
     "historical_evidence": {
-      "past_signals_count": 12,
+      "past_signals_count": 11,
       "reverted_count": 6,
       "stopped_count": 1,
       "timed_out_count": 0,
-      "revert_rate_pct": 50.0,
-      "median_days_to_revert": 3.5
+      "revert_rate_pct": 54.5,
+      "median_days_to_revert": 4.0
     }
   },
   {
@@ -170,6 +171,7 @@
     "failed_gates": [
       "extreme",
       "edge",
+      "lifecycle",
       "training"
     ],
     "gates": {
@@ -177,7 +179,7 @@
       "extreme": false,
       "edge_beats_cost": false,
       "liquidity": true,
-      "lifecycle": true
+      "lifecycle": false
     },
     "vol_a": 11545,
     "vol_b": 103087,
@@ -312,6 +314,7 @@
     "failed_gates": [
       "extreme",
       "edge",
+      "lifecycle",
       "training"
     ],
     "gates": {
@@ -319,7 +322,7 @@
       "extreme": false,
       "edge_beats_cost": false,
       "liquidity": true,
-      "lifecycle": true
+      "lifecycle": false
     },
     "vol_a": 5329,
     "vol_b": 11545,
@@ -417,12 +420,12 @@
       }
     ],
     "historical_evidence": {
-      "past_signals_count": 5,
-      "reverted_count": 4,
+      "past_signals_count": 4,
+      "reverted_count": 3,
       "stopped_count": 0,
       "timed_out_count": 0,
-      "revert_rate_pct": 80.0,
-      "median_days_to_revert": 2.0
+      "revert_rate_pct": 75.0,
+      "median_days_to_revert": 2.5
     }
   },
   {
@@ -445,22 +448,23 @@
     "expiry_b": "2026-10-30",
     "spread_bps": -62.7,
     "spread_rs_10g": -915.3,
-    "mu": -30.4,
-    "sd": 23.2,
+    "mu": -30.3,
+    "sd": 23.4,
     "z": -1.39,
     "z_needed": 2.0,
-    "percentile": 13.3,
+    "percentile": 13.2,
     "status": "QUIET",
     "failed_gates": [
       "extreme",
-      "edge"
+      "edge",
+      "lifecycle"
     ],
     "gates": {
       "enough_history": true,
       "extreme": false,
       "edge_beats_cost": false,
       "liquidity": true,
-      "lifecycle": true
+      "lifecycle": false
     },
     "vol_a": 26349,
     "vol_b": 103087,
@@ -477,92 +481,92 @@
     },
     "z_histogram": [
       {
-        "bin_center": -6.42,
+        "bin_center": -6.41,
         "count": 1
       },
       {
-        "bin_center": -5.83,
+        "bin_center": -5.81,
         "count": 2
       },
       {
-        "bin_center": -5.24,
+        "bin_center": -5.2,
         "count": 2
       },
       {
-        "bin_center": -4.65,
-        "count": 2
+        "bin_center": -4.59,
+        "count": 3
       },
       {
-        "bin_center": -4.06,
-        "count": 5
+        "bin_center": -3.99,
+        "count": 4
       },
       {
-        "bin_center": -3.47,
-        "count": 5
+        "bin_center": -3.38,
+        "count": 8
       },
       {
-        "bin_center": -2.88,
-        "count": 15
-      },
-      {
-        "bin_center": -2.29,
-        "count": 19
-      },
-      {
-        "bin_center": -1.7,
-        "count": 45
-      },
-      {
-        "bin_center": -1.11,
-        "count": 83
-      },
-      {
-        "bin_center": -0.52,
-        "count": 130
-      },
-      {
-        "bin_center": 0.07,
-        "count": 125
-      },
-      {
-        "bin_center": 0.66,
-        "count": 147
-      },
-      {
-        "bin_center": 1.25,
-        "count": 96
-      },
-      {
-        "bin_center": 1.84,
-        "count": 49
-      },
-      {
-        "bin_center": 2.43,
+        "bin_center": -2.77,
         "count": 14
       },
       {
-        "bin_center": 3.02,
-        "count": 6
+        "bin_center": -2.17,
+        "count": 27
       },
       {
-        "bin_center": 3.6,
-        "count": 0
+        "bin_center": -1.56,
+        "count": 56
       },
       {
-        "bin_center": 4.19,
+        "bin_center": -0.95,
+        "count": 95
+      },
+      {
+        "bin_center": -0.34,
+        "count": 142
+      },
+      {
+        "bin_center": 0.26,
+        "count": 129
+      },
+      {
+        "bin_center": 0.87,
+        "count": 143
+      },
+      {
+        "bin_center": 1.48,
+        "count": 77
+      },
+      {
+        "bin_center": 2.08,
+        "count": 30
+      },
+      {
+        "bin_center": 2.69,
+        "count": 8
+      },
+      {
+        "bin_center": 3.3,
+        "count": 5
+      },
+      {
+        "bin_center": 3.9,
         "count": 2
       },
       {
-        "bin_center": 4.78,
-        "count": 3
+        "bin_center": 4.51,
+        "count": 1
+      },
+      {
+        "bin_center": 5.12,
+        "count": 2
       }
     ],
     "historical_evidence": {
-      "past_signals_count": 21,
-      "reverted_count": 10,
-      "stopped_count": 4,
+      "past_signals_count": 17,
+      "reverted_count": 8,
+      "stopped_count": 2,
       "timed_out_count": 2,
-      "revert_rate_pct": 47.6,
+      "revert_rate_pct": 47.1,
       "median_days_to_revert": 6.0
     }
   },
@@ -586,15 +590,16 @@
     "expiry_b": "2026-10-30",
     "spread_bps": -8.1,
     "spread_rs_10g": -118.1,
-    "mu": 5.1,
-    "sd": 10.8,
-    "z": -1.22,
+    "mu": 4.3,
+    "sd": 10.3,
+    "z": -1.21,
     "z_needed": 2.5,
-    "percentile": 16.7,
+    "percentile": 18.6,
     "status": "QUIET",
     "failed_gates": [
       "extreme",
       "edge",
+      "lifecycle",
       "training"
     ],
     "gates": {
@@ -602,7 +607,7 @@
       "extreme": false,
       "edge_beats_cost": false,
       "liquidity": true,
-      "lifecycle": true
+      "lifecycle": false
     },
     "vol_a": 26349,
     "vol_b": 11545,
@@ -648,11 +653,11 @@
       },
       {
         "bin_center": -4.76,
-        "count": 2
+        "count": 1
       },
       {
         "bin_center": -3.85,
-        "count": 4
+        "count": 5
       },
       {
         "bin_center": -2.94,
@@ -660,7 +665,7 @@
       },
       {
         "bin_center": -2.04,
-        "count": 26
+        "count": 30
       },
       {
         "bin_center": -1.13,
@@ -668,19 +673,19 @@
       },
       {
         "bin_center": -0.22,
-        "count": 116
+        "count": 106
       },
       {
         "bin_center": 0.68,
-        "count": 107
+        "count": 111
       },
       {
         "bin_center": 1.59,
-        "count": 35
+        "count": 37
       },
       {
         "bin_center": 2.5,
-        "count": 2
+        "count": 4
       },
       {
         "bin_center": 3.4,
@@ -688,11 +693,11 @@
       },
       {
         "bin_center": 4.31,
-        "count": 2
+        "count": 1
       },
       {
         "bin_center": 5.22,
-        "count": 2
+        "count": 1
       },
       {
         "bin_center": 6.12,
@@ -728,15 +733,16 @@
     "expiry_b": "2026-10-30",
     "spread_bps": -62.7,
     "spread_rs_10g": -915.3,
-    "mu": -44.8,
-    "sd": 17.0,
-    "z": -1.06,
+    "mu": -45.9,
+    "sd": 15.0,
+    "z": -1.12,
     "z_needed": 2.5,
-    "percentile": 19.8,
+    "percentile": 18.4,
     "status": "QUIET",
     "failed_gates": [
       "extreme",
       "edge",
+      "lifecycle",
       "training"
     ],
     "gates": {
@@ -744,7 +750,7 @@
       "extreme": false,
       "edge_beats_cost": false,
       "liquidity": true,
-      "lifecycle": true
+      "lifecycle": false
     },
     "vol_a": 26349,
     "vol_b": 5329,
@@ -786,31 +792,31 @@
       },
       {
         "bin_center": -3.33,
-        "count": 0
+        "count": 1
       },
       {
         "bin_center": -2.72,
-        "count": 15
+        "count": 13
       },
       {
         "bin_center": -2.1,
-        "count": 33
+        "count": 35
       },
       {
         "bin_center": -1.48,
-        "count": 73
+        "count": 75
       },
       {
         "bin_center": -0.87,
-        "count": 124
+        "count": 122
       },
       {
         "bin_center": -0.25,
-        "count": 127
+        "count": 125
       },
       {
         "bin_center": 0.37,
-        "count": 152
+        "count": 153
       },
       {
         "bin_center": 0.98,
@@ -818,23 +824,23 @@
       },
       {
         "bin_center": 1.6,
-        "count": 59
+        "count": 61
       },
       {
         "bin_center": 2.22,
-        "count": 27
+        "count": 24
       },
       {
         "bin_center": 2.83,
-        "count": 11
+        "count": 13
       },
       {
         "bin_center": 3.45,
-        "count": 8
+        "count": 9
       },
       {
         "bin_center": 4.07,
-        "count": 2
+        "count": 0
       },
       {
         "bin_center": 4.68,
@@ -842,12 +848,12 @@
       }
     ],
     "historical_evidence": {
-      "past_signals_count": 14,
-      "reverted_count": 4,
+      "past_signals_count": 12,
+      "reverted_count": 3,
       "stopped_count": 0,
-      "timed_out_count": 5,
-      "revert_rate_pct": 28.6,
-      "median_days_to_revert": 4.5
+      "timed_out_count": 3,
+      "revert_rate_pct": 25.0,
+      "median_days_to_revert": 4.0
     }
   }
 ]

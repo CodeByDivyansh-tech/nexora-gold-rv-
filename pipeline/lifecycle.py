@@ -1,7 +1,44 @@
 """Contract lifecycle calculations and Gantt timeline data (Section 7)."""
+from pipeline.contract_rules import tender_rule
 import pandas as pd
 import numpy as np
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Tuple
+
+def min_entry_td(symbol: str, expiry) -> int:
+    """Fewest trading days to expiry a leg may have on a SIGNAL day under the current rule.
+
+    The exit decision comes EXIT_LEAD_TD days before the last day the leg may be held (the day before its tender
+    window), and the fill day (signal + 1) must still be at least one day before that decision."""
+    from pipeline.config import EXIT_LEAD_TD
+    from pipeline.contract_rules import tender_rule
+    return int(tender_rule(symbol, expiry)['applied_td']) + EXIT_LEAD_TD + 2
+
+
+def entry_timing_ok(sym_a: str, exp_a, td_a: int, sym_b: str, exp_b, td_b: int) -> bool:
+    """Both legs, checked independently, are far enough from their own tender windows to open a position.
+    Used by the live alerts (alerts.evaluate_pair_gates) and the backtest (backtest.run_pair_backtest)."""
+    return td_a >= min_entry_td(sym_a, exp_a) and td_b >= min_entry_td(sym_b, exp_b)
+
+
+def intended_lots(sym_a: str, sym_b: str, px_a: float):
+    """Lots per leg a signal would trade (Section 5.4 sizing: equal grams, ~NOTIONAL_PER_LEG, whole lots)."""
+    import numpy as np
+    from pipeline.config import NOTIONAL_PER_LEG, SPEC_TUPLES
+    la, lb = SPEC_TUPLES[sym_a][0], SPEC_TUPLES[sym_b][0]
+    g = (la * lb) // np.gcd(la, lb)
+    grams = int(g * max(1, round(NOTIONAL_PER_LEG / (g * px_a))))
+    return grams, grams / la, grams / lb
+
+
+def size_liquidity_ok(lots: float, vol, oi) -> Tuple[bool, float]:
+    """One leg's size-aware liquidity screen: volume and OI floors, and lots <= MAX_PARTICIPATION x volume.
+    Returns (ok, participation); participation is inf when volume is missing or zero."""
+    from pipeline.config import MAX_PARTICIPATION, MIN_OI_LOTS, MIN_VOLUME_LOTS
+    if vol is None or oi is None or pd.isna(vol) or pd.isna(oi) or vol <= 0:
+        return False, float('inf')
+    part = float(lots) / float(vol)
+    return bool(vol >= MIN_VOLUME_LOTS and oi >= MIN_OI_LOTS and part <= MAX_PARTICIPATION), part
+
 
 def compute_contract_lifecycle(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -33,14 +70,16 @@ def compute_contract_lifecycle(df: pd.DataFrame) -> pd.DataFrame:
         else:
             liquid_from = first_seen
             
-        # Entry allowed end (expiry - 7 TD)
-        # In our precalculated td_to_exp, we find dates where td_to_exp >= 7
-        td7_rows = g[g['td_to_exp'] >= 7]
-        entry_allowed_end = td7_rows['date'].max() if not td7_rows.empty else last_seen
-        
-        # Forced exit date (expiry - 4 TD)
-        td4_rows = g[g['td_to_exp'] <= 4]
-        forced_exit_date = td4_rows['date'].min() if not td4_rows.empty else last_seen
+        # Current rule (contract_rules.tender_rule): the last signal day a new position may open, the last day a
+        # position may still be held (the day before the tender window) and the first day of the tender window
+        rule = tender_rule(sym, exp)
+        tw = int(rule['applied_td'])
+        ent = g[g['td_to_exp'] >= min_entry_td(sym, exp)]
+        entry_allowed_end = ent['date'].max() if not ent.empty else last_seen
+        held = g[g['td_to_exp'] >= tw]
+        forced_exit_date = held['date'].max() if not held.empty else first_seen
+        win = g[g['td_to_exp'] < tw]
+        tender_start = win['date'].min() if not win.empty else None
         
         records.append({
             'symbol': sym,
@@ -53,6 +92,9 @@ def compute_contract_lifecycle(df: pd.DataFrame) -> pd.DataFrame:
             'entry_allowed_start': liquid_from.strftime('%Y-%m-%d'),
             'entry_allowed_end': entry_allowed_end.strftime('%Y-%m-%d') if pd.notna(entry_allowed_end) else last_seen.strftime('%Y-%m-%d'),
             'forced_exit_date': forced_exit_date.strftime('%Y-%m-%d') if pd.notna(forced_exit_date) else last_seen.strftime('%Y-%m-%d'),
+            'tender_window_td': tw,
+            'tender_start': tender_start.strftime('%Y-%m-%d') if tender_start is not None else None,
+            'tender_rule_status': rule['status'],
             'rows': rows_count,
             'no_trade_days': no_trade_count,
         })
@@ -80,5 +122,16 @@ def calendar_check(trades: pd.DataFrame, lifecycle_df: pd.DataFrame) -> Dict[str
             ok = ok and c['first_seen'] <= e <= c['last_seen'] and e <= x <= c['last_seen'] and x <= exp
         inside += bool(ok)
     reasons = trades['reason'].value_counts() if len(trades) else pd.Series(dtype=int)
-    return {'n': int(len(trades)), 'inside': int(inside),
-            'closed_roll': int(reasons.get('roll', 0)), 'closed_expiry': int(reasons.get('expiry', 0))}
+    out = {'n': int(len(trades)), 'inside': int(inside),
+           'closed_roll': int(reasons.get('roll', 0)),
+           # 'tender' (current rule) and 'expiry' (legacy buffer) are both the calendar closing a trade early
+           'closed_expiry': int(reasons.get('expiry', 0)) + int(reasons.get('tender', 0))}
+    if len(trades) and 'td_exit_a' in trades.columns:
+        # exit fill before BOTH legs' tender windows (each leg checked against its own window)
+        ok = (trades['td_exit_a'] >= trades['tender_td_a']) & (trades['td_exit_b'] >= trades['tender_td_b'])
+        out['before_tender'] = int(ok.sum())
+        out['min_td_at_exit'] = int(min(trades['td_exit_a'].min(), trades['td_exit_b'].min()))
+        out['forced_fills'] = int(trades['forced_fill'].sum()) if 'forced_fill' in trades.columns else 0
+        out['lifecycle_status'] = {str(k): int(v) for k, v in trades['lifecycle'].value_counts().items()} if 'lifecycle' in trades.columns else {}
+        out['verified_official'] = int((trades['lifecycle'] == 'official').sum()) if 'lifecycle' in trades.columns else 0
+    return out

@@ -9,6 +9,9 @@ const R = JSON.parse(readFileSync('public/data/robustness.json', 'utf8'))
 const H = JSON.parse(readFileSync('public/data/history.json', 'utf8'))
 const HC = JSON.parse(readFileSync('public/data/history_charts.json', 'utf8'))
 const E = JSON.parse(readFileSync('public/data/explore.json', 'utf8'))
+const CV0 = JSON.parse(readFileSync('public/data/curve.json', 'utf8'))
+const PF0 = JSON.parse(readFileSync('public/data/portfolio.json', 'utf8'))
+const PV0 = JSON.parse(readFileSync('public/data/provenance.json', 'utf8'))
 const PAIRS = ['M_TEN', 'M_PETAL', 'M_GUINEA', 'TEN_PETAL', 'GUINEA_TEN', 'GUINEA_PETAL']
 const SLIPS = ['0', '2', '5', '10']
 
@@ -24,11 +27,11 @@ function load(name) {
 const states = {
   Home: [{}, { range: '1M', hover: 5 }, { range: '3Y', hover: 100 }, { dark: false }, { H, range: '10Y', hover: 200 }, { H, range: 'All', hover: 900 }, { range: 'All' }],
   Today: [{}, { ri: 0 }, { ri: 60 }, { ri: 120, speed: 2 }, { HC }, { HC, ri: 0 }, { HC, ri: 400 }, { HC, rspan: 'ours', ri: 10 }],
-  Market: [{}, { range: '3M', hover: 10 }, { range: '3Y', hover: 150 }, { H, range: '10Y', hover: 100 }, { H, range: 'All', hover: 1000 }, { range: '10Y' }, { HC }, { HC, vspan: 'ours' }],
+  Market: [{}, { range: '3M', hover: 10 }, { range: '3Y', hover: 150 }, { H, range: '10Y', hover: 100 }, { H, range: 'All', hover: 1000 }, { range: '10Y' }, { HC }, { HC, vspan: 'ours' }, { CV: CV0 }, { CV: CV0, tsCmp: '2024-03-28', tsOff: ['GOLDM', 'GOLDTEN'] }, { CVfail: true }],
   Pairs: PAIRS.flatMap((pair) => [{ pair }, { pair, hover: 20, allTrades: true }, { pair, HC, allTrades: true }, { pair, HC, span: 'ours' }, { pair, HC, story: D.pairs[pair].trades.length ? D.pairs[pair].trades[0].sig + '|' + D.pairs[pair].trades[0].e : null }]),
   Signals: PAIRS.map((pair) => ({ pair, allPast: true })).concat([{ R }, { R, cs: '0', cb: '0', cz: '1' }, { R, cs: '', cb: 'abc', cz: '0' }, { cs: '10', cb: '50', cz: '25' }]),
-  Backtesting: PAIRS.flatMap((pair) => SLIPS.map((slip) => ({ pair, slip, hover: 0 }))).concat([{ R }, { R, H }, { H, pair: 'GUINEA_TEN', slip: '10' }]).concat(PAIRS.flatMap((pair) => SLIPS.map((slip) => ({ pair, slip, HC })))).concat([{ HC, espan: 'ours' }]),
-  Data: [{}, { all: true }, { H }, { H, all: true }],
+  Backtesting: PAIRS.flatMap((pair) => SLIPS.map((slip) => ({ pair, slip, hover: 0 }))).concat([{ R }, { R, H }, { H, pair: 'GUINEA_TEN', slip: '10' }]).concat(PAIRS.flatMap((pair) => SLIPS.map((slip) => ({ pair, slip, HC })))).concat([{ HC, espan: 'ours' }, { HC, PF: PF0 }, { PFfail: true }]),
+  Data: [{}, { all: true }, { H }, { H, all: true }, { H, PV: PV0 }],
   Brief: [{}, { HC }, { HCfail: true }, { dark: false, HC }],
   Explore: [{ E }, { E, xpair: 'M_TEN' }, { E, xpair: 'GUINEA_PETAL', slip: '0' }, { E, pub: '0', ze: '3.0', W: '10', mh: '20', h: '0' },
     { E, xpair: 'ALL', pub: '0', ze: '1.5' }, ...PAIRS.flatMap((xpair) => ['0', '10'].map((slip) => ({ E, xpair, slip, pub: '0' })))],
@@ -350,8 +353,17 @@ function L_N() { return D.longrun.n }
   assert.equal(lines.length, 10); assert.equal(v.rows.filter((r) => r.group).length, 1)
   assert.deepEqual(lines.map((r) => r.num), ['1', '2', '3', '4', '5', '6.1', '6.2', '6.3', '6.4', '6.5'])
   assert.equal(v.verdict.hindsight, want)
+  // Oct-2026 audit: no blanket "Done". Each line carries one of four statuses and says why; lifecycle (tender rules not
+  // verified from MCX), the backtest method (one split, not rolling walk-forward) and "unseen history" are partial.
+  const STATUSES = ['Implemented and verified', 'Implemented, not independently verified', 'Partly implemented', 'Not implemented']
+  const by = Object.fromEntries(lines.map((r) => [r.num, r.status]))
+  assert.equal(by['3'], 'Partly implemented'); assert.equal(by['5'], 'Partly implemented'); assert.equal(by['6.2'], 'Partly implemented')
+  assert.equal(by['2'], 'Implemented, not independently verified')
+  assert.ok(!lines.some((r) => r.status === 'Done'))
+  assert.ok(!/walk-forward backtesting/i.test(lines.find((r) => r.num === '3').title))
   for (const r of lines) {
-    assert.equal(r.status, 'Done')
+    assert.ok(STATUSES.includes(r.status), r.num + ': status ' + r.status)
+    assert.ok(r.why && r.why.length > 30, r.num + ': says why')
     assert.ok(r.show.length > 40 && r.links.length >= 1, r.num + ': says what we show and links to its proof')
     for (const l of r.links) {
       const m = /^([A-Za-z]+)\.dc\.html(?:#([a-z0-9-]+))?$/.exec(l.href)
@@ -420,7 +432,7 @@ function L_N() { return D.longrun.n }
   for (const what of ['today', 'prices', 'trades', 'backtest', 'report']) {
     const c = mk({ what, period: 'all', pair: 'ALL' })
     const d = c.doc(D, what, 'ALL', 'Everything since 2011', c.table(D, what, 'ALL', 'all', H, HC))
-    assert.match(d.foot, /official MCX Bhavcopy settlements, .+ all downloaded by us from MCX/, what + ': PDF and printable page credit MCX')
+    assert.match(d.foot, /MCX Bhavcopy closes \(not verified to equal the official settlement price\), .+ all downloaded by us from MCX/, what + ": PDF and printable page credit MCX")
     assert.doesNotMatch(d.foot, /archive|shared with/i)
   }
   const tr = mk({}).table(D, 'trades', 'ALL', 'all', H, HC)
@@ -429,4 +441,69 @@ function L_N() { return D.longrun.n }
   const bt = mk({}).table(D, 'backtest', 'ALL', 'all', H, HC)
   assert.ok(bt.rows.filter((r) => D.longrun.pairs.includes(Object.keys(D.pairs).find((k) => D.pairs[k].label === r[0]))).every((r) => /Our MCX download, 2011–2023/.test(r[13])))
   console.log('download credit ok')
+}
+
+// Oct-2026 compliance audit: new views show the pipeline's numbers, labels follow the data
+{
+  const CV = JSON.parse(readFileSync('public/data/curve.json', 'utf8'))
+  const PF = JSON.parse(readFileSync('public/data/portfolio.json', 'utf8'))
+  const PV = JSON.parse(readFileSync('public/data/provenance.json', 'utf8'))
+  const RB = JSON.parse(readFileSync('public/data/robustness.json', 'utf8'))
+  const inr = (x) => '₹' + Math.round(x).toLocaleString('en-IN')
+  // Term structure: rows are the latest snapshot's contracts, prices straight from curve.json, filters and dates react
+  const mk = (st) => { const c = new (load('Market'))(); c.props = {}; c.state = { D, CV, ...st }; return c.renderVals().ts }
+  const ts = mk({})
+  const latest = CV.snapshots.find((s) => s.date === CV.latest)
+  assert.equal(ts.show, true); assert.equal(ts.rows.length, latest.contracts.length)
+  const first = latest.contracts.slice().sort((a, b) => (a.expiry < b.expiry ? -1 : a.expiry > b.expiry ? 1 : a.symbol < b.symbol ? -1 : 1))[0]
+  assert.equal(ts.rows[0].px, first.no_trade ? '–' : inr(first.px_per_10g_pure))
+  assert.ok(ts.title.includes(ts.legendCmp) && ts.hasCmp, 'compares with the snapshot about a month earlier')
+  const other = CV.snapshots.find((s) => s.date !== CV.latest && s.date !== CV.month_ago)
+  assert.notEqual(mk({ tsCmp: other.date }).legendCmp, ts.legendCmp, 'picking another date changes the comparison')
+  const noPetal = mk({ tsOff: ['GOLDPETAL'] })
+  assert.ok(noPetal.rows.every((r) => r.sym !== 'GOLDPETAL') && noPetal.rows.length < ts.rows.length)
+  assert.match(ts.carry.now, /% a year$/); assert.match(ts.decNote, /accounting identity/)
+  assert.ok(ts.decRows.every((r) => r.gap === '< 0.001'), 'decomposition parts add back exactly')
+  assert.equal(mk({ CV: undefined }).show, false)
+  // Backtesting: forward period starts the day after the test year; portfolio table = portfolio.json
+  const b = new (load('Backtesting'))(); b.props = {}; b.state = { D, H, HC, R, PF }
+  const bv = b.renderVals()
+  const day1 = new Date(Date.parse(D.split.test_end + 'T00:00:00Z') + 864e5).toISOString().slice(0, 10)
+  assert.ok(bv.cmp.optsA.some((o) => o.label === 'After the test year (from ' + (+day1.slice(8)) + ' Oct ' + day1.slice(0, 4) + ')'), 'forward period label starts on ' + day1)
+  const all = bv.pf.rows.find((r) => r.name === 'All years')
+  assert.equal(all.n, String(PF.periods.all.n_trades))
+  assert.equal(all.net, (PF.periods.all.net_rs < 0 ? '−' : '') + '₹' + Math.abs(Math.round(PF.periods.all.net_rs)).toLocaleString('en-IN'))
+  assert.ok(bv.pf.notes.some((n) => /out of the trades ENTERED/.test(n)) && bv.pf.notes.some((n) => /not a per-trade figure annualised/.test(n)))
+  assert.match(bv.pf.intro, /margin is not modelled/)
+  assert.ok(!/walk-forward/i.test(JSON.stringify(bv, (k, x) => (typeof x === 'function' ? undefined : x)).replace(/not a rolling walk-forward|one split, not a rolling walk-forward/g, '')))
+  // Data page: the specification and tender tables and the file manifest are the pipeline's
+  const dv = new (load('Data'))(); dv.props = {}; dv.state = { D, H, PV }
+  const dd = dv.renderVals()
+  assert.equal(dd.spec.rows.length, D.lifecycleRule.tables.specs.length); assert.equal(dd.spec.tender.length, D.lifecycleRule.tables.tender_reported.length)
+  assert.ok(dd.spec.rows.every((r) => r.status !== 'official'))
+  assert.equal(dd.prov.files.length, PV.files.length); assert.match(dd.prov.priceField, /not verified/)
+  // Signals: alerts and trades are reconciled, not forced to match
+  assert.equal(RB.reconcile.adds_up, true)
+  const sg = new (load('Signals'))(); sg.props = {}; sg.state = { D, R: RB }
+  assert.match(sg.renderVals().ft.reconcile, new RegExp(RB.reconcile.trades + ' trades'))
+  // Pitch: every figure marked data-pitch is filled by pitch/data.js from the data (no stale hand-typed results)
+  const pitch = readFileSync('public/pitch/index.html', 'utf8'), pjs = readFileSync('public/pitch/data.js', 'utf8')
+  const keys = [...pitch.matchAll(/data-pitch="([a-z_]+)"/g)].map((m) => m[1])
+  assert.ok(keys.length >= 15)
+  for (const k of keys) assert.ok(pjs.includes("'" + k + "'"), 'pitch/data.js fills ' + k)
+  assert.ok(pitch.includes('<script type="module" src="data.js"></script>') && !/Honest Test \(Walk-Forward\)/.test(pitch))
+  console.log('audit views ok')
+}
+
+// Every classic script the site loads must parse (Oct-2026: a "/" in a Goldie regex broke explain.js and no test noticed)
+{
+  const { readdirSync } = await import('node:fs')
+  for (const dir of ['public/app', 'public/intro']) {
+    for (const f of readdirSync(dir).filter((x) => x.endsWith('.js'))) {
+      const src = readFileSync(dir + '/' + f, 'utf8')
+      if (/^\s*import |\bawait\b[^\n]*fetch/m.test(src)) continue          // ES modules are checked by node --check in CI
+      assert.doesNotThrow(() => new Function(src), dir + '/' + f + ' does not parse')
+    }
+  }
+  console.log('scripts parse ok')
 }

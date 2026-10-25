@@ -10,8 +10,9 @@ The README explains the research; SPEC.md is the original build spec (data, form
 - Live: https://gold-rv.vercel.app (Vercel deploys `main` automatically on every push).
   3D intro: `/intro/`. 3D pitch deck: `/pitch/`.
 - Verdict: the gaps between the contracts are real, but **no persistent edge is proven after costs**.
-  Lead with the clean test (2011–2023, rule frozen): 151 trades, −₹5,49,070 at 5 bps slippage, t −3.63,
-  11 of 13 years lost; −₹2,35,391 even at zero slippage.
+  Lead with the 2011–2023 historical holdout (settings never chosen on it; tender and liquidity rules tightened
+  25 Oct 2026, after its first results were known): 88 trades, −₹1,30,655 at 5 bps slippage, t −2.04, 9 of 12
+  years lost; at zero slippage it makes +₹51,534, so costs decide it. Never say it loses even at zero slippage.
 
 ## Layout
 

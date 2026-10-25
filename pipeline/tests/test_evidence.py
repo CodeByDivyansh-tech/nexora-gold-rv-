@@ -5,7 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 import pytest
-from scipy import stats
+from scipy.special import stdtr   # t-distribution CDF; t.sf(x, df) == stdtr(df, -x). scipy.stats is not needed
 
 from pipeline import config as C
 from pipeline.evidence import breakeven, roll_spreads, corwin_schultz
@@ -75,7 +75,7 @@ def test_test_year_is_labelled_as_not_clean_and_dates_are_in_order():
 
 def test_multiple_testing_p_value_is_computed_not_typed():
     e = _j('evidence.json')['multiple_testing']
-    p = 2 * stats.t.sf(abs(e['t']), df=e['n'] - 1)
+    p = 2 * stdtr(e['n'] - 1, -abs(e['t']))
     assert abs(e['p_two_sided'] - round(p, 3)) < 1e-9
     assert abs(e['p_bonferroni'] - round(min(1, p * e['rule_versions_scored_on_test']), 3)) < 1e-9
     assert e['settings_tried_on_training'] == len(C.WINDOW_GRID) * len(C.Z_ENTRY_GRID) * len(C.MAX_HOLD_GRID) * 6
@@ -85,8 +85,13 @@ def test_verdict_leads_with_the_clean_test_and_never_calls_the_test_year_unseen(
     m = _j('methodology.json')
     v = m['honest_conclusion']
     h = _j('history.json')
-    assert v.index('cleanest test') < v.index('test year')
+    assert v.index('historical holdout') < v.index('test year')
     assert 'not a clean' in v and 'unseen' not in v.lower()
+    # Oct-2026 audit: a single train/test split is not a rolling walk-forward, and the rule correction is disclosed
+    assert 'walk-forward' not in v.lower() and 'walk forward' not in v.lower()
+    assert 'corrected' in v and 'after the earlier version' in v
+    stages = ' '.join(s['name'] + ' ' + s['desc'] for s in m['stages']).lower()
+    assert 'not a rolling walk-forward' in stages
     assert f"{h['result']['by_slip']['5']['n']} trades" in v
     site = _j('site-data.json')
     assert site['conclusion'] == v
