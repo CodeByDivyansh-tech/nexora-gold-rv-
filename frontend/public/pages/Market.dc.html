@@ -116,6 +116,109 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
           <p style="margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted)">{{vsm.note}}</p>
         </section>
 
+        <section id="ts" class="grv-card" aria-labelledby="ts-h" style="scroll-margin-top: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 2.5vw, 26px); display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 id="ts-h" style="margin: 0; font-size: 18px; font-weight: 600">Term structure: the futures curve and carry<button type="button" class="grv-q" data-term="Cost of carry" aria-label="What does 'Cost of carry' mean?" title="What does this mean?">?</button></h2>
+            <span style="font-size: 13px; color: var(--muted); line-height: 1.5">Every listed contract, priced per 10 g of pure gold and placed at its expiry date. A curve that rises with expiry is carry: holding gold for longer costs money.</span>
+          </div>
+          <sc-if value="{{ts.show}}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center">
+              <div role="group" aria-label="Contracts shown" style="display: flex; flex-wrap: wrap; gap: 6px">
+                <sc-for list="{{ts.symOpts}}" as="o" hint-placeholder-count="4">
+                  <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.style}}"><span aria-hidden="true" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: {{o.color}}; margin-right: 6px"></span>{{o.label}}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <span style="font-size: 13px; font-weight: 600">{{ts.title}}</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center">
+                <span style="font-size: 12px; color: var(--muted)">Compare with:</span>
+                <sc-for list="{{ts.cmpOpts}}" as="o" hint-placeholder-count="5">
+                  <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.style}}">{{o.label}}</button>
+                </sc-for>
+              </div>
+            </div>
+            <figure style="margin: 0; display: flex; flex-direction: column; gap: 6px">
+              <div style="display: flex; justify-content: space-between; font: 500 11px 'Geist Mono', ui-monospace, monospace; color: var(--muted)"><span>{{ts.yHi}}</span><span>per 10 g pure</span></div>
+              <svg viewBox="0 0 1000 300" preserveAspectRatio="none" role="img" aria-label="{{ts.aria}}" style="width: 100%; height: 260px; display: block; overflow: visible">
+                <path d="{{ts.lineCmp}}" style="fill: none; stroke: var(--muted); stroke-width: 1.5px; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke"></path>
+                <path d="{{ts.lineCur}}" style="fill: none; stroke: var(--gold); stroke-width: 2.25px; vector-effect: non-scaling-stroke"></path>
+                <sc-for list="{{ts.dotsCmp}}" as="p" hint-placeholder-count="10">
+                  <circle cx="{{p.cx}}" cy="{{p.cy}}" r="{{p.r}}" style="fill: {{p.fill}}; stroke: {{p.stroke}}; stroke-width: 1.5px; vector-effect: non-scaling-stroke"><title>{{p.label}}</title></circle>
+                </sc-for>
+                <sc-for list="{{ts.dotsCur}}" as="p" hint-placeholder-count="10">
+                  <circle cx="{{p.cx}}" cy="{{p.cy}}" r="{{p.r}}" style="fill: {{p.fill}}; stroke: {{p.stroke}}; stroke-width: 2px; vector-effect: non-scaling-stroke"><title>{{p.label}}</title></circle>
+                </sc-for>
+              </svg>
+              <div style="display: flex; justify-content: space-between; font: 500 11px 'Geist Mono', ui-monospace, monospace; color: var(--muted)"><span>{{ts.yLo}} · expiry {{ts.xLo}}</span><span>expiry {{ts.xHi}}</span></div>
+              <figcaption style="display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted)">
+                <span><span aria-hidden="true" style="display: inline-block; width: 18px; height: 2px; background: var(--gold); vertical-align: middle; margin-right: 6px"></span>{{ts.legendCur}} (filled dots)</span>
+                <sc-if value="{{ts.hasCmp}}" hint-placeholder-val="{{ true }}"><span><span aria-hidden="true" style="display: inline-block; width: 18px; border-top: 2px dashed var(--muted); vertical-align: middle; margin-right: 6px"></span>{{ts.legendCmp}} (hollow dots)</span></sc-if>
+                <span>Dot colour = contract</span>
+              </figcaption>
+            </figure>
+            <sc-if value="{{ts.hasWarn}}" hint-placeholder-val="{{ false }}">
+              <ul style="margin: 0; padding: 10px 14px 10px 30px; border: 1px solid var(--down); border-radius: 12px; font-size: 13px; line-height: 1.5; display: flex; flex-direction: column; gap: 4px">
+                <sc-for list="{{ts.warn}}" as="w" hint-placeholder-count="1"><li>{{w}}</li></sc-for>
+              </ul>
+            </sc-if>
+            <div style="overflow-x: auto; border: 1px solid var(--line); border-radius: 14px">
+              <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 13px">
+                <caption class="sr">Contracts on the curve, their expiry, price per 10 g of pure gold, change since the comparison date and data flags</caption>
+                <thead>
+                  <tr style="text-align: left; color: var(--muted); font-size: 12px">
+                    <th style="padding: 10px 12px; font-weight: 500">Contract</th><th style="padding: 10px 8px; font-weight: 500">Expiry</th>
+                    <th style="padding: 10px 8px; font-weight: 500; text-align: right">Calendar days</th><th style="padding: 10px 8px; font-weight: 500; text-align: right">Trading days</th>
+                    <th style="padding: 10px 8px; font-weight: 500; text-align: right">Per 10 g pure</th><th style="padding: 10px 8px; font-weight: 500; text-align: right">Change since {{ts.legendCmp}}</th>
+                    <th style="padding: 10px 8px; font-weight: 500; text-align: right">Volume</th><th style="padding: 10px 8px; font-weight: 500; text-align: right">OI</th>
+                    <th style="padding: 10px 12px; font-weight: 500">Flags</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ts.rows}}" as="r" hint-placeholder-count="10">
+                    <tr style="border-top: 1px solid var(--line)">
+                      <td style="padding: 9px 12px; font-weight: 600; white-space: nowrap"><span aria-hidden="true" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: {{r.color}}; margin-right: 6px"></span>{{r.sym}}</td>
+                      <td style="padding: 9px 8px; white-space: nowrap">{{r.exp}}</td>
+                      <td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.days}}</td>
+                      <td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.td}}</td>
+                      <td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.px}}</td>
+                      <td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.chg}}</td>
+                      <td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.vol}}</td>
+                      <td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.oi}}</td>
+                      <td style="padding: 9px 12px; color: {{r.flagColor}}; line-height: 1.4">{{r.flags}}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px">
+              <div style="border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+                <span style="font-weight: 600; font-size: 14px">Carry: how it is estimated</span>
+                <p style="margin: 0; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; line-height: 1.6; background: var(--raised); border-radius: 10px; padding: 10px 12px">c = ln(F_far ÷ F_near) × 365 ÷ days between expiries<br><span style="color: var(--muted)">per year; F = Bhavcopy close of two GOLDPETAL contracts on the same day</span></p>
+                <span style="font-size: 14px">On {{ts.legendCur}}: <b style="font-family: 'Geist Mono', ui-monospace, monospace">{{ts.carry.now}}</b></span>
+                <span style="font-size: 13px; color: var(--muted); line-height: 1.5">{{ts.carry.from}}</span>
+                <sc-if value="{{ts.carry.unstable}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: var(--down)">{{ts.carry.unstableText}}</span></sc-if>
+                <span style="font-size: 13px; color: var(--muted); line-height: 1.5">Median {{ts.carry.median}} a year (middle half {{ts.carry.iqr}}). Flagged as unstable on {{ts.carry.flagged}}. Every gap on the site removes this carry for the days between the two contracts' expiries; a missing day reuses the last estimate, never a later one.</span>
+              </div>
+              <div style="border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+                <span style="font-weight: 600; font-size: 14px">Where a day's price change comes from (average size, bps a day)</span>
+                <div style="overflow-x: auto">
+                  <table style="width: 100%; min-width: 440px; border-collapse: collapse; font-size: 12px">
+                    <thead><tr style="text-align: right; color: var(--muted)"><th style="text-align: left; padding: 6px 4px; font-weight: 500">Contract</th><th style="padding: 6px 4px; font-weight: 500">Total</th><th style="padding: 6px 4px; font-weight: 500">Gold</th><th style="padding: 6px 4px; font-weight: 500">Roll-down</th><th style="padding: 6px 4px; font-weight: 500">Curve</th><th style="padding: 6px 4px; font-weight: 500">Residual</th><th style="padding: 6px 4px; font-weight: 500">Identity gap</th></tr></thead>
+                    <tbody>
+                      <sc-for list="{{ts.decRows}}" as="d" hint-placeholder-count="4">
+                        <tr style="border-top: 1px solid var(--line); text-align: right; font-family: 'Geist Mono', ui-monospace, monospace"><td style="text-align: left; padding: 6px 4px; font-family: 'Geist', system-ui, sans-serif; font-weight: 600; white-space: nowrap"><span aria-hidden="true" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: {{d.color}}; margin-right: 6px"></span>{{d.sym}}</td><td style="padding: 6px 4px">{{d.total}}</td><td style="padding: 6px 4px">{{d.gold}}</td><td style="padding: 6px 4px">{{d.roll}}</td><td style="padding: 6px 4px">{{d.curve}}</td><td style="padding: 6px 4px">{{d.resid}}</td><td style="padding: 6px 4px">{{d.gap}}</td></tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </div>
+                <span style="font-size: 12px; color: var(--muted); line-height: 1.5">{{ts.decNote}}</span>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ts.wait}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 13px; color: var(--muted)">{{ts.wait}}</p></sc-if>
+        </section>
+
         <section class="grv-detail" aria-labelledby="regime-h" style="display: flex; flex-direction: column; gap: 12px">
           <div style="display: flex; flex-direction: column; gap: 4px">
             <h2 id="regime-h" style="margin: 0; font-size: 18px; font-weight: 600">Normal is not fixed</h2>
@@ -253,6 +356,10 @@ class Component extends DCLogic {
       .then((r) => r.json())
       .then((h) => this.setState({ HC: h }))
       .catch(() => {});
+    fetch('data/curve.json')
+      .then((r) => r.json())
+      .then((c) => this.setState({ CV: c }))
+      .catch(() => this.setState({ CVfail: true }));
   }
 
   tokens(dark) {
@@ -263,7 +370,7 @@ class Component extends DCLogic {
   }
 
   inr(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
-  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
+  srs(n) { return (n < 0 ? '−' : '+') + '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
   sgn(n, d) { return (n < 0 ? '−' : '+') + Math.abs(n).toFixed(d); }
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
 
@@ -442,7 +549,90 @@ class Component extends DCLogic {
 
     return {
       ...shell, loading: false, ready: true, ranges, legend, four, hover, gapTen, vsm, regimes, regimeH, specs, examples,
-      expM: this.fd(Q.GOLDM.expiryDate), expOther: this.fd(Q.GOLDTEN.expiryDate)
+      expM: this.fd(Q.GOLDM.expiryDate), expOther: this.fd(Q.GOLDTEN.expiryDate),
+      ts: this.termStructure(st.CV, st, COL, SYMS, D)
+    };
+  }
+
+  // Term structure and carry (Oct-2026 audit): every number here is read from curve.json (pipeline/build_site_data.py)
+  termStructure(CV, st, COL, SYMS, D) {
+    const empty = { show: false, wait: st.CVfail ? 'The curve data did not load.' : 'Loading the futures curve…' };
+    if (!CV || !CV.snapshots || !CV.snapshots.length) return empty;
+    const snaps = CV.snapshots;
+    const byDate = {}; snaps.forEach((s) => { byDate[s.date] = s; });
+    const cur = byDate[CV.latest] ? CV.latest : snaps[snaps.length - 1].date;
+    const cmp = byDate[st.tsCmp] && st.tsCmp !== cur ? st.tsCmp : (byDate[CV.month_ago] ? CV.month_ago : null);
+    const on = SYMS.filter((s) => !st.tsOff || st.tsOff.indexOf(s) < 0);
+    const pick = (snap) => (snap ? snap.contracts.filter((c) => on.indexOf(c.symbol) >= 0) : []);
+    const A = pick(byDate[cur]), B = pick(byDate[cmp]);
+    const tw = (D.lifecycleRule && D.lifecycleRule.tenderTd) || 5;
+    // chart: x = expiry date, y = rupees per 10 g of pure gold; only contracts that traded that day are joined by the line
+    const W = 1000, H = 300, padL = 8, padR = 8, padT = 16, padB = 28;
+    const pts = A.concat(B);
+    const ok = pts.filter((c) => !c.no_trade);
+    const xs = pts.map((c) => Date.parse(c.expiry)), ys = ok.map((c) => c.px_per_10g_pure);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const ypad = (y1 - y0) * 0.08 || 100;
+    const X = (e) => padL + (x1 > x0 ? (Date.parse(e) - x0) / (x1 - x0) : 0.5) * (W - padL - padR);
+    const Y = (v) => padT + (1 - (v - (y0 - ypad)) / ((y1 + ypad) - (y0 - ypad))) * (H - padT - padB);
+    const line = (list) => list.filter((c) => !c.no_trade).sort((a, b) => (a.expiry < b.expiry ? -1 : 1))
+      .map((c, i) => (i ? 'L' : 'M') + X(c.expiry).toFixed(1) + ' ' + Y(c.px_per_10g_pure).toFixed(1)).join(' ');
+    const dot = (c, which) => ({ cx: X(c.expiry).toFixed(1), cy: Y(c.no_trade ? (y0 + y1) / 2 : c.px_per_10g_pure).toFixed(1),
+      fill: which === 'cur' && !c.no_trade ? COL[c.symbol] : 'var(--panel)', stroke: COL[c.symbol], r: which === 'cur' ? 6 : 4.5,
+      label: c.symbol + ' ' + this.fd(c.expiry) + ' on ' + this.fd(which === 'cur' ? cur : cmp) + ': ' + (c.no_trade ? 'no trade' : this.inr(c.px_per_10g_pure) + ' per 10 g pure') });
+    const prevOf = {}; B.forEach((c) => { prevOf[c.symbol + '|' + c.expiry] = c; });
+    const curKeys = {}; A.forEach((c) => { curKeys[c.symbol + '|' + c.expiry] = 1; });
+    const rows = A.slice().sort((a, b) => (a.expiry < b.expiry ? -1 : a.expiry > b.expiry ? 1 : a.symbol < b.symbol ? -1 : 1)).map((c) => {
+      const p = prevOf[c.symbol + '|' + c.expiry];
+      const flags = [];
+      if (c.no_trade) flags.push('no trade that day');
+      else if (c.thin) flags.push('thin (low volume or OI)');
+      if (c.td_to_exp < tw) flags.push('inside the assumed ' + tw + '-day tender window');
+      if (c.spec_status !== 'secondary' && c.spec_status !== 'official') flags.push('specification ' + c.spec_status);
+      return { sym: c.symbol, color: COL[c.symbol], exp: this.fd(c.expiry), days: c.days_to_exp + ' d', td: String(c.td_to_exp),
+        px: c.no_trade ? '–' : this.inr(c.px_per_10g_pure),
+        chg: p && !p.no_trade && !c.no_trade ? this.srs(c.px_per_10g_pure - p.px_per_10g_pure) : (cmp ? 'not listed then' : '–'),
+        vol: c.vol.toLocaleString('en-IN'), oi: c.oi.toLocaleString('en-IN'), flags: flags.length ? flags.join('; ') : 'none',
+        flagColor: flags.length ? 'var(--down)' : 'var(--muted)' };
+    });
+    const warn = [];
+    const onlyB = B.filter((c) => !curKeys[c.symbol + '|' + c.expiry]).length;
+    const onlyA = A.filter((c) => !prevOf[c.symbol + '|' + c.expiry]).length;
+    if (cmp && (onlyA || onlyB)) warn.push('The two dates do not hold the same contracts (' + onlyA + ' only on ' + this.fd(cur) + ', ' + onlyB + ' only on ' + this.fd(cmp) + '): compare like with like using the table.');
+    if (A.filter((c) => !c.no_trade).length < 2) warn.push('Fewer than two traded contracts are selected, so there is no curve to draw.');
+    if (A.some((c) => c.no_trade)) warn.push('Hollow dots are contracts that did not trade that day; their close is not a traded price and is left off the line.');
+    if (cmp && byDate[cmp].contracts.some((c) => c.symbol === 'GOLDTEN') !== byDate[cur].contracts.some((c) => c.symbol === 'GOLDTEN')) warn.push('GOLDTEN was not listed on one of the two dates (listed 2025).');
+    const ref = byDate[cur].carry_from;
+    const dec = CV.decomposition || {};
+    const decRows = SYMS.filter((s) => dec[s]).map((s) => {
+      const m = dec[s].mean_abs_bps;
+      return { sym: s, color: COL[s], rows: dec[s].rows.toLocaleString('en-IN'), total: m.total.toFixed(1), gold: m.gold.toFixed(1),
+        roll: m.rolldown.toFixed(2), curve: m.curve.toFixed(2), resid: m.residual.toFixed(1), gap: dec[s].max_identity_gap_bps < 0.001 ? '< 0.001' : dec[s].max_identity_gap_bps.toFixed(3) };
+    });
+    const chip = (on2) => 'min-height: 36px; padding: 0 12px; border-radius: 999px; cursor: pointer; font: 500 13px \'Geist\', system-ui, sans-serif; ' +
+      (on2 ? 'background: var(--glow); color: var(--gold); border: 1px solid var(--gold)' : 'background: transparent; color: var(--fg); border: 1px solid var(--line)');
+    return {
+      show: true, wait: '',
+      title: 'Futures curve on ' + this.fd(cur) + (cmp ? ' and ' + this.fd(cmp) : ''),
+      cmpOpts: snaps.filter((s) => s.date !== cur).map((s) => ({ label: this.fd(s.date), pressed: s.date === cmp ? 'true' : 'false', style: chip(s.date === cmp),
+        pick: () => this.setState({ tsCmp: s.date }) })),
+      symOpts: SYMS.map((s) => { const isOn = on.indexOf(s) >= 0; return { label: s, color: COL[s], pressed: isOn ? 'true' : 'false', style: chip(isOn),
+        pick: () => { const off = (st.tsOff || []).slice(); const k = off.indexOf(s); if (k >= 0) off.splice(k, 1); else if (on.length > 1) off.push(s); this.setState({ tsOff: off }); } }; }),
+      lineCur: line(A), lineCmp: cmp ? line(B) : '', hasCmp: !!cmp,
+      dotsCur: A.map((c) => dot(c, 'cur')), dotsCmp: B.map((c) => dot(c, 'cmp')),
+      yHi: this.inr(y1), yLo: this.inr(y0), xLo: this.fd(new Date(x0).toISOString().slice(0, 10)), xHi: this.fd(new Date(x1).toISOString().slice(0, 10)),
+      legendCur: this.fd(cur), legendCmp: cmp ? this.fd(cmp) : '',
+      aria: 'Futures curve: rupees per 10 g of pure gold against expiry date, ' + A.length + ' contracts on ' + this.fd(cur) + (cmp ? ', compared with ' + B.length + ' on ' + this.fd(cmp) : ''),
+      rows, warn, hasWarn: warn.length > 0,
+      carry: {
+        now: byDate[cur].reference_carry_pct.toFixed(2) + '% a year',
+        from: ref ? 'From the GOLDPETAL ' + this.fd(ref.near) + ' and ' + this.fd(ref.far) + ' contracts (the pair with the most open interest the day before; contracts inside their tender window are skipped).' : 'No usable GOLDPETAL pair that day: the last estimate is carried forward.',
+        unstable: !!(ref && ref.unstable),
+        unstableText: 'This estimate is outside ' + CV.carry_sane_pct[0] + '–' + CV.carry_sane_pct[1] + '% a year and is flagged as unstable.',
+        median: CV.median_carry_pct.toFixed(2) + '%', iqr: CV.iqr_carry_pct[0].toFixed(2) + '–' + CV.iqr_carry_pct[1].toFixed(2) + '%',
+        flagged: CV.carry_unstable_days.toLocaleString('en-IN') + ' of ' + CV.carry_days.toLocaleString('en-IN') + ' days'
+      },
+      decRows, decNote: 'Each contract\'s daily change in log price = gold move (from the nearest GOLDPETAL contract, carry removed) + roll-down (last carry × the day of time to expiry that passed) + curve change (change in carry × time to expiry) + residual. It is an accounting identity: the parts add back exactly (largest gap shown), so it says where a move came from, not what caused it. The residual is large because one day\'s carry is a noisy estimate. Our own MCX download only (' + this.fd(D.start) + ' on); the 2011–2023 years are not decomposed.'
     };
   }
 }

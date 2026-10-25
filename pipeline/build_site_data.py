@@ -25,7 +25,13 @@ from pipeline.config import (
     STOP_Z_BUFFER,
     MAX_FILL_MOVE,
     MIN_TRAIN_TRADES,
+    CARRY_SANE_LO,
+    CARRY_SANE_HI,
+    MIN_ENTRY_TD,
+    EXIT_LEAD_TD,
+    MAX_PARTICIPATION,
 )
+from pipeline.contract_rules import CONSERVATIVE_TENDER_TD
 from pipeline.load import load_clean_bhavcopy
 from pipeline.carry import compute_reference_carry, compute_carry_decomposition
 from pipeline.pairs import build_all_pairs, compute_rolling_z
@@ -286,32 +292,46 @@ def build_all_site_data(output_dir: str = 'frontend/public/data'):
         for d, val in carry_series.items()
     ]
     # Sample curves on selected milestone dates
+    # The latest curve and one about a month (21 trading days) earlier, for the Market page's term-structure view,
+    # plus the older milestone dates; all computed from the data (never typed in)
+    month_ago = pd.Timestamp(dates[max(0, len(dates) - 1 - 21)])
     sample_dates = [
         pd.Timestamp('2024-03-28'),
         pd.Timestamp('2024-09-30'),
         pd.Timestamp('2025-03-31'),
         pd.Timestamp('2025-09-30'),
         pd.Timestamp('2026-03-31'),
+        month_ago,
         pd.Timestamp(last_date),
     ]
     curve_snapshots = []
-    for s_date in sample_dates:
+    for s_date in sorted(set(sample_dates)):
         snap_df = df[df['date'] == s_date]
         if snap_df.empty:
             continue
         c_items = []
-        for _, row in snap_df.iterrows():
+        for _, row in snap_df.sort_values('expiry').iterrows():
             c_items.append({
                 'symbol': row['symbol'],
                 'expiry': row['expiry'].strftime('%Y-%m-%d'),
                 'days_to_exp': int((row['expiry'] - row['date']).days),
+                'td_to_exp': int(row['td_to_exp']),
                 'px_per_g_pure': round(float(row['px_per_g_pure']), 2),
                 'px_per_10g_pure': round(float(row['px_per_10g_pure']), 2),
+                'close': round(float(row['close']), 2),
                 'oi': int(row['oi']),
+                'vol': int(row['vol']),
+                'no_trade': bool(row['no_trade']),
+                'thin': bool(row['thin']),
+                'spec_status': str(row['spec_status']),
             })
+        ref = chosen_pet_ref.loc[s_date] if s_date in chosen_pet_ref.index else None
         curve_snapshots.append({
             'date': s_date.strftime('%Y-%m-%d'),
             'reference_carry_pct': round(float(carry_series.get(s_date, 0.06)) * 100.0, 2),
+            # which GOLDPETAL calendar spread gave the carry that day (None: carried forward from an earlier day)
+            'carry_from': None if ref is None else {'near': ref['expiry_n'].strftime('%Y-%m-%d'), 'far': ref['expiry_f'].strftime('%Y-%m-%d'),
+                                                    'unstable': bool(ref['unstable'])},
             'contracts': c_items,
         })
         
@@ -323,6 +343,28 @@ def build_all_site_data(output_dir: str = 'frontend/public/data'):
         ],
         'reference_carry_series': ref_carry_records,
         'snapshots': curve_snapshots,
+        'latest': pd.Timestamp(last_date).strftime('%Y-%m-%d'),
+        'month_ago': month_ago.strftime('%Y-%m-%d'),
+        'carry_unstable_days': int(chosen_pet_ref['unstable'].sum()),
+        'carry_days': int(len(chosen_pet_ref)),
+        'carry_sane_pct': [round(CARRY_SANE_LO * 100, 1), round(CARRY_SANE_HI * 100, 1)],
+        # Decomposition of each contract's daily log price change (carry.compute_carry_decomposition), in bps a day.
+        # It is an accounting identity: gold + roll-down + curve change + residual = the actual change. It describes
+        # where a move came from; it does not show what caused it.
+        'decomposition': {
+            sym: {
+                'rows': int((decomp_df['symbol'] == sym).sum()),
+                'mean_abs_bps': {k: round(float(decomp_df.loc[decomp_df['symbol'] == sym, c].abs().mean() * 1e4), 2)
+                                 for k, c in (('total', 'd_ln_F'), ('gold', 'gold_move'), ('rolldown', 'rolldown'),
+                                              ('curve', 'curve_change'), ('residual', 'residual'))},
+                'sum_bps': {k: round(float(decomp_df.loc[decomp_df['symbol'] == sym, c].sum() * 1e4), 1)
+                            for k, c in (('total', 'd_ln_F'), ('gold', 'gold_move'), ('rolldown', 'rolldown'),
+                                         ('curve', 'curve_change'), ('residual', 'residual'))},
+                # identity check: the four parts add back to the total on every row (largest gap, bps)
+                'max_identity_gap_bps': round(float((decomp_df.loc[decomp_df['symbol'] == sym, 'd_ln_F']
+                                                     - decomp_df.loc[decomp_df['symbol'] == sym, ['gold_move', 'rolldown', 'curve_change', 'residual']].sum(axis=1)).abs().max() * 1e4), 6),
+            } for sym in CONTRACT_SPECS if (decomp_df['symbol'] == sym).any()
+        },
     }
     save_json(os.path.join(output_dir, 'curve.json'), curve_data)
     
@@ -563,6 +605,19 @@ def build_all_site_data(output_dir: str = 'frontend/public/data'):
                     'reason': tr['reason'],
                     'days': int(tr['days']),
                     'seg': tr['seg'],
+                    # Oct-2026 audit: costs by side, size per leg, participation and lifecycle evidence per trade
+                    'cost_entry': round(float(tr['cost_entry']), 2),
+                    'cost_exit': round(float(tr['cost_exit']), 2),
+                    'lots_a': round(float(tr['lots_a']), 3),
+                    'lots_b': round(float(tr['lots_b']), 3),
+                    'part_entry': tr['part_entry'],
+                    'part_exit': tr['part_exit'],
+                    'forced_fill': bool(tr['forced_fill']),
+                    'td_exit_a': int(tr['td_exit_a']),
+                    'td_exit_b': int(tr['td_exit_b']),
+                    'tender_td_a': tr['tender_td_a'],
+                    'tender_td_b': tr['tender_td_b'],
+                    'lifecycle': tr['lifecycle'],
                 })
                 
             backtest_payload = {
@@ -758,30 +813,36 @@ def build_all_site_data(output_dir: str = 'frontend/public/data'):
     hs, h0 = hr.get('by_slip', {}).get(str(BASE_SLIPPAGE)), hr.get('by_slip', {}).get('0')
     def made(v: float) -> str:
         return ('made ' if v > 0 else 'lost ') + rs(abs(v))
+    hy = f"{hist['window']['from'][:4]}–{hist['window']['to'][:4]}"
     if hs:
-        hist_txt = (f"The cleanest test is {hist['window']['from'][:4]}–{hist['window']['to'][:4]}: the rule and its settings were "
-                    f"frozen before that data was used. There it {made(hs['net_rs'])} over {hs['n']} trades at {BASE_SLIPPAGE} bps "
+        hist_txt = (f"The historical holdout is {hy}: the settings were chosen on training data only and that period was never "
+                    f"used to choose them. There the rule {made(hs['net_rs'])} over {hs['n']} trades at {BASE_SLIPPAGE} bps "
                     f"slippage (t = {str(hs['t']).replace('-', '−')})"
                     + (f", and {made(h0['net_rs'])} even with zero slippage. " if h0 and h0['net_rs'] < 0 else ". "))
     else:
         hist_txt = ''
+    if b['test_net_rs'] > 0:
+        test_txt = (f"Its profit rests on one episode ({crash_txt}), and it is not significant ({t_txt}{p_txt}). ")
+    else:
+        test_txt = f"It is not significant either way ({t_txt}{p_txt}). "
     honest = (
         f"Cross-contract gold gaps are real and measurable, but no persistent edge is proven after costs. {hist_txt}"
         f"The {TEST_START[:4]}–{TEST_END[2:4]} test year {made(b['test_net_rs'])} over {b['test_n']} trades, but it is not a clean "
-        f"test: the five-check rule was written after that year's first results were seen. Its profit also rests on one "
-        f"episode ({crash_txt}), and it is not significant ({t_txt}{p_txt}). In training the same rule "
-        f"{made(b['train_net_rs'])} over {b['train_n']} trades, and training would have switched on only {len(on_pairs)} of 6 pairs."
+        f"test: the five-check rule was written after that year's first results were seen. {test_txt}In training the same rule "
+        f"{made(b['train_net_rs'])} over {b['train_n']} trades, and training would have switched on only {len(on_pairs)} of 6 pairs. "
+        f"In Oct 2026 the contract-lifecycle and liquidity rules were corrected (tender windows, size-aware volume checks); "
+        f"that was done after the earlier version's results on every period were known, to fix the rules, not to change the results."
     )
     methodology_data = {
         'stages': [
             {'step': 1, 'name': 'Load & Validate', 'desc': f'Parse {hist["window"]["rows"] + len(df):,} daily prices: {hist["window"]["rows"]:,} from the MCX history book (2011–2023) and {len(df):,} from our own MCX download (Oct 2023 on). Strip symbols, check primary keys, compare against the raw MCX file and the book, flag no-trade days.'},
-            {'step': 2, 'name': 'Normalize', 'desc': 'Divide close by quote grams and purity to get a price per gram of pure gold.'},
-            {'step': 3, 'name': 'Implied Carry', 'desc': 'Estimate the cost of carry from GOLDPETAL calendar spreads; forward-fill only.'},
+            {'step': 2, 'name': 'Normalize', 'desc': 'Divide the Bhavcopy close by the grams it is quoted for and by its purity (from a date-effective specification table) to get a price per gram of pure gold.'},
+            {'step': 3, 'name': 'Implied Carry', 'desc': 'Estimate the cost of carry from GOLDPETAL calendar spreads, skipping contracts inside their tender window; forward-fill only. Estimates outside 0–15% a year are flagged as unstable.'},
             {'step': 4, 'name': 'Pair Construction', 'desc': 'Pick contracts using the previous day\'s open interest, so nothing from the future is used.'},
-            {'step': 5, 'name': 'Point-in-Time z-scores', 'desc': 'Rolling mean and spread of each gap use only earlier days.'},
-            {'step': 6, 'name': 'One rule: five checks', 'desc': f'The same five checks drive today\'s alerts and every backtest trade: enough history, an unusual gap that is not already past the stop-loss, a gap bigger than {HURDLE_MULTIPLE:.0f}× the round-trip cost, liquidity, and contract life.'},
-            {'step': 7, 'name': 'Walk-Forward Test', 'desc': f'Settings tuned on Train ({TRAIN_START[:7]} to {TRAIN_END[:7]}) and frozen for Test ({TEST_START[:7]} to {TEST_END[:7]}). A pair is traded in Test only if training gave at least {MIN_TRAIN_TRADES} trades and a profit. The same frozen rule is then run on {hist["window"]["from"][:4]}–{hist["window"]["to"][:4]}, years it never saw: the clean test.'},
-            {'step': 8, 'name': 'Costs & Attribution', 'desc': f'Each closed trade is split into spread and gold parts after statutory costs and slippage. No fills on days a leg moved {MAX_FILL_MOVE*100:.0f}% or more.'},
+            {'step': 5, 'name': 'Point-in-Time z-scores', 'desc': 'One rolling mean and spread for alerts, charts and backtest, from earlier days only.'},
+            {'step': 6, 'name': 'One rule: five checks', 'desc': f'The same five checks drive today\'s alerts and every backtest trade: enough history, an unusual gap that is not already past the stop-loss, a gap bigger than {HURDLE_MULTIPLE:.0f}× the round-trip cost, liquidity sized to the trade (each leg at most {MAX_PARTICIPATION*100:.0f}% of that day\'s volume), and contract life (each leg clear of its own tender window).'},
+            {'step': 7, 'name': 'Train/test split and historical holdout', 'desc': f'Settings chosen once on Train ({TRAIN_START[:7]} to {TRAIN_END[:7]}) by highest net after costs, then frozen for the test year ({TEST_START[:7]} to {TEST_END[:7]}) and for the historical holdout ({hist["window"]["from"][:4]}–{hist["window"]["to"][:4]}). There is no separate validation period and no rolling re-fit, so this is a single split, not a rolling walk-forward. A pair is traded in Test only if training gave at least {MIN_TRAIN_TRADES} trades and a profit.'},
+            {'step': 8, 'name': 'Costs & Attribution', 'desc': f'Each closed trade is split into spread and gold parts after statutory costs and slippage; every trade is also marked to market daily for portfolio figures. No fills on days a leg moved {MAX_FILL_MOVE*100:.0f}% or more, except a flagged forced exit before a tender window.'},
         ],
         'split_dates': {
             'train_start': TRAIN_START,
@@ -796,14 +857,20 @@ def build_all_site_data(output_dir: str = 'frontend/public/data'):
             'Signals generated at close t execute at close t+1; exits never fill at the signal\'s own close',
             f'No fills on days either leg moved {MAX_FILL_MOVE*100:.0f}% or more (prices may be stuck at the daily limit)',
             'Carry rate c_t is forward-filled only; never backward-filled',
+            f'A position opens only if both legs are at least {MIN_ENTRY_TD} trading days from expiry on the signal day, and is closed by the last trading day before either leg\'s {CONSERVATIVE_TENDER_TD}-day tender window (the calendar is known in advance, so this uses no future data)',
         ],
         'limitations': [
-            'EOD settlement close is an official reference, not an executable book fill.',
-            'Bhavcopy volume indicates activity but does not measure order-book depth. Slippage is assumed at '
+            'Prices are the Bhavcopy close: a daily reference, not an executable fill. We have not verified that it equals MCX\'s official settlement price in every period.',
+            'Bhavcopy volume indicates activity but does not measure order-book depth or guarantee execution; the size check '
+            f'(each leg at most {MAX_PARTICIPATION*100:.0f}% of the day\'s volume) is a screen, not a fill model. Open interest is only a screen. Slippage is assumed at '
             f'{BASE_SLIPPAGE} bps per order: daily data cannot measure it (see the slippage check), only real broker fills can.',
+            f'Tender periods: no MCX circular could be read directly (MCX refuses automated requests). Broker notices report 5 trading days '
+            f'(2025) and 3 days (from Feb 2026) for the smaller gold contracts; we apply the longer {CONSERVATIVE_TENDER_TD}-day window to every contract '
+            'and year. Contract specifications before Oct 2023 are assumed equal to today\'s (no source found).',
             f"The {TEST_START[:4]}–{TEST_END[2:4]} test year is not a clean out-of-sample test: the five-check rule was written "
             f"on {ev['test_year']['rule_frozen']}, after the original study's test-year results were known. The "
-            f"{hist['window']['from'][:4]}–{hist['window']['to'][:4]} check is the clean one.",
+            f"{hist['window']['from'][:4]}–{hist['window']['to'][:4]} historical holdout was never used to choose settings, but the "
+            "Oct-2026 lifecycle and liquidity correction was made after the earlier version's results there were known.",
             'GOLDTEN contracts listed only on 31-Mar-2025, offering limited historical depth.',
             f'Test period contains only {int(per_pair_n.min()) if len(per_pair_n) else 0} to {int(per_pair_n.max()) if len(per_pair_n) else 0} trades per pair ({b["test_n"]} in total); small samples preclude high certainty.',
             'GOLDPETAL repriced against the other contracts: ' + pb['summary'],
@@ -850,6 +917,14 @@ def build_all_site_data(output_dir: str = 'frontend/public/data'):
     print("--- 9. Extra checks: alert follow-through and 95% ranges ---")
     from pipeline.robustness import build as build_robustness
     build_robustness(output_dir)
+
+    print("--- 10. Portfolio: every trade marked to market daily, all pairs together ---")
+    from pipeline.portfolio import build as build_portfolio
+    build_portfolio(output_dir)
+
+    print("--- 11. Provenance: raw-file hashes, ingestion counts, contract-rule tables ---")
+    from pipeline.provenance import build as build_provenance
+    build_provenance(output_dir, carry_chosen=chosen_pet_ref)
 
     print("--- Build complete! All JSON files written successfully. ---")
 

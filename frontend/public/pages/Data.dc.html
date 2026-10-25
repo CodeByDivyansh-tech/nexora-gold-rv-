@@ -44,7 +44,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 20px">
         <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
           <h1 class="grv-foil" style="margin: 0; font-size: clamp(30px, 4vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Where the numbers come from</h1>
-          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 62ch">Every price on this site is an official MCX end-of-day settlement from the Bhavcopy, from 2011 to today. Here is what we have, where each part comes from, how we checked it, and what it cannot tell you.</p>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 62ch">Every price on this site is the end-of-day close from MCX's Bhavcopy, from 2011 to today. Here is what we have, where each part comes from, how we checked it, and what it cannot tell you.</p>
         </div>
         <div class="headmeta" style="align-items: center; gap: 12px">
           <button type="button" data-dl="1" onClick="{{openDl}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); font: 600 14px 'Geist', system-ui, sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>Download</button>
@@ -149,7 +149,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 
         <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch">
           <section class="grv-detail grv-card" aria-labelledby="pit-h" style="flex: 1 1 360px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
-            <h2 id="pit-h" style="margin: 0; font-size: 16px; font-weight: 600">How we avoid peeking at the future<button type="button" class="grv-q" data-term="Walk-forward test" aria-label="What does 'Walk-forward test' mean?" title="What does this mean?">?</button></h2>
+            <h2 id="pit-h" style="margin: 0; font-size: 16px; font-weight: 600">How we avoid peeking at the future<button type="button" class="grv-q" data-term="Train/test split" aria-label="What does 'Train/test split' mean?" title="What does this mean?">?</button></h2>
             <ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.55">
               <sc-for list="{{rules}}" as="r" hint-placeholder-count="5">
                 <li>{{r.text}}</li>
@@ -165,6 +165,54 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
             </ul>
           </section>
         </div>
+
+        <section id="specs" class="grv-card" aria-labelledby="spec-h" style="scroll-margin-top: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 2.5vw, 26px); display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 id="spec-h" style="margin: 0; font-size: 18px; font-weight: 600">Contract specifications and tender rules, and how sure we are</h2>
+            <span style="font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 90ch">{{spec.note}}</span>
+          </div>
+          <div style="overflow-x: auto; border: 1px solid var(--line); border-radius: 14px">
+            <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 13px">
+              <caption class="sr">Contract specifications by period, with source and verification status</caption>
+              <thead><tr style="text-align: left; color: var(--muted); font-size: 12px"><th style="padding: 10px 12px; font-weight: 500">Contract</th><th style="padding: 10px 8px; font-weight: 500">In force</th><th style="padding: 10px 8px; font-weight: 500">Lot</th><th style="padding: 10px 8px; font-weight: 500">Priced per</th><th style="padding: 10px 8px; font-weight: 500">Purity</th><th style="padding: 10px 8px; font-weight: 500">Status</th><th style="padding: 10px 12px; font-weight: 500">Source</th></tr></thead>
+              <tbody>
+                <sc-for list="{{spec.rows}}" as="r" hint-placeholder-count="7">
+                  <tr style="border-top: 1px solid var(--line)"><td style="padding: 9px 12px; font-weight: 600">{{r.sym}}</td><td style="padding: 9px 8px; white-space: nowrap">{{r.when}}</td><td style="padding: 9px 8px; font-family: 'Geist Mono', ui-monospace, monospace">{{r.lot}}</td><td style="padding: 9px 8px; font-family: 'Geist Mono', ui-monospace, monospace">{{r.quote}}</td><td style="padding: 9px 8px; font-family: 'Geist Mono', ui-monospace, monospace">{{r.purity}}</td><td style="padding: 9px 8px; color: {{r.color}}; font-weight: 600">{{r.status}}</td><td style="padding: 9px 12px; color: var(--muted); line-height: 1.45">{{r.source}}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin: 0; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; line-height: 1.6; background: var(--raised); border-radius: 10px; padding: 10px 12px">₹ per 10 g of pure gold = Bhavcopy close ÷ grams quoted ÷ purity × 10<br><span style="color: var(--muted)">purity applied once; the specification in force on that row's date is used</span></p>
+          <span style="font-weight: 600; font-size: 14px">Tender periods: what sources report, and the rule we apply</span>
+          <div style="overflow-x: auto; border: 1px solid var(--line); border-radius: 14px">
+            <table style="width: 100%; min-width: 700px; border-collapse: collapse; font-size: 13px">
+              <caption class="sr">Tender-period lengths reported by sources, per contract and expiry period</caption>
+              <thead><tr style="text-align: left; color: var(--muted); font-size: 12px"><th style="padding: 10px 12px; font-weight: 500">Contract</th><th style="padding: 10px 8px; font-weight: 500">Expiries</th><th style="padding: 10px 8px; font-weight: 500; text-align: right">Reported window</th><th style="padding: 10px 8px; font-weight: 500">Status</th><th style="padding: 10px 12px; font-weight: 500">Source</th></tr></thead>
+              <tbody>
+                <sc-for list="{{spec.tender}}" as="r" hint-placeholder-count="7">
+                  <tr style="border-top: 1px solid var(--line)"><td style="padding: 9px 12px; font-weight: 600">{{r.sym}}</td><td style="padding: 9px 8px; white-space: nowrap">{{r.when}}</td><td style="padding: 9px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{r.td}}</td><td style="padding: 9px 8px; color: var(--gold); font-weight: 600">{{r.status}}</td><td style="padding: 9px 12px; color: var(--muted); line-height: 1.45">{{r.source}}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin: 0; font-size: 14px; line-height: 1.6">{{spec.applied}}</p>
+          <sc-if value="{{prov.show}}" hint-placeholder-val="{{ true }}">
+            <span style="font-weight: 600; font-size: 14px">Files the site is built from (SHA-256)</span>
+            <span style="font-size: 13px; color: var(--muted); line-height: 1.5">{{prov.hashNote}} {{prov.priceField}}</span>
+            <div style="overflow-x: auto; border: 1px solid var(--line); border-radius: 14px">
+              <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 12px">
+                <caption class="sr">Raw and derived data files with their SHA-256 hashes and row counts</caption>
+                <thead><tr style="text-align: left; color: var(--muted)"><th style="padding: 9px 12px; font-weight: 500">File</th><th style="padding: 9px 8px; font-weight: 500">Kind</th><th style="padding: 9px 8px; font-weight: 500; text-align: right">Rows</th><th style="padding: 9px 12px; font-weight: 500">SHA-256</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{prov.files}}" as="f" hint-placeholder-count="6">
+                    <tr style="border-top: 1px solid var(--line)"><td style="padding: 8px 12px"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'Geist Mono', ui-monospace, monospace">{{f.file}}</span><span style="color: var(--muted)">{{f.what}}</span></span></td><td style="padding: 8px 8px">{{f.role}}</td><td style="padding: 8px 8px; text-align: right; font-family: 'Geist Mono', ui-monospace, monospace">{{f.rows}}</td><td style="padding: 8px 12px; font-family: 'Geist Mono', ui-monospace, monospace; overflow-wrap: anywhere; color: var(--muted)">{{f.sha}}</td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+            <span style="font-size: 13px; color: var(--muted); line-height: 1.5">{{prov.ingest}}</span>
+          </sc-if>
+        </section>
 
         <section class="grv-detail" aria-labelledby="log-h" style="display: flex; flex-direction: column; gap: 12px">
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
@@ -246,6 +294,10 @@ class Component extends DCLogic {
       .then((r) => r.json())
       .then((h) => this.setState({ H: h }))
       .catch(() => {});
+    fetch('data/provenance.json')
+      .then((r) => r.json())
+      .then((p) => this.setState({ PV: p }))
+      .catch(() => {});
   }
 
   tokens(dark) {
@@ -256,6 +308,35 @@ class Component extends DCLogic {
   }
 
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
+  // Date-effective specifications and tender rules (site-data.json -> lifecycleRule.tables, from pipeline/contract_rules.py)
+  specView(D) {
+    const LR = D.lifecycleRule;
+    if (!LR || !LR.tables) return { note: '', rows: [], tender: [], applied: '' };
+    const T = LR.tables;
+    const COLR = { official: 'var(--up)', secondary: 'var(--gold)', assumed: 'var(--down)', unavailable: 'var(--muted)' };
+    const when = (a, b) => (a ? this.fd(a) : 'first row we hold') + ' – ' + (b ? this.fd(b) : 'today');
+    return {
+      note: T.note,
+      rows: T.specs.map((r) => ({ sym: r.symbol, when: when(r.start, r.end), lot: r.lot_grams + ' g', quote: r.quote_grams + ' g',
+        purity: String(Math.round(r.purity * 1000)), status: r.status, color: COLR[r.status] || 'var(--fg)', source: r.source })),
+      tender: T.tender_reported.map((r) => ({ sym: r.symbol, when: when(r.expiry_from, r.expiry_to), td: r.reported_td + ' trading days', status: r.status, source: r.source })),
+      applied: 'Applied rule, every contract and every year: the last ' + LR.tenderTd + ' trading days up to and including expiry are treated as the tender window (the longest any source reports). A position is closed by the last trading day before either leg\'s window, the exit is decided ' + LR.exitLeadTd + ' trading days before that, and a new position needs at least ' + LR.minEntryTd + ' trading days to expiry on both legs. Contract months no source covers are marked unverified; no trade is counted as fully verified until an MCX circular confirms its window.'
+    };
+  }
+
+  // Provenance record (provenance.json, pipeline/provenance.py)
+  provView(PV) {
+    if (!PV || !PV.files) return { show: false, files: [] };
+    const ing = PV.ingestion || {};
+    const n = (x) => (x == null ? '–' : Number(x).toLocaleString('en-IN'));
+    return {
+      show: true, hashNote: PV.hash_note, priceField: PV.price_field,
+      files: PV.files.map((f) => ({ file: f.file, what: f.what, role: f.role, rows: n(f.rows), sha: f.sha256 })),
+      ingest: 'Ingestion, from the retrieval log: ' + n(ing.requests_or_files) + ' requests or files, ' + n(ing.rows_received) + ' rows received, ' +
+        n(ing.rows_outside_range_or_after_expiry) + ' dropped as outside the requested dates or after expiry, ' + n(ing.rows_rejected_not_futures) + ' rejected as not futures. ' + (ing.note || '')
+    };
+  }
+
   fdm(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('/'); return (+p[0]) + ' ' + M[+p[1] - 1] + ' ' + p[2]; }
 
   renderVals() {
@@ -278,21 +359,21 @@ class Component extends DCLogic {
     const n = (x) => x.toLocaleString('en-IN');
     // The whole study first (2011 to today); the two sources it is built from come right after.
     const big = [
-      { value: n(L.allRows), label: 'daily prices', note: 'One official settlement per contract per trading day, ' + this.fd(L.start) + ' to ' + this.fd(D.asOf) + ': ' + n(L.rows) + ' from the MCX history book and ' + n(m.rows) + ' from our own MCX download.', color: 'var(--fg)' },
+      { value: n(L.allRows), label: 'daily prices', note: 'One MCX Bhavcopy close per contract per trading day, ' + this.fd(L.start) + ' to ' + this.fd(D.asOf) + ': ' + n(L.rows) + ' from the MCX history book and ' + n(m.rows) + ' from our own MCX download.', color: 'var(--fg)' },
       { value: n(L.allContracts), label: 'contracts', note: 'Every expiry of GOLDM, GOLDGUINEA and GOLDPETAL since 2011, and of GOLDTEN since it was listed in 2025.', color: 'var(--fg)' },
       { value: n(L.allDays), label: 'trading days', note: this.fd(L.start) + ' to ' + this.fd(D.asOf) + ': ' + n(L.days) + ' in the clean-test years and ' + n(m.days) + ' since ' + this.fd(D.start) + '.', color: 'var(--fg)' },
       { value: String((m.mismatches || 0) + (L.checkMismatches || 0)), label: 'mismatches', note: n(L.checked) + ' rows where our download and the history book overlap agree on every field, and ' + n(m.checkRows) + ' rows of our raw MCX files match our cleaned data. Both checks run on every build.', color: (m.mismatches || 0) + (L.checkMismatches || 0) === 0 ? 'var(--up)' : 'var(--down)' }
     ];
     const parts = [
-      { name: 'MCX Gold Futures History Book', when: this.fd(L.start) + ' to ' + this.fd(L.end), what: n(L.rows) + ' daily prices from the book · ' + n(L.contracts) + ' contracts · ' + n(L.days) + ' trading days', use: 'The clean test: years the rule never saw. GOLDTEN was not listed yet, so three contracts.' },
+      { name: 'MCX Gold Futures History Book', when: this.fd(L.start) + ' to ' + this.fd(L.end), what: n(L.rows) + ' daily prices from the book · ' + n(L.contracts) + ' contracts · ' + n(L.days) + ' trading days', use: 'The clean test: years never used to choose the settings. GOLDTEN was not listed yet, so three contracts.' },
       { name: 'Our own MCX Bhavcopy download', when: this.fd(D.start) + ' to ' + this.fd(D.asOf), what: n(m.rows) + ' daily prices from our own download · ' + n(m.contracts) + ' contracts · ' + n(m.days) + ' trading days', use: 'Training (to ' + this.fd(D.split.train_end) + '), the test year (to ' + this.fd(D.split.test_end) + ') and today\'s numbers. All four contracts.' }
     ];
     const C = D.rule.current['5'];
-    const srs = (x) => (x < 0 ? '−' : '+') + '₹' + Math.abs(Math.round(x)).toLocaleString('en-IN');
+    const srs = (x) => (x < 0 ? '−' : '+') + '₹' + Math.round(Math.abs(x)).toLocaleString('en-IN');
     const how = [
       { value: n(L.allRows), color: 'var(--fg)', what: 'daily prices, ' + L.start.slice(0, 4) + ' to ' + D.asOf.slice(0, 4), source: 'Counted row by row from the two source files: the MCX history book (data/raw/mcx_history_book.csv, 2011–2023 part) and our MCX download (data/raw/gold_bhavcopy_clean.csv).' },
       { value: String((m.mismatches || 0) + (L.checkMismatches || 0)), color: 'var(--up)', what: 'mismatches', source: 'pipeline/history.py compares the ' + n(L.checked) + ' rows both sources cover, field by field; pipeline/download.py rebuilds our clean file from the raw MCX files and must match it byte for byte.' },
-      { value: srs(L.net), color: L.net < 0 ? 'var(--down)' : 'var(--up)', what: 'the clean test: ' + L.n + ' trades, ' + L.start.slice(0, 4) + '–' + L.end.slice(0, 4), source: 'The frozen rule run on years it never saw (pipeline/history.py). Every trade is in history_charts.json, and a test checks they add up to this total.' },
+      { value: srs(L.net), color: L.net < 0 ? 'var(--down)' : 'var(--up)', what: 'the clean test: ' + L.n + ' trades, ' + L.start.slice(0, 4) + '–' + L.end.slice(0, 4), source: 'The frozen rule run on years never used to choose its settings (pipeline/history.py). Every trade is in history_charts.json, and a test checks they add up to this total.' },
       { value: srs(C.test_net_rs), color: C.test_net_rs < 0 ? 'var(--down)' : 'var(--up)', what: 'the 12-month test year: ' + C.test_n + ' trades (one part of the study, not a clean test)', source: 'pipeline/build_site_data.py. Trades closed in the ' + D.events.crashShort + ' made ' + srs(C.crash_net_rs) + '; the rest ' + srs(C.ex_crash_net_rs) + '.' },
       { value: D.rt.toFixed(1) + ' bps', color: 'var(--fg)', what: 'round-trip cost, the basis of the cost line', source: 'MCX, SEBI and government rates plus our 5 bps slippage assumption per order (pipeline/attribution.py); the Signals page lets you change it.' },
       { value: 'Every setting', color: 'var(--fg)', what: 'in Try your own rule', source: 'A real run of the same engine (pipeline/explore.py), not an estimate. Its cell for the published settings reproduces the published results exactly, checked by a test.' }
@@ -303,7 +384,7 @@ class Component extends DCLogic {
     // MCX held regular Saturday sessions until early 2014; after that only special ones
     const sat = wk.filter((d) => d <= '2014-03-31' && !SPECIAL[d]), special = wk.filter((d) => d > '2014-03-31' || SPECIAL[d]);
     const quality = [
-      { value: n(m.noTrade + (L.noTrade || 0)), label: 'days with no trades removed', note: 'A settlement with zero volume is not a real price, so we leave it out: ' + n(L.noTrade || 0) + ' in 2011–2023 and ' + n(m.noTrade) + ' since Oct 2023.' },
+      { value: n(m.noTrade + (L.noTrade || 0)), label: 'days with no trades removed', note: 'A close with zero volume is not a traded price, so we leave it out: ' + n(L.noTrade || 0) + ' in 2011–2023 and ' + n(m.noTrade) + ' since Oct 2023.' },
       { value: n(m.thin + (L.thin || 0)), label: 'thin days flagged', note: 'Fewer than 25 lots traded or under 50 open: no signal, and slippage is tripled if a trade is open. ' + n(L.thin || 0) + ' in 2011–2023 and ' + n(m.thin) + ' since Oct 2023.' },
       { value: String(wk.length), label: 'weekend sessions kept', note: (sat.length ? sat.length + ' regular Saturday sessions, which MCX held until ' + this.fd(sat[sat.length - 1]).replace(/^\d+ /, '') + '. ' : '') + 'Special sessions: ' + special.map((d) => this.fd(d) + (SPECIAL[d] ? ' (' + SPECIAL[d] + ')' : '')).join(', ') + '. All real trading days, so we kept them.' }
     ];
@@ -329,7 +410,7 @@ class Component extends DCLogic {
         show: true,
         intro: 'Another team shared their MCX Gold Futures History Book with us: official MCX Bhavcopy rows from ' + this.fd(HX.source.first) + ' to ' + this.fd(HX.source.last) + '. Thank you!',
         facts: [
-          { value: n(HX.source.rows), label: 'daily settlements in the book', note: since + '. We use ' + n(D.longrun.rows) + ' of them (' + this.fd(HX.window.from) + ' to ' + this.fd(HX.window.to) + ') for the clean test, and the ' + n(k.shared_rows) + ' that overlap our download to check it.', color: 'var(--fg)' },
+          { value: n(HX.source.rows), label: 'daily closes in the book', note: since + '. We use ' + n(D.longrun.rows) + ' of them (' + this.fd(HX.window.from) + ' to ' + this.fd(HX.window.to) + ') for the clean test, and the ' + n(k.shared_rows) + ' that overlap our download to check it.', color: 'var(--fg)' },
           { value: n(HX.source.contracts), label: 'contracts in the book', note: 'Each contract listed under its own expiry, exactly as MCX published it.', color: 'var(--fg)' },
           { value: String(k.mismatches), label: 'mismatches with our data', note: n(k.shared_rows) + ' rows both sources cover, compared on open, high, low, close, volume, open interest and value.', color: k.mismatches === 0 ? 'var(--up)' : 'var(--down)' },
           { value: String(SUP.missing_contracts.length), label: 'contracts our download missed, now added', note: (SUP.missing_rows || 0) + ' traded rows: ' + SUP.missing_contracts.join(', ') + '. They were the busiest contracts in Oct–Dec 2023.', color: 'var(--fg)' }
@@ -339,6 +420,7 @@ class Component extends DCLogic {
     }
     return {
       ...shell, loading: false, ready: true, big, parts, how, quality, stages, rules, limits, log, hx,
+      spec: this.specView(D), prov: this.provView(st.PV),
       logCount: D.retrieval.length, logExpanded: showAll ? 'true' : 'false',
       logButton: showAll ? 'Show the first 8' : 'Show all ' + D.retrieval.length,
       toggleLog: () => this.setState({ all: !showAll })

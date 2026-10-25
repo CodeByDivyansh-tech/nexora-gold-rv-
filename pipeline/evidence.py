@@ -29,7 +29,7 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-from scipy import stats
+from scipy.special import stdtr   # t-distribution CDF; t.sf(x, df) == stdtr(df, -x). scipy.stats is not needed
 
 from pipeline import config as C
 from pipeline.load import load_clean_bhavcopy
@@ -259,7 +259,7 @@ def build(data_dir: str = 'frontend/public/data', csv_path: str = 'data/raw/gold
     # 3. multiple testing on the test year
     b5 = cur[str(C.BASE_SLIPPAGE)]
     n, t = b5['test_n'], b5['test_t']
-    p_two = float(2 * stats.t.sf(abs(t), df=n - 1)) if (t is not None and n > 1) else None
+    p_two = float(2 * stdtr(n - 1, -abs(t))) if (t is not None and n > 1) else None
     versions = C.TEST_YEAR_RULE_VERSIONS
     grid_combos = len(C.WINDOW_GRID) * len(C.Z_ENTRY_GRID) * len(C.MAX_HOLD_GRID)
     multiple = {

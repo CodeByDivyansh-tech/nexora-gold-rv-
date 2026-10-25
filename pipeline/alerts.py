@@ -11,20 +11,25 @@ from pipeline.config import (
     STOP_Z_BUFFER,
 )
 from pipeline.attribution import calculate_round_trip_cost_bps
+from pipeline.config import PAIR_DEFINITIONS
+from pipeline.lifecycle import entry_timing_ok, intended_lots, min_entry_td, size_liquidity_ok
+from pipeline.pairs import rolling_stats
 
 def evaluate_pair_gates(
     row: pd.Series,
     W: int,
     ze: float,
     round_trip_cost_bps: float,
+    sym_a: str = None,
+    sym_b: str = None,
 ) -> Tuple[bool, List[str], Dict[str, bool]]:
     """
     Evaluates 5 gates from Section 6 for a given pair row:
     1. Enough history: >= W prior observations
     2. Extreme: z_entry <= |z| < z_entry + STOP_Z_BUFFER (unusual, but not already past the stop-loss)
     3. Edge beats cost: |spread - mu| >= 2 * round_trip_cost_bps
-    4. Liquidity: both legs volume >= 25 lots and OI >= 50, not thin
-    5. Lifecycle: both legs >= 7 trading days to expiry, not a roll day
+    4. Liquidity: each leg's intended lots <= MAX_PARTICIPATION x its volume, volume >= 25 lots, OI >= 50, not thin
+    5. Lifecycle: each leg >= its own min entry days (tender window + exit lead + 2), not a roll day
     """
     gates = {}
     failed_reasons = []
@@ -51,17 +56,27 @@ def evaluate_pair_gates(
     if not edge_beats_cost:
         failed_reasons.append('edge')
         
-    # Gate 4: Liquidity
-    vol_ok = (row['vol_a'] >= MIN_VOLUME_LOTS) and (row['vol_b'] >= MIN_VOLUME_LOTS)
-    oi_ok = (row['oi_a'] >= MIN_OI_LOTS) and (row['oi_b'] >= MIN_OI_LOTS)
+    # Gate 4: Liquidity, sized to the trade: each leg's intended lots against that leg's own volume and OI
+    # (lifecycle.size_liquidity_ok, the same check the backtest makes on the signal day and on every fill day)
+    if sym_a and 'px_a' in row.index:
+        _, lots_a, lots_b = intended_lots(sym_a, sym_b, float(row['px_a']))
+        ok_a, _ = size_liquidity_ok(lots_a, row['vol_a'], row['oi_a'])
+        ok_b, _ = size_liquidity_ok(lots_b, row['vol_b'], row['oi_b'])
+        size_ok = ok_a and ok_b
+    else:
+        size_ok = (row['vol_a'] >= MIN_VOLUME_LOTS) and (row['vol_b'] >= MIN_VOLUME_LOTS) and \
+                  (row['oi_a'] >= MIN_OI_LOTS) and (row['oi_b'] >= MIN_OI_LOTS)
     not_thin = not bool(row.get('thin_a', False)) and not bool(row.get('thin_b', False))
-    liquidity_ok = vol_ok and oi_ok and not_thin
+    liquidity_ok = bool(size_ok and not_thin)
     gates['liquidity'] = liquidity_ok
     if not liquidity_ok:
         failed_reasons.append('liquidity')
         
-    # Gate 5: Lifecycle
-    td_ok = (row['td_to_exp_a'] >= MIN_ENTRY_TD) and (row['td_to_exp_b'] >= MIN_ENTRY_TD)
+    # Gate 5: Lifecycle: each leg far enough from its own tender window (lifecycle.entry_timing_ok, same as backtest)
+    if sym_a and 'expiry_a' in row.index:
+        td_ok = entry_timing_ok(sym_a, row['expiry_a'], row['td_to_exp_a'], sym_b, row['expiry_b'], row['td_to_exp_b'])
+    else:
+        td_ok = (row['td_to_exp_a'] >= MIN_ENTRY_TD) and (row['td_to_exp_b'] >= MIN_ENTRY_TD)
     not_roll = not bool(row.get('roll', False)) and not bool(row.get('roll_flag', False))
     lifecycle_ok = td_ok and not_roll
     gates['lifecycle'] = lifecycle_ok
@@ -92,11 +107,7 @@ def generate_today_alerts(
         p_df = pairs_dict[pair_id].copy()
         
         # Calculate rolling stats with chosen W
-        mu = p_df['spread'].rolling(W).mean().shift(1)
-        sd = p_df['spread'].rolling(W).std().shift(1)
-        p_df['mu'] = mu
-        p_df['sd'] = sd
-        p_df['z'] = (p_df['spread'] - mu) / sd
+        p_df['mu'], p_df['sd'], p_df['z'] = rolling_stats(p_df, W)   # same definition as the backtest and charts
         
         if as_of_date is not None:
             sub = p_df[p_df['date'] <= as_of_date]
@@ -106,9 +117,11 @@ def generate_today_alerts(
         last_row = sub.iloc[-1]
         dt = last_row['date']
         
+        sym_a, sym_b, _ = PAIR_DEFINITIONS[pair_id]
         is_signal, failed_reasons, gates = evaluate_pair_gates(
-            last_row, W=W, ze=ze, round_trip_cost_bps=rt_cost_bps
+            last_row, W=W, ze=ze, round_trip_cost_bps=rt_cost_bps, sym_a=sym_a, sym_b=sym_b
         )
+        grams_now, lots_a_now, lots_b_now = intended_lots(sym_a, sym_b, float(last_row['px_a']))
         sw = (switch or {}).get(pair_id, {'on': True, 'reason': 'no switch applied'})
         if not sw['on']:
             is_signal = False
@@ -146,6 +159,12 @@ def generate_today_alerts(
             'vol_b': int(last_row['vol_b']),
             'oi_a': int(last_row['oi_a']),
             'oi_b': int(last_row['oi_b']),
+            'lots_a': round(lots_a_now, 2),
+            'lots_b': round(lots_b_now, 2),
+            'part_a': round(lots_a_now / last_row['vol_a'], 4) if last_row['vol_a'] > 0 else None,
+            'part_b': round(lots_b_now / last_row['vol_b'], 4) if last_row['vol_b'] > 0 else None,
+            'min_entry_td_a': min_entry_td(sym_a, last_row['expiry_a']),
+            'min_entry_td_b': min_entry_td(sym_b, last_row['expiry_b']),
             'td_to_exp_a': int(last_row['td_to_exp_a']),
             'td_to_exp_b': int(last_row['td_to_exp_b']),
             'roll_flag': bool(last_row.get('roll', False)),

@@ -4,19 +4,32 @@ import numpy as np
 from typing import Tuple, Dict
 from pipeline.config import DEFAULT_CARRY
 
-def compute_reference_carry(df: pd.DataFrame, dates: np.ndarray) -> Tuple[pd.Series, pd.DataFrame]:
+def compute_reference_carry(df: pd.DataFrame, dates: np.ndarray, exclude_tender: bool = True) -> Tuple[pd.Series, pd.DataFrame]:
     """
     Computes daily reference carry c_t from GOLDPETAL calendar spreads (Section 4.2).
+    c_t = ln(F_far / F_near) * 365 / (calendar days between the two expiries), per year, from that day's closes.
+    The pair used each day is the one with the highest min(open interest) as of t-1, so the choice uses nothing
+    from day t onwards. Days with no usable pair carry the last estimate forward (never backward).
+
+    exclude_tender: skip pairs whose near contract is inside its tender window (contract_rules.tender_rule), where the
+        price reflects delivery, not carry (Oct-2026 audit). False reproduces the original study's choice.
     Returns:
         carry: pd.Series indexed by date with daily reference carry rate
-        chosen_pairs: pd.DataFrame with details of chosen GOLDPETAL contract pair per date
+        chosen_pairs: pd.DataFrame with details of chosen GOLDPETAL contract pair per date, incl. 'unstable'
+            (estimate outside [CARRY_SANE_LO, CARRY_SANE_HI] a year)
     """
+    from pipeline.config import CARRY_SANE_LO, CARRY_SANE_HI
+    from pipeline.contract_rules import tender_rule
     # GOLDPETAL traded rows
-    pet = df[(df['symbol'] == 'GOLDPETAL') & ~df['no_trade_day']][['date', 'expiry', 'px', 'oi_prev']].copy()
-    
+    cols = ['date', 'expiry', 'px', 'oi_prev'] + (['td_to_exp'] if 'td_to_exp' in df.columns else [])
+    pet = df[(df['symbol'] == 'GOLDPETAL') & ~df['no_trade_day']][cols].copy()
+
     # Pairwise merge on date
     cc = pet.merge(pet, on='date', suffixes=('_n', '_f'))
     cc = cc[cc['expiry_f'] > cc['expiry_n']].dropna(subset=['oi_prev_n', 'oi_prev_f', 'px_n', 'px_f'])
+    if exclude_tender and 'td_to_exp_n' in cc.columns:
+        win = cc['expiry_n'].map(lambda e: tender_rule('GOLDPETAL', e)['applied_td'])
+        cc = cc[cc['td_to_exp_n'] >= win]
     
     # Calendar days difference
     cc['gap_days'] = (cc['expiry_f'] - cc['expiry_n']).dt.days
@@ -28,7 +41,8 @@ def compute_reference_carry(df: pd.DataFrame, dates: np.ndarray) -> Tuple[pd.Ser
     # Choose pair with highest min(OI_prev) on t-1
     cc['m'] = np.minimum(cc['oi_prev_n'], cc['oi_prev_f'])
     chosen = cc.loc[cc.groupby('date')['m'].idxmax()].copy().set_index('date')
-    
+    chosen['unstable'] = (chosen['c'] < CARRY_SANE_LO) | (chosen['c'] > CARRY_SANE_HI)
+
     # Build complete daily carry series
     carry_series = pd.Series(index=pd.DatetimeIndex(dates), dtype=float)
     carry_series.loc[chosen.index] = chosen['c']

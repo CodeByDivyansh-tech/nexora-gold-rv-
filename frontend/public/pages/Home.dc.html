@@ -59,7 +59,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
       </div>
 
       <sc-if value="{{loading}}" hint-placeholder-val="{{ false }}">
-        <div role="status" style="display: flex; flex-direction: column; gap: 14px"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Loading the latest settlement data…</span><span class="grv-skel" style="height: 110px"></span><div aria-hidden="true" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 14px"><span class="grv-skel" style="height: 120px"></span><span class="grv-skel" style="height: 120px"></span><span class="grv-skel" style="height: 120px"></span></div><span class="grv-skel" aria-hidden="true" style="height: 320px"></span></div>
+        <div role="status" style="display: flex; flex-direction: column; gap: 14px"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Loading the latest MCX data…</span><span class="grv-skel" style="height: 110px"></span><div aria-hidden="true" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 14px"><span class="grv-skel" style="height: 120px"></span><span class="grv-skel" style="height: 120px"></span><span class="grv-skel" style="height: 120px"></span></div><span class="grv-skel" aria-hidden="true" style="height: 320px"></span></div>
       </sc-if>
 
       <sc-if value="{{failed}}" hint-placeholder-val="{{ false }}">
@@ -230,7 +230,7 @@ class Component extends DCLogic {
     return GRVTheme.tokens(dark);
   }
 
-  inr(n) { return (n < 0 ? '−' : '') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN'); }
+  inr(n) { return (n < 0 ? '−' : '') + '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
 
   stepHover(e, n, big) {
@@ -361,7 +361,7 @@ class Component extends DCLogic {
     ];
 
     // the answer in brief, before any scrolling: today, the 15-year verdict, and a way to test it yourself
-    const rsA = (x) => '₹' + Math.abs(Math.round(x)).toLocaleString('en-IN');
+    const rsA = (x) => '₹' + Math.round(Math.abs(x)).toLocaleString('en-IN');
     // explorer grid on the clean test (site-data.json → hindsight)
     const HS = D.hindsight;
     const hindsight = HS ? 'At ' + HS.slip + ' bps slippage, only ' + HS.profitable + ' of ' + HS.total + ' settings make money on ' + HS.start.slice(0, 4) + '–' + HS.end.slice(0, 4) + ', even picked with hindsight.' : '';
@@ -373,7 +373,7 @@ class Component extends DCLogic {
         cta: 'See all six pairs', bg: 'var(--panel)', border: 'var(--line)' },
       { kicker: yrs + ' years of testing, ' + L.start.slice(0, 4) + '–' + D.asOf.slice(0, 4), href: 'Backtesting.dc.html',
         head: L.net < 0 ? 'No reliable edge found' : 'An edge, before caveats', color: 'var(--fg)',
-        text: 'On ' + L.start.slice(0, 4) + '–' + L.end.slice(0, 4) + ', years the rule never saw, it ' + (L.net < 0 ? 'lost ' : 'made ') + rsA(L.net) + ' after costs and ' + L.losingYears + ' of ' + L.years + ' years lost money. The test-year profit came from the ' + D.events.crashShort + '.',
+        text: 'On ' + L.start.slice(0, 4) + '–' + L.end.slice(0, 4) + ', years never used to choose the settings, it ' + (L.net < 0 ? 'lost ' : 'made ') + rsA(L.net) + ' after costs and ' + L.losingYears + ' of ' + L.years + ' years lost money. The ' + D.split.test_start.slice(0, 4) + '–' + D.split.test_end.slice(2, 4) + ' test year ' + (R.test_net_rs >= 0 ? 'made ' : 'lost ') + rsA(R.test_net_rs) + ' and is not a clean test.',
         note: hindsight, cta: 'How we tested it', bg: 'var(--panel)', border: 'var(--line)' },
       { kicker: 'Check it yourself', href: 'Explore.dc.html', head: 'Try your own rule', color: 'var(--gold)',
         text: 'Change how unusual a gap must be, how long to hold and the slippage, and see ' + yrs + ' years of real backtest results.',
@@ -390,7 +390,7 @@ class Component extends DCLogic {
         { href: 'Signals.dc.html', label: 'See which check failed', why: 'pair by pair' },
         { href: 'Signals.dc.html', label: 'Try your own costs', why: 'your broker\'s slippage and fees' }] },
       { title: 'Show me the proof', steps: [
-        { href: 'Backtesting.dc.html', label: 'The clean test, ' + L.start.slice(0, 4) + '–' + L.end.slice(0, 4), why: 'years the rule never saw' },
+        { href: 'Backtesting.dc.html', label: 'The clean test, ' + L.start.slice(0, 4) + '–' + L.end.slice(0, 4), why: 'years never used to choose the settings' },
         { href: 'Explore.dc.html', label: 'Try other settings', why: 'real backtests, ' + yrs + ' years' },
         { href: 'Data.dc.html', label: 'Check the data', why: 'where each number comes from' }] }
     ];

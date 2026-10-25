@@ -53,6 +53,21 @@ def follow_through(series, i, horizon=HORIZON):
     return g0, half_day is not None, abs(g0) - abs(last), half_day
 
 
+def why_not_measured(series, i, horizon=HORIZON):
+    """Reason a signal day has no follow-through figure (mirrors follow_through's early returns)."""
+    r0 = series[i]
+    if r0['mu'] is None or r0['z'] is None:
+        return 'no normal level yet on the signal day'
+    if abs(r0['s'] - r0['mu']) < 1e-9:
+        return 'gap exactly at normal'
+    if i + 1 >= len(series):
+        return 'signal on the last day of data'
+    r = series[i + 1]
+    if r['ea'] != r0['ea'] or r['eb'] != r0['eb']:
+        return 'the pair switched to new contracts the next day'
+    return 'no later day on the same contracts'
+
+
 def summarise(rows):
     if not rows:
         return dict(n=0)
@@ -105,12 +120,15 @@ def build(data_dir='frontend/public/data'):
 
     groups = {'alert': [], 'alert_clean': [], 'alert_test': [], 'alert_train': [], 'alert_forward': [], 'unusual_small': [], 'ordinary': []}
     per_alert = []
+    excluded = []          # trades whose signal day has no follow-through figure, with the reason (alerts != trades)
     hist, hsig = _history_series(data_dir)
     for p, series in hist.items():
         ze = _load(data_dir, f'backtest/{p}_5.json')['params']['ze']
         for i, r in enumerate(series):
             ft = follow_through(series, i)
             if ft is None:
+                if r['d'] in hsig[p]:
+                    excluded.append(dict(pair=p, date=r['d'], period='clean', reason=why_not_measured(series, i)))
                 continue
             if r['d'] in hsig[p]:
                 groups['alert'].append(ft)
@@ -124,9 +142,11 @@ def build(data_dir='frontend/public/data'):
         series = _load(data_dir, f'pairs/{p}.json')
         for i, r in enumerate(series):
             ft = follow_through(series, i)
-            if ft is None:
-                continue
             key = (p, r['d'])
+            if ft is None:
+                if key in sig_days:
+                    excluded.append(dict(pair=p, date=r['d'], period=sig_days[key]['seg'], reason=why_not_measured(series, i)))
+                continue
             if key in sig_days:
                 h = sig_days[key]
                 groups['alert'].append(ft)
@@ -166,7 +186,16 @@ def build(data_dir='frontend/public/data'):
     boot['clean_5'] = bootstrap(clean5, rng)
     boot['clean_5']['total'] = _load(data_dir, 'history.json')['result']['by_slip']['5']['net_rs']
 
-    out = dict(horizon_days=HORIZON, round_trip_cost_bps=rt_cost, alerts=alerts, groups_from=hc['from'],
+    # Alerts and trades are different populations: every trade starts from an alert (its signal day), but the
+    # follow-through figure needs at least one later day on the same two contracts. The difference is listed here.
+    n_trades = len(history) + sum(len(p['trades']['5']) for p in hc['pairs'].values())
+    reconcile = dict(trades=n_trades, alerts_measured=alerts['alert']['n'], not_measured=len(excluded),
+                     adds_up=(alerts['alert']['n'] + len(excluded) == n_trades),
+                     excluded=sorted(excluded, key=lambda e: e['date']),
+                     definition=('Alert: a day all five checks passed and a trade was signalled. Trade: the position that followed, '
+                                 'filled at the next close. Follow-through is measured over the next ' + str(HORIZON) + ' trading days '
+                                 'while the same two contracts are held, so a signal with no later day on those contracts has no figure.'))
+    out = dict(horizon_days=HORIZON, round_trip_cost_bps=rt_cost, alerts=alerts, groups_from=hc['from'], reconcile=reconcile,
                alert_list=sorted(per_alert, key=lambda a: a['date'], reverse=True),
                bootstrap=boot, seed=SEED, draws=DRAWS, crash_window=list(CRASH))
     with open(os.path.join(data_dir, 'robustness.json'), 'w', encoding='utf-8') as f:

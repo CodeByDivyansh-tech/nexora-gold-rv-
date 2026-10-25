@@ -97,10 +97,25 @@ def segment_of(dates):
     return np.where(d <= pd.Timestamp(TRAIN_END), 'train', np.where(d <= pd.Timestamp(TEST_END), 'test', 'forward'))
 
 # Trading parameters & thresholds (Sections 5.2, 5.3, 5.4)
-TENDER_BUFFER_TD = 4        # Days before expiry to force square-off
-MIN_ENTRY_TD = 7            # Min trading days to expiry on entry
-MIN_VOLUME_LOTS = 25        # Liquidity filter
-MIN_OI_LOTS = 50            # Liquidity filter
+TENDER_BUFFER_TD = 4        # LEGACY ONLY (reference study): exit when a leg has <= 4 trading days left
+LEGACY_MIN_ENTRY_TD = 7     # LEGACY ONLY (reference study): min trading days to expiry on the signal day
+
+# Contract lifecycle for the current rule (Oct-2026 compliance audit). The old 4-day buffer let exits fill inside a
+# 5-day tender window. Now each leg has its own tender window (contract_rules.tender_rule: the conservative 5 trading
+# days including expiry, never shorter than any source reports), and:
+#   - an open position is closed by the close of the last trading day BEFORE either leg's tender window;
+#   - the exit decision is taken EXIT_LEAD_TD trading days before that, so there are EXIT_LEAD_TD chances to fill;
+#   - a new position needs both legs to be at least one day clear of that exit decision on its fill day.
+# td_to_exp is 0 on expiry day, so a 5-day window covers td_to_exp 0..4 and the last allowed fill is td_to_exp 5.
+EXIT_LEAD_TD = 2
+from pipeline.contract_rules import CONSERVATIVE_TENDER_TD  # noqa: E402
+MIN_ENTRY_TD = CONSERVATIVE_TENDER_TD + EXIT_LEAD_TD + 2    # 9: signal day; the fill day is then >= 8
+MIN_VOLUME_LOTS = 25        # Liquidity filter (absolute floor, both legs, signal day and fill day)
+MIN_OI_LOTS = 50            # Open-interest screen (both legs). OI is NOT evidence of executable depth.
+# Size-aware liquidity (Oct-2026 audit): each leg's intended lots may be at most this share of that contract's
+# traded volume on the signal day and on every fill day. Daily Bhavcopy volume cannot show bid-ask depth or
+# guarantee execution; this is a screen, not a fill model. 5% is the threshold the old (unused) capacity flag used.
+MAX_PARTICIPATION = 0.05
 THIN_VOLUME_THRESHOLD = 25  # Volume below which is considered thin
 THIN_OI_THRESHOLD = 50      # OI below which is considered thin
 NOTIONAL_PER_LEG = 1_000_000 # Target notional in ₹ per leg (~₹10 Lakh)
@@ -142,5 +157,18 @@ TEST_YEAR_FIRST_SEEN = '2026-10-02'
 RULE_FROZEN_ON = '2026-10-04'
 TEST_YEAR_RULE_VERSIONS = 3   # rule versions scored on the test year: original, five checks, five checks + switch
 
-LEGACY_RULE = {'use_hurdle': False, 'entry_band': False, 'max_fill_move': None}   # original study (reference_summary.csv)
-ALERT_RULE = {'use_hurdle': True, 'entry_band': True, 'max_fill_move': MAX_FILL_MOVE}  # the rule the site shows
+LEGACY_RULE = {'use_hurdle': False, 'entry_band': False, 'max_fill_move': None,      # original study (reference_summary.csv)
+               'lifecycle': 'legacy', 'max_participation': None}
+ALERT_RULE = {'use_hurdle': True, 'entry_band': True, 'max_fill_move': MAX_FILL_MOVE,  # the rule the site shows
+              'lifecycle': 'tender', 'max_participation': MAX_PARTICIPATION}
+
+# Rolling statistics (one policy for alerts, charts and backtest): mean and spread of the previous W observations of
+# the carry-adjusted spread (day t excluded). The window runs across contract rolls (the spread is carry-adjusted, so
+# consecutive contracts are comparable; entry is blocked on a roll day). A gap of more than ROLLING_GAP_DAYS calendar
+# days between observations restarts the window. (No such gap exists in the data as of Oct 2026.)
+ROLLING_GAP_DAYS = 10
+
+# Carry reference (pipeline/carry.py): GOLDPETAL calendar spreads whose near contract is inside its tender window
+# are not used. A carry estimate outside [CARRY_SANE_LO, CARRY_SANE_HI] a year is flagged as unstable.
+CARRY_SANE_LO = 0.0
+CARRY_SANE_HI = 0.15

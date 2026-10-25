@@ -3,70 +3,74 @@
  "round_trip_cost_bps": 24.4,
  "alerts": {
   "alert": {
-   "n": 202,
-   "halfway_pct": 63,
-   "median_closed_bps": 24.1,
-   "mean_closed_bps": 5.4,
-   "median_gap_bps": 74.5,
-   "median_days_to_half": 3.0
+   "n": 137,
+   "halfway_pct": 74,
+   "median_closed_bps": 32.0,
+   "mean_closed_bps": 23.7,
+   "median_gap_bps": 76.1,
+   "median_days_to_half": 3
   },
   "alert_clean": {
-   "n": 146,
-   "halfway_pct": 58,
-   "median_closed_bps": 18.3,
-   "mean_closed_bps": -7.9,
-   "median_gap_bps": 73.4,
-   "median_days_to_half": 3.0
+   "n": 88,
+   "halfway_pct": 69,
+   "median_closed_bps": 25.4,
+   "mean_closed_bps": 12.1,
+   "median_gap_bps": 75.2,
+   "median_days_to_half": 3
   },
   "alert_test": {
-   "n": 19,
-   "halfway_pct": 95,
-   "median_closed_bps": 47.8,
-   "mean_closed_bps": 71.5,
-   "median_gap_bps": 84.3,
-   "median_days_to_half": 2.0
+   "n": 16,
+   "halfway_pct": 94,
+   "median_closed_bps": 48.1,
+   "mean_closed_bps": 77.2,
+   "median_gap_bps": 106.1,
+   "median_days_to_half": 2
   },
   "alert_train": {
-   "n": 37,
-   "halfway_pct": 70,
-   "median_closed_bps": 19.6,
-   "mean_closed_bps": 24.0,
+   "n": 33,
+   "halfway_pct": 76,
+   "median_closed_bps": 26.3,
+   "mean_closed_bps": 28.6,
    "median_gap_bps": 74.4,
-   "median_days_to_half": 2.5
+   "median_days_to_half": 3
   },
   "alert_forward": {
    "n": 0
   },
   "unusual_small": {
-   "n": 773,
-   "halfway_pct": 58,
-   "median_closed_bps": 14.9,
-   "mean_closed_bps": 11.5,
-   "median_gap_bps": 66.8,
+   "n": 826,
+   "halfway_pct": 55,
+   "median_closed_bps": 13.9,
+   "mean_closed_bps": 1.1,
+   "median_gap_bps": 64.4,
    "median_days_to_half": 2.0
   },
   "ordinary": {
-   "n": 7273,
-   "halfway_pct": 80,
-   "median_closed_bps": -10.8,
-   "mean_closed_bps": -20.8,
-   "median_gap_bps": 11.6,
-   "median_days_to_half": 2.0
+   "n": 7196,
+   "halfway_pct": 79,
+   "median_closed_bps": -11.0,
+   "mean_closed_bps": -21.8,
+   "median_gap_bps": 11.3,
+   "median_days_to_half": 2
   }
  },
  "groups_from": "2011-04-18",
+ "reconcile": {
+  "trades": 138,
+  "alerts_measured": 137,
+  "not_measured": 1,
+  "adds_up": true,
+  "excluded": [
+   {
+    "pair": "M_GUINEA",
+    "date": "2025-09-30",
+    "period": "test",
+    "reason": "the pair switched to new contracts the next day"
+   }
+  ],
+  "definition": "Alert: a day all five checks passed and a trade was signalled. Trade: the position that followed, filled at the next close. Follow-through is measured over the next 10 trading days while the same two contracts are held, so a signal with no later day on those contracts has no figure."
+ },
  "alert_list": [
-  {
-   "pair": "M_GUINEA",
-   "date": "2026-05-26",
-   "seg": "test",
-   "z": 3.97,
-   "gap_bps": 88.8,
-   "halfway_10d": true,
-   "closed_bps": 77.7,
-   "days_to_half": 1,
-   "trade_net_rs": -9014.0
-  },
   {
    "pair": "TEN_PETAL",
    "date": "2026-03-30",
@@ -82,10 +86,10 @@
    "pair": "M_PETAL",
    "date": "2026-03-27",
    "seg": "test",
-   "z": 3.1,
-   "gap_bps": 214.0,
+   "z": 3.08,
+   "gap_bps": 214.1,
    "halfway_10d": true,
-   "closed_bps": 119.3,
+   "closed_bps": 119.5,
    "days_to_half": 7,
    "trade_net_rs": -1516.0
   },
@@ -104,23 +108,12 @@
    "pair": "M_GUINEA",
    "date": "2026-03-25",
    "seg": "test",
-   "z": 3.24,
-   "gap_bps": 120.8,
+   "z": 3.43,
+   "gap_bps": 127.9,
    "halfway_10d": true,
-   "closed_bps": 37.5,
+   "closed_bps": 44.9,
    "days_to_half": 9,
    "trade_net_rs": -18256.2
-  },
-  {
-   "pair": "GUINEA_TEN",
-   "date": "2026-02-17",
-   "seg": "test",
-   "z": 3.23,
-   "gap_bps": 69.1,
-   "halfway_10d": true,
-   "closed_bps": 25.3,
-   "days_to_half": 2,
-   "trade_net_rs": 4608.4
   },
   {
    "pair": "TEN_PETAL",
@@ -153,7 +146,7 @@
    "halfway_10d": true,
    "closed_bps": 182.5,
    "days_to_half": 3,
-   "trade_net_rs": 80066.0
+   "trade_net_rs": -86874.0
   },
   {
    "pair": "GUINEA_TEN",
@@ -198,17 +191,6 @@
    "closed_bps": 46.8,
    "days_to_half": 2,
    "trade_net_rs": 5276.2
-  },
-  {
-   "pair": "M_PETAL",
-   "date": "2025-11-19",
-   "seg": "test",
-   "z": -2.13,
-   "gap_bps": -49.7,
-   "halfway_10d": true,
-   "closed_bps": 29.3,
-   "days_to_half": 2,
-   "trade_net_rs": 8066.1
   },
   {
    "pair": "GUINEA_TEN",
@@ -300,17 +282,6 @@
   },
   {
    "pair": "M_PETAL",
-   "date": "2025-07-21",
-   "seg": "train",
-   "z": 3.09,
-   "gap_bps": 64.0,
-   "halfway_10d": false,
-   "closed_bps": 5.2,
-   "days_to_half": null,
-   "trade_net_rs": 1798.5
-  },
-  {
-   "pair": "M_PETAL",
    "date": "2025-06-27",
    "seg": "train",
    "z": -2.22,
@@ -376,17 +347,6 @@
    "trade_net_rs": -1783.7
   },
   {
-   "pair": "M_PETAL",
-   "date": "2025-02-18",
-   "seg": "train",
-   "z": -2.43,
-   "gap_bps": -122.4,
-   "halfway_10d": false,
-   "closed_bps": -73.5,
-   "days_to_half": null,
-   "trade_net_rs": -2311.3
-  },
-  {
    "pair": "GUINEA_PETAL",
    "date": "2025-02-17",
    "seg": "train",
@@ -417,7 +377,7 @@
    "halfway_10d": true,
    "closed_bps": -10.7,
    "days_to_half": 3,
-   "trade_net_rs": -8929.7
+   "trade_net_rs": -4084.7
   },
   {
    "pair": "M_PETAL",
@@ -461,7 +421,7 @@
    "halfway_10d": true,
    "closed_bps": 256.3,
    "days_to_half": 6,
-   "trade_net_rs": 4512.4
+   "trade_net_rs": 7332.4
   },
   {
    "pair": "M_PETAL",
@@ -538,7 +498,7 @@
    "halfway_10d": true,
    "closed_bps": -48.3,
    "days_to_half": 4,
-   "trade_net_rs": -5266.2
+   "trade_net_rs": 173.8
   },
   {
    "pair": "GUINEA_PETAL",
@@ -555,10 +515,10 @@
    "pair": "M_GUINEA",
    "date": "2024-06-10",
    "seg": "train",
-   "z": -2.58,
-   "gap_bps": -109.2,
+   "z": -2.62,
+   "gap_bps": -107.8,
    "halfway_10d": true,
-   "closed_bps": 81.2,
+   "closed_bps": 78.4,
    "days_to_half": 4,
    "trade_net_rs": 6152.7
   },
@@ -566,23 +526,12 @@
    "pair": "M_PETAL",
    "date": "2024-06-07",
    "seg": "train",
-   "z": -2.2,
-   "gap_bps": -89.4,
+   "z": -2.18,
+   "gap_bps": -88.4,
    "halfway_10d": true,
-   "closed_bps": 15.4,
+   "closed_bps": 13.5,
    "days_to_half": 7,
-   "trade_net_rs": -5082.1
-  },
-  {
-   "pair": "M_PETAL",
-   "date": "2024-04-18",
-   "seg": "train",
-   "z": -2.27,
-   "gap_bps": -118.5,
-   "halfway_10d": true,
-   "closed_bps": 3.5,
-   "days_to_half": 2,
-   "trade_net_rs": 6483.1
+   "trade_net_rs": 5787.9
   },
   {
    "pair": "M_PETAL",
@@ -629,17 +578,6 @@
    "trade_net_rs": -4028.1
   },
   {
-   "pair": "M_GUINEA",
-   "date": "2024-01-23",
-   "seg": "train",
-   "z": 2.92,
-   "gap_bps": 74.2,
-   "halfway_10d": false,
-   "closed_bps": 2.6,
-   "days_to_half": null,
-   "trade_net_rs": -5723.3
-  },
-  {
    "pair": "M_PETAL",
    "date": "2023-12-01",
    "seg": "train",
@@ -676,97 +614,97 @@
  "bootstrap": {
   "0": {
    "all": {
-    "n": 20,
-    "total": 174771.1,
-    "lo": 41903.5,
-    "hi": 376131.5,
-    "above_zero_pct": 100
+    "n": 17,
+    "total": -7087.2,
+    "lo": -202693.2,
+    "hi": 127450.1,
+    "above_zero_pct": 50
    },
    "crash": {
-    "n": 8,
-    "total": 159364.2
+    "n": 7,
+    "total": -14700.8
    },
    "without_crash": {
-    "n": 12,
-    "total": 15406.9,
-    "lo": -25675.4,
-    "hi": 54147.0,
-    "above_zero_pct": 78
+    "n": 10,
+    "total": 7613.5,
+    "lo": -28481.0,
+    "hi": 39778.6,
+    "above_zero_pct": 69
    }
   },
   "2": {
    "all": {
-    "n": 20,
-    "total": 150301.8,
-    "lo": 16792.3,
-    "hi": 340915.2,
-    "above_zero_pct": 99
+    "n": 17,
+    "total": -27053.4,
+    "lo": -227618.4,
+    "hi": 112118.8,
+    "above_zero_pct": 42
    },
    "crash": {
-    "n": 8,
-    "total": 150812.3
+    "n": 7,
+    "total": -22246.0
    },
    "without_crash": {
-    "n": 12,
-    "total": -510.5,
-    "lo": -43834.5,
-    "hi": 39288.6,
-    "above_zero_pct": 51
+    "n": 10,
+    "total": -4807.3,
+    "lo": -42692.5,
+    "hi": 27168.8,
+    "above_zero_pct": 43
    }
   },
   "5": {
    "all": {
-    "n": 20,
-    "total": 113597.9,
-    "lo": -21427.0,
-    "hi": 296243.3,
-    "above_zero_pct": 94
+    "n": 17,
+    "total": -57002.5,
+    "lo": -264140.2,
+    "hi": 85230.6,
+    "above_zero_pct": 32
    },
    "crash": {
-    "n": 8,
-    "total": 137984.5
+    "n": 7,
+    "total": -33563.9
    },
    "without_crash": {
-    "n": 12,
-    "total": -24386.6,
-    "lo": -72885.8,
-    "hi": 18013.7,
-    "above_zero_pct": 14
+    "n": 10,
+    "total": -23438.6,
+    "lo": -65726.9,
+    "hi": 9762.1,
+    "above_zero_pct": 10
    }
   },
   "10": {
    "all": {
-    "n": 20,
-    "total": 52424.8,
-    "lo": -84108.3,
-    "hi": 235409.8,
-    "above_zero_pct": 70
+    "n": 17,
+    "total": -106917.8,
+    "lo": -322667.6,
+    "hi": 42099.9,
+    "above_zero_pct": 12
    },
    "crash": {
-    "n": 8,
-    "total": 116604.8
+    "n": 7,
+    "total": -52427.0
    },
    "without_crash": {
-    "n": 12,
-    "total": -64180.1,
-    "lo": -119608.6,
-    "hi": -15946.7,
+    "n": 10,
+    "total": -54490.8,
+    "lo": -102942.0,
+    "hi": -18580.5,
     "above_zero_pct": 0
    }
   },
   "train_5": {
-   "n": 38,
-   "total": -16514.4,
-   "lo": -77229.8,
-   "hi": 43637.4,
-   "above_zero_pct": 30
+   "n": 33,
+   "total": 3774.8,
+   "lo": -53075.9,
+   "hi": 60319.5,
+   "above_zero_pct": 56
   },
   "clean_5": {
-   "n": 151,
-   "total": -549069.8,
-   "lo": -846623,
-   "hi": -281414,
-   "above_zero_pct": 0
+   "n": 88,
+   "total": -130654.8,
+   "lo": -250768,
+   "hi": -12552,
+   "above_zero_pct": 1
   }
  },
  "seed": 7,

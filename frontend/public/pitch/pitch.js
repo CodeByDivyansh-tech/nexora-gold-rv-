@@ -79,6 +79,8 @@ const speakerNotes = {
   16: "Slide 16 summarizes our key takeaways and engineering roadmap. The four core principles: normalize first, respect costs, attribute profits honestly, and automate tests. Our roadmap outlines immediate live paper trading, near-term tick-level slippage measurement, and later cross-commodity expansion to silver.",
   17: "Thank you judges for your time and thoughtful evaluation. We invite you to explore the live Gold RV Intelligence terminal or review our audited codebase on GitHub. We are now open for your questions.",
 };
+// pitch/data.js rewrites the result lines from the pipeline's JSON, so the deck never contradicts the site
+window.GRV_PITCH = { spokenLines, speakerNotes };
 
 // 4 Contracts Data
 const contractData = {
@@ -126,7 +128,7 @@ const contractData = {
 
 // Helper: Indian numbering format (1,13,598)
 function formatIndian(val) {
-  const absVal = Math.abs(Math.round(val));
+  const absVal = Math.round(Math.abs(val));
   const str = absVal.toString();
   const lastThree = str.substring(str.length - 3);
   const otherNumbers = str.substring(0, str.length - 3);
@@ -1449,18 +1451,11 @@ class PitchDeckManager {
       const counters = panel.querySelectorAll('.counter-stat');
       counters.forEach((el) => {
         gsap.killTweensOf(el);
-        const target = el.dataset.target;
-        if (target === '20') {
-          el.textContent = '20';
-        } else if (target === '113598') {
-          el.textContent = '+₹1,13,598';
-        } else if (target === '1.89') {
-          el.textContent = '1.89';
-        } else if (target === '19056') {
-          el.textContent = '-₹19,056';
-        } else if (target === '549070') {
-          el.textContent = '-₹5,49,070';
-        }
+        // final value straight from the element's data attributes (pitch/data.js fills them from the pipeline's JSON)
+        const v = parseFloat(el.dataset.target);
+        const dec = parseInt(el.dataset.decimals || '0', 10);
+        const body = el.dataset.indian === 'true' ? Math.round(v).toLocaleString('en-IN') : v.toFixed(dec);
+        el.textContent = (el.dataset.prefix || '') + body;
       });
     }
 

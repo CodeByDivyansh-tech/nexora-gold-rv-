@@ -19,7 +19,7 @@ def test_backtest_reproduces_reference_summary():
     
     # Load and run pipeline backtest on the rows the original study used (no history-book supplement)
     df, dates, tdi = load_clean_bhavcopy('data/raw/gold_bhavcopy_clean.csv', end=TEST_END, original_only=True)
-    carry_series, _ = compute_reference_carry(df, dates)
+    carry_series, _ = compute_reference_carry(df, dates, exclude_tender=False)   # the original study's carry choice
     pairs = build_all_pairs(df, carry_series)
     P = prepare_contract_lookup(df)
     

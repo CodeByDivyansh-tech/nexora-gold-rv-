@@ -23,7 +23,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 .bf-t tr.bf-group td{padding:14px 14px 6px;font-weight:600;font-size:15px;border-top:1px solid var(--line);background:var(--raised)}
 .bf-chip{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);color:var(--gold);font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap}
 .bf-chip:hover{border-color:var(--gold)}
-.bf-done{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font:600 12px 'Geist',system-ui,sans-serif;background:color-mix(in srgb,var(--up) 16%,transparent);color:var(--up);white-space:nowrap}
+.bf-st{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font:600 12px/1.35 'Geist',system-ui,sans-serif}
+.bf-ok{background:color-mix(in srgb,var(--up) 16%,transparent);color:var(--up)}
+.bf-unv{background:var(--glow);color:var(--gold)}
+.bf-part{background:color-mix(in srgb,var(--down) 14%,transparent);color:var(--down)}
+.bf-none{background:var(--raised);color:var(--muted);border:1px solid var(--line)}
 .bf-lab{display:none}
 /* phones: each row becomes a card, so nothing scrolls sideways */
 @media (max-width: 760px){
@@ -61,7 +65,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 20px">
         <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
           <h1 class="grv-foil" style="margin: 0; font-size: clamp(30px, 4vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">The brief, answered</h1>
-          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 62ch">Problem 03 asked for six things. Each row below is one line of the brief, what we built for it, and the page that proves it. Every number here is read from the same data files as the rest of the site.</p>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 62ch">Problem 03 asked for six things. Each row below is one line of the brief, how far we got, what we built, and the page that shows it. Every number here is read from the same data files as the rest of the site.</p>
         </div>
         <div class="headmeta" style="align-items: center; gap: 12px">
           <button type="button" data-dl="1" onClick="{{openDl}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); font: 600 14px 'Geist', system-ui, sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>Download</button>
@@ -102,7 +106,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
               <thead>
                 <tr>
                   <th scope="col" style="width: 26%">The brief asked for</th>
-                  <th scope="col" style="width: 9%">Status</th>
+                  <th scope="col" style="width: 19%">Status</th>
                   <th scope="col">What we show</th>
                   <th scope="col" style="width: 22%">Proof</th>
                 </tr>
@@ -115,7 +119,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
                   <sc-if value="{{r.line}}" hint-placeholder-val="{{ true }}">
                     <tr>
                       <td><span style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: var(--gold); flex: none">{{r.num}}</span><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600; font-size: 15px">{{r.title}}</span><span style="font-size: 13px; color: var(--muted)">{{r.ask}}</span></span></span></td>
-                      <td><span class="bf-lab">Status</span><span class="bf-done"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{r.status}}</span></td>
+                      <td><span class="bf-lab">Status</span><span class="bf-st {{r.cls}}">{{r.status}}</span><span style="display: block; margin-top: 8px; font-size: 12px; line-height: 1.5; color: var(--muted)">{{r.why}}</span></td>
                       <td><span class="bf-lab">What we show</span><span style="overflow-wrap: anywhere">{{r.show}}</span></td>
                       <td><span class="bf-lab">Proof</span><span style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{r.links}}" as="l" hint-placeholder-count="2"><a class="bf-chip" href="{{l.href}}">{{l.label}}</a></sc-for></span></td>
                     </tr>
@@ -167,7 +171,7 @@ class Component extends DCLogic {
   }
 
   fd(s) { const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const p = s.split('-'); return (+p[2]) + ' ' + M[+p[1] - 1] + ' ' + p[0]; }
-  srs(v) { return (v < 0 ? '−' : '') + '₹' + Math.abs(Math.round(v)).toLocaleString('en-IN'); }
+  srs(v) { return (v < 0 ? '−' : '') + '₹' + Math.round(Math.abs(v)).toLocaleString('en-IN'); }
   sgn(v, d) { return (v < 0 ? '−' : '+') + Math.abs(v).toFixed(d); }
 
   renderVals() {
@@ -215,60 +219,77 @@ class Component extends DCLogic {
     // 2. carry: roll-down versus genuine curve change (pipeline/carry.py, on our own MCX download)
     const C = B.carry;
     const carryTxt = C && C.rows
-      ? 'Each contract\'s daily price change is split into the gold move, roll-down (carry earned as expiry comes closer) and genuine curve change, using the carry implied by GOLDPETAL calendar spreads. On our own MCX download (' + this.fd(C.start) + ' to ' + this.fd(C.end) + ', ' + n(C.rows) + ' contract-days), roll-down averages ' + C.rolldown.toFixed(2) + ' bps a day and curve changes ' + C.curve.toFixed(2) + ' bps, against ' + C.gold.toFixed(1) + ' bps for gold itself. Every gap on the site, ' + span + ', is measured after removing carry.'
+      ? 'Each contract\'s daily price change is split into the gold move, roll-down (carry earned as expiry comes closer), curve change and a residual, using the carry implied by GOLDPETAL calendar spreads. On our own MCX download (' + this.fd(C.start) + ' to ' + this.fd(C.end) + ', ' + n(C.rows) + ' contract-days), roll-down averages ' + C.rolldown.toFixed(2) + ' bps a day and curve changes ' + C.curve.toFixed(2) + ' bps, against ' + C.gold.toFixed(1) + ' bps for gold itself. The split is an accounting identity: it shows where a move came from, not why. The 2011–2023 years are not decomposed.'
       : 'Every gap on the site is measured after removing carry.';
 
-    // 5. every trade inside its contracts' calendar (pipeline/lifecycle.py)
-    const K = B.calendar || {}, kc = K.clean, ko = K.ours;
-    const calTxt = kc && ko
-      ? n(kc.inside + ko.inside) + ' of ' + n(kc.n + ko.n) + ' trades, ' + span + ', sit inside both contracts\' calendars: entered on a day both were listed, closed before either stopped trading. ' + n(kc.closed_roll + ko.closed_roll) + ' were closed early for a contract roll and ' + n(kc.closed_expiry + ko.closed_expiry) + ' as expiry and its delivery period came near.'
+    // 5. every trade inside its contracts' calendar and clear of both tender windows (pipeline/lifecycle.py)
+    const K = B.calendar || {}, kc = K.clean, ko = K.ours, LR = D.lifecycleRule || {};
+    const both = kc && ko;
+    const before = both && kc.before_tender != null ? kc.before_tender + ko.before_tender : null;
+    const calTxt = both
+      ? n(kc.inside + ko.inside) + ' of ' + n(kc.n + ko.n) + ' trades, ' + span + ', sit inside both contracts\' calendars' + (before != null ? ', and ' + n(before) + ' closed before either leg\'s tender window' : '') + '. ' + n(kc.closed_roll + ko.closed_roll) + ' were closed early for a contract roll and ' + n(kc.closed_expiry + ko.closed_expiry) + ' because a tender window was near.'
       : '';
+    // Status words (Oct-2026 audit): only what is implemented AND checked is called verified
+    const S = { ok: ['Implemented and verified', 'bf-ok'], unv: ['Implemented, not independently verified', 'bf-unv'],
+      part: ['Partly implemented', 'bf-part'], none: ['Not implemented', 'bf-none'] };
+    const st2 = (k) => ({ status: S[k][0], cls: S[k][1] });
 
     const rows = [
-      { line: true, num: '1', title: 'Cross-contract relative value', ask: 'Normalise for size, quote basis and purity; flag which contract is cheap or expensive.', status: 'Done',
-        show: 'Each price is turned into rupees per 10 g of pure gold (' + norm + '). On ' + this.fd(D.asOf) + ', after removing carry, against GOLDM: ' + vs + '. The six pairs are flagged only when a gap is unusual for that pair: today the biggest is ' + big.dev.toFixed(1) + ' bps (' + big.label + ').',
-        links: [{ label: 'Market', href: 'Market.dc.html#norm-h' }, { label: 'Pair Explorer', href: 'Pairs.dc.html' }] },
-      { line: true, num: '2', title: 'Term structure and carry', ask: 'Separate roll-down from real changes in the curve.', status: 'Done',
+      { line: true, num: '1', title: 'Cross-contract relative value', ask: 'Normalise for size, quote basis and purity; flag which contract is cheap or expensive.', ...st2('unv'),
+        why: 'The formula is tested, but the contract specifications come from broker and exchange-summary sources, not an MCX document; before Oct 2023 they are assumed unchanged.',
+        show: 'Each Bhavcopy close is turned into rupees per 10 g of pure gold (' + norm + '). On ' + this.fd(D.asOf) + ', after removing carry, against GOLDM: ' + vs + '. The six pairs are flagged only when a gap is unusual for that pair: today the biggest is ' + big.dev.toFixed(1) + ' bps (' + big.label + ').',
+        links: [{ label: 'Market', href: 'Market.dc.html#norm-h' }, { label: 'Data: specifications', href: 'Data.dc.html#spec-h' }] },
+      { line: true, num: '2', title: 'Term structure and carry', ask: 'Separate roll-down from real changes in the curve.', ...st2('unv'),
+        why: 'The futures curve, carry estimate and decomposition are shown on the Market page and reconcile exactly, but carry rests on one GOLDPETAL calendar spread a day and is flagged unstable on some days.',
         show: carryTxt,
-        links: [{ label: 'Market: gaps after carry', href: 'Market.dc.html#vsm-h' }, { label: 'Pair Explorer', href: 'Pairs.dc.html#hist-h' }] },
-      { line: true, num: '3', title: 'Walk-forward backtesting', ask: 'No look-ahead, real costs, and care on thin days.', status: 'Done',
-        show: 'Settings tuned on ' + this.fd(D.split.train_start) + ' to ' + this.fd(D.split.train_end) + ' and frozen; then run on the test year and on ' + clean + ', years the rule never saw. Signals at one close fill at the next; ' + D.rules.length + ' point-in-time rules. Each round trip pays ' + D.costTotal.toFixed(1) + ' bps (MCX fees, taxes, ' + D.slip + ' bps slippage per order). No entry unless both contracts traded at least ' + D.minVol + ' lots with ' + D.minOi + ' lots open, and no fill on a day either moved ' + D.rule.maxMove.toFixed(0) + '% or more; ' + n(L.thin + D.meta.thin) + ' thin contract-days were flagged, ' + span + '.',
+        links: [{ label: 'Market: term structure', href: 'Market.dc.html#ts-h' }, { label: 'Market: gaps after carry', href: 'Market.dc.html#vsm-h' }] },
+      { line: true, num: '3', title: 'Out-of-sample backtesting', ask: 'No look-ahead, real costs, and care on thin days (the brief asks for walk-forward).', ...st2('part'),
+        why: 'One train/test split plus a historical holdout, with no look-ahead. It is not a rolling walk-forward (settings are chosen once, never re-fitted), and there is no separate validation period.',
+        show: 'Settings chosen on ' + this.fd(D.split.train_start) + ' to ' + this.fd(D.split.train_end) + ' and frozen; then run on the test year and on ' + clean + ', years never used to choose them. Signals at one close fill at the next; ' + D.rules.length + ' point-in-time rules. Each round trip pays ' + D.costTotal.toFixed(1) + ' bps (MCX fees, taxes, ' + D.slip + ' bps slippage per order). Each leg\'s order is at most ' + Math.round((LR.maxPart || 0) * 100) + '% of that day\'s volume, on the signal day and every fill day; ' + n(L.thin + D.meta.thin) + ' thin contract-days were flagged, ' + span + '.',
         links: [{ label: 'Backtesting', href: 'Backtesting.dc.html#clean-test' }, { label: 'Data: no peeking', href: 'Data.dc.html#pit-h' }] },
-      { line: true, num: '4', title: 'Trader-facing intelligence', ask: 'Stay quiet when there is no signal; split strategy from gold.', status: 'Done',
+      { line: true, num: '4', title: 'Trader-facing intelligence', ask: 'Stay quiet when there is no signal; split strategy from gold.', ...st2('ok'),
+        why: 'Today\'s checks and the backtest use the same code (tested), and every trade\'s spread and gold parts add back to its result.',
         show: 'On ' + this.fd(D.asOf) + ' ' + (sig.length ? sig.length + ' of ' + D.today.length + ' pairs pass all five checks.' : 'none of the ' + D.today.length + ' pairs passes all five checks, so the site says "No trade today" and shows which check each pair failed.') + ' Every trade is split into its spread part and its gold part: ' + (pend ? 'gold share ' + wait : 'gold price moves are ' + goldShare.toFixed(1) + '% of the gross result over all ' + n(allN) + ' trades, ' + span + '.'),
         links: [{ label: 'Today', href: 'Today.dc.html' }, { label: 'Signals', href: 'Signals.dc.html' }, { label: 'Attribution', href: 'Backtesting.dc.html#attr-h' }] },
-      { line: true, num: '5', title: 'Contract lifecycle', ask: 'Listing, liquidity, tender and expiry; every trade inside its calendar.', status: 'Done',
-        show: n(L.allContracts) + ' contracts tracked from listing to expiry, ' + span + '. A trade needs at least ' + D.minTd + ' trading days to expiry on both contracts and is closed before the delivery (tender) period. ' + calTxt,
-        links: [{ label: 'Signals: Timing check', href: 'Signals.dc.html' }, { label: 'Trades and exits', href: 'Pairs.dc.html#trades-h' }, { label: 'Data', href: 'Data.dc.html' }] },
+      { line: true, num: '5', title: 'Contract lifecycle', ask: 'Listing, liquidity, tender and expiry; every trade inside its calendar.', ...st2('part'),
+        why: 'Each leg has its own tender window and every trade is checked against it, but no MCX circular could be read: the ' + (LR.tenderTd || '') + '-day window is a conservative assumption from broker notices, so no trade is marked fully verified.',
+        show: n(L.allContracts) + ' contracts tracked from listing to expiry, ' + span + '. A trade needs at least ' + D.minTd + ' trading days to expiry on both legs on the signal day and is closed by the last trading day before either leg\'s ' + (LR.tenderTd || '') + '-day tender window. ' + calTxt,
+        links: [{ label: 'Signals: Timing check', href: 'Signals.dc.html' }, { label: 'Data: tender rules', href: 'Data.dc.html#spec-h' }, { label: 'Trades and exits', href: 'Pairs.dc.html#trades-h' }] },
       { group: true, title: '6. The final challenge' },
-      { line: true, num: '6.1', title: 'A functional prototype', ask: 'Something that runs, not slides.', status: 'Done',
-        show: 'This website: ' + n(L.allRows) + ' official MCX daily prices, ' + this.fd(L.start) + ' to ' + this.fd(D.asOf) + ', today\'s six pairs, a rule explorer and downloads (spreadsheet, PDF), all rebuilt from the raw files by one pipeline.',
+      { line: true, num: '6.1', title: 'A functional prototype', ask: 'Something that runs, not slides.', ...st2('ok'),
+        why: 'The site is rebuilt from the raw files by one pipeline; CI checks the committed data equals a fresh build.',
+        show: 'This website: ' + n(L.allRows) + ' MCX daily prices, ' + this.fd(L.start) + ' to ' + this.fd(D.asOf) + ', today\'s six pairs, a rule explorer and downloads (spreadsheet, PDF), all rebuilt from the raw files by one pipeline.',
         links: [{ label: 'Today', href: 'Today.dc.html' }, { label: 'Try your own rule', href: 'Explore.dc.html' }] },
-      { line: true, num: '6.2', title: 'Validates on unseen history', ask: 'Test on data the model never saw.', status: 'Done',
-        show: 'The rule and its settings were frozen before the data for ' + this.fd(L.start) + ' to ' + this.fd(L.end) + ' was used: ' + L.n + ' trades, ' + this.srs(L.net) + ' after costs, t = ' + this.sgn(L.t, 2) + '. ' + (R.forward_n ? 'Since the test year ended: ' + R.forward_n + ' more trades, ' + this.srs(R.forward_net_rs) + '.' : ''),
+      { line: true, num: '6.2', title: 'Validates on unseen history', ask: 'Test on data the model never saw.', ...st2('part'),
+        why: 'The settings were never chosen on ' + clean + ', but the Oct-2026 lifecycle and liquidity correction was made after the earlier version\'s results there were known, so it is no longer strictly unseen.',
+        show: 'Historical holdout ' + this.fd(L.start) + ' to ' + this.fd(L.end) + ': ' + L.n + ' trades, ' + this.srs(L.net) + ' after costs, t = ' + this.sgn(L.t, 2) + '. ' + (R.forward_n ? 'Since the test year ended: ' + R.forward_n + ' more trades, ' + this.srs(R.forward_net_rs) + '.' : ''),
         links: [{ label: 'The clean test', href: 'Backtesting.dc.html#clean-test' }] },
-      { line: true, num: '6.3', title: 'Performance after costs, on contracts actually held', ask: 'Real contracts, real costs.', status: 'Done',
-        show: 'Every trade is priced on the two exact contracts it held, at their settlement prices, after ' + D.costTotal.toFixed(1) + ' bps per round trip: ' + n(allN) + ' trades, ' + span + ', ' + this.srs(allNet) + ' in total at ' + D.slip + ' bps slippage.' + (kc && ko ? ' Each one sits inside both contracts\' calendars (' + n(kc.inside + ko.inside) + ' of ' + n(kc.n + ko.n) + ').' : ''),
-        links: [{ label: 'Each pair', href: 'Backtesting.dc.html#pairs' }, { label: 'Trades', href: 'Pairs.dc.html#trades-h' }] },
-      { line: true, num: '6.4', title: 'Separates strategy from gold price', ask: 'Show the result is not just a bet on gold.', status: 'Done',
+      { line: true, num: '6.3', title: 'Performance after costs, on contracts actually held', ask: 'Real contracts, real costs.', ...st2('unv'),
+        why: 'Trades are priced on the exact contracts held and reproduce from the raw rows (tested); the fee rates are today\'s and were not checked against each year\'s MCX circulars, and slippage is assumed.',
+        show: 'Every trade is priced on the two exact contracts it held, at their Bhavcopy closes, after ' + D.costTotal.toFixed(1) + ' bps per round trip: ' + n(allN) + ' trades, ' + span + ', ' + this.srs(allNet) + ' in total at ' + D.slip + ' bps slippage.' + (both ? ' Each one sits inside both contracts\' calendars (' + n(kc.inside + ko.inside) + ' of ' + n(kc.n + ko.n) + ').' : ''),
+        links: [{ label: 'Portfolio', href: 'Backtesting.dc.html#portfolio' }, { label: 'Each pair', href: 'Backtesting.dc.html#pairs' }] },
+      { line: true, num: '6.4', title: 'Separates strategy from gold price', ask: 'Show the result is not just a bet on gold.', ...st2('ok'),
+        why: 'Trade-level split (spread + gold − costs = net, tested) and a daily portfolio comparison with gold, on the same days.',
         show: pend ? 'Both legs hold the same grams of gold; the gold share is ' + wait + '.' : 'Both legs hold the same grams of gold, so gold price moves are only ' + goldShare.toFixed(1) + '% of the gross result over all ' + n(allN) + ' trades, ' + span + '. The rest is the spread the rule bets on.',
-        links: [{ label: 'Attribution', href: 'Backtesting.dc.html#attr-h' }] },
-      { line: true, num: '6.5', title: 'A rigorous no-edge result is valid', ask: 'A careful "no" counts.', status: 'Done',
+        links: [{ label: 'Attribution', href: 'Backtesting.dc.html#attr-h' }, { label: 'Portfolio vs gold', href: 'Backtesting.dc.html#portfolio' }] },
+      { line: true, num: '6.5', title: 'A rigorous no-edge result is valid', ask: 'A careful "no" counts.', ...st2('ok'),
+        why: 'Every period, losing ones included, is shown with costs, slippage sensitivity and a hindsight check.',
         show: 'Our answer is no persistent edge after costs. On ' + clean + ' the rule ' + (L.net < 0 ? 'lost ' : 'made ') + this.srs(Math.abs(L.net)).replace(/^−/, '') + ' and ' + L.losingYears + ' of ' + L.years + ' years lost money; with zero slippage it ' + (L.net0 < 0 ? 'still lost ' : 'made ') + this.srs(Math.abs(L.net0)) + '. ' + (HS ? 'Only ' + HS.profitable + ' of ' + HS.total + ' settings make money there even when picked with hindsight.' : ''),
         links: [{ label: 'The verdict', href: 'Backtesting.dc.html' }, { label: 'Try your own rule', href: 'Explore.dc.html' }] }
     ];
 
+    const ty = yr(D.split.test_start) + '–' + D.split.test_end.slice(2, 4);
     const verdict = {
       kicker: 'The answer, ' + span,
       head: L.net < 0 ? 'The gaps are real. No persistent edge is proven after costs.' : 'The gaps are real, and the clean test made money.',
-      text: 'On ' + clean + ', years the rule never saw, it ' + (L.net < 0 ? 'lost ' : 'made ') + this.srs(Math.abs(L.net)).replace(/^−/, '') + ' over ' + L.n + ' trades after costs (t = ' + this.sgn(L.t, 2) + '). The ' + yr(D.split.test_start) + '–' + D.split.test_end.slice(2, 4) + ' test year made ' + this.srs(R.test_net_rs) + ', but it is not a clean test and its profit came from the ' + D.events.crashShort + '.',
+      text: 'On ' + clean + ', years never used to choose the settings, the rule ' + (L.net < 0 ? 'lost ' : 'made ') + this.srs(Math.abs(L.net)).replace(/^−/, '') + ' over ' + L.n + ' trades after costs (t = ' + this.sgn(L.t, 2) + '). The ' + ty + ' test year ' + (R.test_net_rs >= 0 ? 'made ' : 'lost ') + this.srs(Math.abs(R.test_net_rs)) + ' over ' + R.test_n + ' trades, and it is not a clean test.',
       hindsight: HS ? 'At ' + HS.slip + ' bps slippage, only ' + HS.profitable + ' of ' + HS.total + ' settings make money on ' + yr(HS.start) + '–' + yr(HS.end) + ', even picked with hindsight.' : ''
     };
 
     return {
       ...shell, loading: false, ready: true, rows, verdict,
-      tableNote: 'Five lines of the brief plus the final challenge. The wording is our summary of Problem 03.',
-      source: 'Prices: official MCX Bhavcopy settlements. ' + this.fd(L.start) + ' to ' + this.fd(L.end) + ' from a compiled MCX data book, shared with us with permission; from ' + this.fd(D.start) + ' on, our own MCX download. A research project, not investment advice.'
+      tableNote: 'Five lines of the brief plus the final challenge. The wording is our summary of Problem 03. Status: implemented and verified (and tested), implemented but not independently verified, partly implemented, or not implemented.',
+      source: 'Prices: the MCX Bhavcopy close (not verified to equal the official settlement price in every period). ' + this.fd(L.start) + ' to ' + this.fd(L.end) + ' from a compiled MCX data book, shared with us with permission; from ' + this.fd(D.start) + ' on, our own MCX download. A research project, not investment advice.'
     };
   }
 }

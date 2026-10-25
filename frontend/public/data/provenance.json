@@ -1,0 +1,400 @@
+{
+ "files": [
+  {
+   "file": "data/raw/contract_calendar.csv",
+   "role": "derived",
+   "what": "Built from the clean file by pipeline/download.py.",
+   "sha256": "84c8bb52aaa1092c958fea356af2dcba6b0452a05ccd4d7011504d804bd00e25",
+   "bytes": 11336,
+   "rows": 150
+  },
+  {
+   "file": "data/raw/gold_bhavcopy_clean.csv",
+   "role": "derived",
+   "what": "Built from the raw file + supplement by pipeline/download.py (rebuild reproduces it byte for byte).",
+   "sha256": "55ddbec36d10c85bb3af73a894076b4a200790b7b46a08228aadec754d041e54",
+   "bytes": 1527596,
+   "rows": 12507
+  },
+  {
+   "file": "data/raw/mcx_bhavcopy_raw_api.csv",
+   "role": "raw",
+   "what": "Our MCX rows exactly as received (MCX endpoint and hand-downloaded Bhavcopy CSVs). Source of truth for Oct 2023 on.",
+   "sha256": "8dbc432ea978ab46c8519f172f5a4872ea08021335c61a3501f8305d4ffd68b8",
+   "bytes": 1105796,
+   "rows": 12194
+  },
+  {
+   "file": "data/raw/mcx_bhavcopy_supplement.csv",
+   "role": "raw",
+   "what": "Rows our download missed, copied from the data book (Oct-Dec 2023 contracts, 1 Oct 2026).",
+   "sha256": "69af68863f1458c233f60ab7e76aa08922cf81e7b0c1eaf8811f70ec4bd42266",
+   "bytes": 45154,
+   "rows": 313
+  },
+  {
+   "file": "data/raw/mcx_history_book.csv",
+   "role": "raw",
+   "what": "Compiled MCX data book 2003-2026, shared with permission; used for 2011-2023.",
+   "sha256": "6f96599183143721ee8c669c8a7a7cc8c6599c6e4e26621b124ac1c8dc8a939b",
+   "bytes": 5193355,
+   "rows": 55457
+  },
+  {
+   "file": "data/raw/retrieval_log.csv",
+   "role": "raw",
+   "what": "One line per MCX request or imported file: what was asked for and what came back.",
+   "sha256": "edfdbe0d1b192fdf9c8d91342eb455138f64c10e82f0df53280908c0e9f2cecb",
+   "bytes": 35772,
+   "rows": 163
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_26FEB2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "3e8170d6e90c22ae476d354d0ca6b11d67aad2e7edfebfe35be72fd488238ce8",
+   "bytes": 1694,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_29JAN2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "5cab43b3e4bf2d1815cc109509ac642f955f294bf4d7fe3ec1ed85272e348924",
+   "bytes": 1713,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_30NOV2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "4be2388b2d8bc98b9c3c7bb1f46d03dde2bab200288befa639ab6459f11506c6",
+   "bytes": 1741,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_30OCT2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "bb6db3c7eac9023cb1e547100ff2a8de9829284bf274989cb7154405e0b14c64",
+   "bytes": 1758,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_31DEC2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "8025677aa0bc32865be10efc86921db506bb5fdc2209c20a53352e92d4262590",
+   "bytes": 1731,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_31MAR2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "6aa5ab73213b4a6cab7c73f7977e3da8e19dde793e89dc184f67c3f943b003f4",
+   "bytes": 1666,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_04DEC2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "4e908f11d77f3258250ea9eb1df491d138152f6937fa00f2d19e3f5dbda0053d",
+   "bytes": 1795,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05APR2027_20261006-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "0255ef6b8372f157139c5081cbda7c2d5920094b18c986248112ec1394e13987",
+   "bytes": 1485,
+   "rows": 9
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05FEB2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "2871d50f8d6d4157c67a1f7ff605d0848535e8ad736b4ba404e1d0363dd60820",
+   "bytes": 1732,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05JAN2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "c9862cef586b868020080daf1c7b92fd31ff828e4b8be0de3f62c9ac4210e351",
+   "bytes": 1759,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05MAR2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "e8825c8a3ca1decfd7d03fbf4c96f6c2213904d97c939a98a43698d3cc28d06d",
+   "bytes": 1709,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05NOV2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "59d5e012fadb24f2d121f595397727796d0efa1a52cf4944ee0770d6609ed75d",
+   "bytes": 1801,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05OCT2026_20261005-20261005.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "997a6280fa3f2c153f09516fa85eb8a50f7f8c0f7d3a7eb9af293653fb7f1869",
+   "bytes": 317,
+   "rows": 1
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_26FEB2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "af6ed1fefe55c06db52c980aae67c3caf2f6fa7e1aad33cc947512c22be1a610",
+   "bytes": 1684,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_29JAN2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "555467ac9eb573d3b664a0f288aecdce845866934dc45b818ba666ceccc818f0",
+   "bytes": 1693,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_30NOV2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "1e11b988113ee27bf50933e4103db400504a581da793abdc1bd76c128c2ba35e",
+   "bytes": 1727,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_30OCT2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "dadd000e25b94f130f12edc9ca7bf833e7cad00588be01e444ab0bc26649df0d",
+   "bytes": 1751,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_31DEC2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "abfb24542523098db78d1d81989b97138a9f404ce525dfcb8a02483bb50d8bac",
+   "bytes": 1711,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_31MAR2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "fd145f612855a944ad00bb50a44fe1332dcaef22ebdee22aa67a63bf51553d78",
+   "bytes": 1669,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_26FEB2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "57e61ed6d85185f7f26c0f9ef7734625680411aae2fc2868e69573d08ff62deb",
+   "bytes": 1707,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_29JAN2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "ee199b5e2ffc5e3f9dd65e99534e7d2d15935c6ceafbc9a2504e293d9339a326",
+   "bytes": 1732,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_30NOV2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "47501fbbd3161170ff7456ade8d377a4df5d7a713d050940c23eba8d284a1053",
+   "bytes": 1774,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_30OCT2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "cdd6e0b1b6b104aa5b4355e6709d5dac17be2f4cbb195ebc4dacb51b64ff41f1",
+   "bytes": 1781,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_31DEC2026_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "5304052825e92cf76a4ef032ac7cedab36bb47dbaf57d9f60faa38935ab094fe",
+   "bytes": 1741,
+   "rows": 10
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_31MAR2027_20261005-20261016.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "1403d4d4b9e286c915b5025a1e6b3c8d9162ae3f6c2d68daa95f98cd9355a73c",
+   "bytes": 1682,
+   "rows": 10
+  }
+ ],
+ "hash_note": "SHA-256 shows each file is byte-for-byte the file the site was built from (identity and integrity). It does not show where the data came from or that it is correct.",
+ "ingestion": {
+  "requests_or_files": 163,
+  "rows_received": 12194,
+  "rows_outside_range_or_after_expiry": 0,
+  "rows_rejected_not_futures": 0,
+  "note": "Counts as recorded in data/raw/retrieval_log.csv. Entries logged before Oct 2026 were written with 0 for dropped rows by the old code; the true number for those requests was not kept."
+ },
+ "price_field": "Every price is the \"Close\" field of MCX's daily Bhavcopy for that contract. We have not verified that this field equals MCX's official daily settlement price in every period, so the site calls it the Bhavcopy close.",
+ "rules": {
+  "specs": [
+   {
+    "symbol": "GOLDM",
+    "start": null,
+    "end": "2023-10-09",
+    "lot_grams": 100,
+    "quote_grams": 10,
+    "purity": 0.995,
+    "status": "assumed",
+    "source": "No source found for this period. Today's specification is carried back unchanged (assumption, not evidence)."
+   },
+   {
+    "symbol": "GOLDM",
+    "start": "2023-10-10",
+    "end": null,
+    "lot_grams": 100,
+    "quote_grams": 10,
+    "purity": 0.995,
+    "status": "secondary",
+    "source": "Broker/contract summaries: ICICI Direct \"How to trade gold in commodity derivatives\" (Gold Mini deliverable 995 purity, quoted per 10 g); MCX Gold Mini product summary as returned by web search. Not read in an MCX document."
+   },
+   {
+    "symbol": "GOLDGUINEA",
+    "start": null,
+    "end": "2023-10-09",
+    "lot_grams": 8,
+    "quote_grams": 8,
+    "purity": 0.999,
+    "status": "assumed",
+    "source": "No source found for this period. Today's specification is carried back unchanged (assumption, not evidence)."
+   },
+   {
+    "symbol": "GOLDGUINEA",
+    "start": "2023-10-10",
+    "end": null,
+    "lot_grams": 8,
+    "quote_grams": 8,
+    "purity": 0.999,
+    "status": "secondary",
+    "source": "Broker/contract summaries: ICICI Direct (Gold Ten, Gold Guinea, Gold Petal at 999 purity); MCX Gold Petal product summary \"delivery 999 purity\" as returned by web search; Gold Ten launch reports (HDFC Securities, Angel One, Mar 2025: 10 g unit, ₹1 per 10 g tick). Not read in an MCX document."
+   },
+   {
+    "symbol": "GOLDPETAL",
+    "start": null,
+    "end": "2023-10-09",
+    "lot_grams": 1,
+    "quote_grams": 1,
+    "purity": 0.999,
+    "status": "assumed",
+    "source": "No source found for this period. Today's specification is carried back unchanged (assumption, not evidence)."
+   },
+   {
+    "symbol": "GOLDPETAL",
+    "start": "2023-10-10",
+    "end": null,
+    "lot_grams": 1,
+    "quote_grams": 1,
+    "purity": 0.999,
+    "status": "secondary",
+    "source": "Broker/contract summaries: ICICI Direct (Gold Ten, Gold Guinea, Gold Petal at 999 purity); MCX Gold Petal product summary \"delivery 999 purity\" as returned by web search; Gold Ten launch reports (HDFC Securities, Angel One, Mar 2025: 10 g unit, ₹1 per 10 g tick). Not read in an MCX document."
+   },
+   {
+    "symbol": "GOLDTEN",
+    "start": "2025-03-31",
+    "end": null,
+    "lot_grams": 10,
+    "quote_grams": 10,
+    "purity": 0.999,
+    "status": "secondary",
+    "source": "Broker/contract summaries: ICICI Direct (Gold Ten, Gold Guinea, Gold Petal at 999 purity); MCX Gold Petal product summary \"delivery 999 purity\" as returned by web search; Gold Ten launch reports (HDFC Securities, Angel One, Mar 2025: 10 g unit, ₹1 per 10 g tick). Not read in an MCX document."
+   }
+  ],
+  "tender_reported": [
+   {
+    "symbol": "GOLDM",
+    "expiry_from": "2025-08-01",
+    "expiry_to": "2025-08-31",
+    "reported_td": 5,
+    "status": "secondary",
+    "source": "FYERS notice \"Precious metals expiry 5th August 2025: compulsory delivery contracts\" (Gold, Gold Mini: staggered delivery tender period 5 days before expiry). No MCX circular cited."
+   },
+   {
+    "symbol": "GOLDPETAL",
+    "expiry_from": "2025-10-01",
+    "expiry_to": "2025-11-30",
+    "reported_td": 5,
+    "status": "secondary",
+    "source": "FYERS notices for the 31 Oct 2025 and 28 Nov 2025 expiries (Gold Petal, Gold Guinea, Gold Ten: compulsory delivery, tender period 5 days before expiry). No MCX circular cited."
+   },
+   {
+    "symbol": "GOLDGUINEA",
+    "expiry_from": "2025-10-01",
+    "expiry_to": "2025-11-30",
+    "reported_td": 5,
+    "status": "secondary",
+    "source": "As GOLDPETAL, same FYERS notices."
+   },
+   {
+    "symbol": "GOLDTEN",
+    "expiry_from": "2025-10-01",
+    "expiry_to": "2025-11-30",
+    "reported_td": 5,
+    "status": "secondary",
+    "source": "As GOLDPETAL, same FYERS notices."
+   },
+   {
+    "symbol": "GOLDPETAL",
+    "expiry_from": "2026-02-01",
+    "expiry_to": "2026-02-28",
+    "reported_td": 3,
+    "status": "secondary",
+    "source": "FYERS notice for the 27 Feb 2026 expiry (Gold Petal, Gold Guinea, Gold Ten: staggered delivery tender period starting 3 days before expiry). MCX circular MCX/TRD/040/2026 (27 Jan 2026) sets a 3-day staggered delivery period for the 1 kg GOLD contract; its text was seen only as a search excerpt."
+   },
+   {
+    "symbol": "GOLDGUINEA",
+    "expiry_from": "2026-02-01",
+    "expiry_to": "2026-02-28",
+    "reported_td": 3,
+    "status": "secondary",
+    "source": "As GOLDPETAL, same FYERS notice."
+   },
+   {
+    "symbol": "GOLDTEN",
+    "expiry_from": "2026-02-01",
+    "expiry_to": "2026-02-28",
+    "reported_td": 3,
+    "status": "secondary",
+    "source": "As GOLDPETAL, same FYERS notice."
+   }
+  ],
+  "conservative_tender_td": 5,
+  "note": "No row is marked official: MCX's website refuses automated requests, so no MCX circular or specification sheet could be read directly. Secondary means broker notices or exchange summaries; assumed means no source was found and today's specification is carried back."
+ },
+ "carry": {
+  "days": 778,
+  "unstable_days": 104,
+  "median_pct": 8.0
+ }
+}

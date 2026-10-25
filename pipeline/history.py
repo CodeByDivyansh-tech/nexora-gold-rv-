@@ -164,13 +164,16 @@ def chart_data(book: pd.DataFrame, end: pd.Timestamp, params: Dict[str, Dict[str
             tr[str(slip)] = [[pd.Timestamp(t['sig']).strftime('%Y-%m-%d'), pd.Timestamp(t['entry']).strftime('%Y-%m-%d'),
                               pd.Timestamp(t['exit']).strftime('%Y-%m-%d'), int(t['side']), round(float(t['z']), 2),
                               round(float(t['net'])), round(float(t['gross'])), round(float(t['net_bps']), 1), t['reason'], int(t['days']),
-                              round(float(t['gross_bps']), 1), round(float(t['spread_pnl'])), round(float(t['gold'])), round(float(t['cost']))]
+                              round(float(t['gross_bps']), 1), round(float(t['spread_pnl'])), round(float(t['gold'])), round(float(t['cost'])),
+                              pd.Timestamp(t['expA']).strftime('%Y-%m-%d'), pd.Timestamp(t['expB']).strftime('%Y-%m-%d'), int(t['grams']),
+                              round(float(t['cost_entry']), 2), round(float(t['cost_exit']), 2), str(t['lifecycle']), bool(t['forced_fill'])]
                              for _, t in a.iterrows()]
         out['pairs'][pid] = {
             'd': [d.strftime('%Y-%m-%d') for d in ps['date']], 's': [r1(v) for v in ps['spread']],
             'mu': [r1(v) for v in ps['mu']], 'sd': [r1(v) for v in ps['sd']],
             'trades': tr,     # [signal, entry, exit, side, z, net Rs, gross Rs, net bps, reason, days held,
-                          #  gross bps, spread P&L Rs, gold P&L Rs, costs Rs], by slippage
+                          #  gross bps, spread P&L Rs, gold P&L Rs, costs Rs, expiry A, expiry B, grams,
+                          #  entry costs Rs, exit costs Rs, lifecycle status, forced exit fill], by slippage
         }
     # weekly replay frames (Today page): each week's biggest |spread - normal| per pair, and whether a trade signalled,
     # cut into 5-trading-day blocks ending on the last history day, like the replay of our own data
@@ -187,7 +190,8 @@ def chart_data(book: pd.DataFrame, end: pd.Timestamp, params: Dict[str, Dict[str
         rd.append(days[i])
     out['replay'] = {'ids': HISTORY_PAIRS, 'd': rd, 'f': rf, 'sig': rs}
     out['tradeFields'] = ['sig', 'entry', 'exit', 'side', 'z', 'net', 'gross', 'net_bps', 'reason', 'days',
-                          'gross_bps', 'spread_pnl', 'gold', 'cost']
+                          'gross_bps', 'spread_pnl', 'gold', 'cost', 'expA', 'expB', 'grams', 'cost_entry', 'cost_exit',
+                          'lifecycle', 'forced_fill']
     return out
 
 

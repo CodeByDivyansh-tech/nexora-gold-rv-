@@ -684,11 +684,11 @@
       </div>
     </section>
 
-    <!-- SLIDE 8: STEP 5 · THE HONEST TEST (WALK-FORWARD) -->
+    <!-- SLIDE 8: STEP 5 · THE HONEST TEST (TRAIN/TEST SPLIT + HISTORICAL HOLDOUT) -->
     <section class="slide-panel" id="slide-8" data-slide="8">
       <div class="slide-inner">
         <div class="keynote-tag">Step 5 · Rigorous Backtesting Methodology</div>
-        <h1 class="keynote-h1">Step 5 · The Honest Test (Walk-Forward)</h1>
+        <h1 class="keynote-h1">Step 5 · The Honest Test (Train/Test Split + Holdout)</h1>
 
         <!-- Timeline Graphic -->
         <div class="walk-forward-timeline">
@@ -741,7 +741,7 @@
         <!-- Training Switch Callout -->
         <div style="background: rgba(242, 169, 59, 0.08); border: 1px solid var(--line-gold); border-radius: 8px; padding: 7px 16px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
           <span><strong>Training switch:</strong> a pair trades in the test only if training gave at least 10 trades and a profit.</span>
-          <span class="mono" style="color: var(--gold); font-weight: 700;">Only GOLDM·GOLDPETAL qualified.</span>
+          <span class="mono" style="color: var(--gold); font-weight: 700;" data-pitch="switch_on">Only GOLDM·GOLDPETAL qualified.</span>
         </div>
       </div>
     </section>
@@ -756,23 +756,23 @@
         <div class="stats-row-cinematic">
           <div class="stat-cell-cinematic">
             <span class="stat-desc">Test-Year Trades (5 bps Slippage)</span>
-            <div class="stat-num-huge mono counter-stat" data-target="20">0</div>
-            <span class="stat-desc">12-month walk-forward test</span>
+            <div class="stat-num-huge mono counter-stat" data-target="20" data-pitch="test_n">0</div>
+            <span class="stat-desc">12-month test year (one train/test split)</span>
           </div>
           <div class="stat-cell-cinematic">
             <span class="stat-desc">Net Strategy P&amp;L</span>
-            <div class="stat-num-huge green mono counter-stat" data-target="113598" data-prefix="+₹" data-indian="true">0</div>
-            <span class="stat-desc">+39.4 bps per trade (₹10L/leg)</span>
+            <div class="stat-num-huge green mono counter-stat" data-target="113598" data-prefix="+₹" data-indian="true" data-pitch="test_net">0</div>
+            <span class="stat-desc" data-pitch="test_bps">+39.4 bps per trade (₹10L/leg)</span>
           </div>
           <div class="stat-cell-cinematic">
             <span class="stat-desc">t-Statistic</span>
-            <div class="stat-num-huge gold mono counter-stat" data-target="1.89" data-decimals="2">0.00</div>
-            <span class="stat-desc">Below 2: not statistically proven</span>
+            <div class="stat-num-huge gold mono counter-stat" data-target="1.89" data-decimals="2" data-pitch="test_t">0.00</div>
+            <span class="stat-desc" data-pitch="test_t_desc">Below 2: not statistically proven</span>
           </div>
           <div class="stat-cell-cinematic">
             <span class="stat-desc">Clean Test 2011–2023</span>
-            <div class="stat-num-huge red mono counter-stat" data-target="549070" data-prefix="-₹" data-indian="true">0</div>
-            <span class="stat-desc">151 trades, frozen rule, t = −3.63</span>
+            <div class="stat-num-huge red mono counter-stat" data-target="549070" data-prefix="-₹" data-indian="true" data-pitch="clean_net">0</div>
+            <span class="stat-desc" data-pitch="clean_desc">151 trades, frozen rule, t = −3.63</span>
           </div>
         </div>
 
@@ -790,27 +790,27 @@
             <tbody>
               <tr>
                 <td><strong>Original</strong> (4 checks, no cost line)</td>
-                <td class="mono" style="color: var(--red);">60 tr: -₹63,801</td>
-                <td class="mono" style="color: var(--green);">54 tr: +₹16,387</td>
-                <td class="mono">-0.08</td>
+                <td class="mono" style="color: var(--red);" data-pitch="orig_train">60 tr: -₹63,801</td>
+                <td class="mono" style="color: var(--green);" data-pitch="orig_test">54 tr: +₹16,387</td>
+                <td class="mono" data-pitch="orig_t">-0.08</td>
               </tr>
               <tr class="highlight-row">
                 <td><strong>Fixed</strong> (Same 5 checks as alerts)</td>
-                <td class="mono" style="color: var(--red);">38 tr: -₹16,514</td>
-                <td class="mono" style="color: var(--green); font-weight: 700;">20 tr: +₹1,13,598</td>
-                <td class="mono" style="color: var(--gold); font-weight: 700;">1.89</td>
+                <td class="mono" style="color: var(--red);" data-pitch="cur_train">38 tr: -₹16,514</td>
+                <td class="mono" style="color: var(--green); font-weight: 700;" data-pitch="cur_test">20 tr: +₹1,13,598</td>
+                <td class="mono" style="color: var(--gold); font-weight: 700;" data-pitch="cur_t">1.89</td>
               </tr>
               <tr>
                 <td><strong>Fixed + Training Switch</strong> (GOLDM·PETAL)</td>
                 <td class="mono" style="color: var(--text-muted);">Qualified</td>
-                <td class="mono" style="color: var(--green);">4 tr: +₹22,916</td>
+                <td class="mono" style="color: var(--green);" data-pitch="sw_test">4 tr: +₹22,916</td>
                 <td class="mono">—</td>
               </tr>
               <tr>
-                <td><strong>Clean test</strong> (frozen rule, 2011–2023, 3 pairs)</td>
+                <td><strong>Clean test</strong> (historical holdout, 2011–2023, 3 pairs)</td>
                 <td class="mono" style="color: var(--text-muted);">—</td>
-                <td class="mono" style="color: var(--red); font-weight: 700;">151 tr: -₹5,49,070</td>
-                <td class="mono" style="color: var(--red); font-weight: 700;">-3.63</td>
+                <td class="mono" style="color: var(--red); font-weight: 700;" data-pitch="clean_row">151 tr: -₹5,49,070</td>
+                <td class="mono" style="color: var(--red); font-weight: 700;" data-pitch="clean_t">-3.63</td>
               </tr>
             </tbody>
           </table>
@@ -818,7 +818,7 @@
 
         <!-- Verdict Banner -->
         <div class="verdict-banner-cinematic">
-          Honest Verdict: the test year is not a clean test (rule revised after a first look) and t = 1.89; the clean 2011–2023 test loses money. No persistent edge is proven after costs.
+          <span data-pitch="verdict">Honest Verdict: the test year is not a clean test (rule revised after a first look); the 2011–2023 historical holdout loses money. No persistent edge is proven after costs.</span>
         </div>
       </div>
     </section>
@@ -1190,7 +1190,7 @@
               <div>• 3. Pair 6 pairs + carry estimation</div>
               <div>• 4. Rolling z-score (past data only)</div>
               <div>• 5. Five checks -&gt; alert or stay quiet</div>
-              <div>• 6. Walk-forward backtest simulation</div>
+              <div>• 6. Train/test split backtest + historical holdout</div>
             </div>
           </div>
 
@@ -1399,6 +1399,7 @@
 
   <!-- Main Pitch Module JavaScript -->
   <script type="module" src="pitch.js"></script>
+<script type="module" src="data.js"></script>
 
   <!-- Failsafe 2D fallback: ensures presentation NEVER shows a blank screen -->
   <script>

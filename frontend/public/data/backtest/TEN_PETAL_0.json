@@ -29,7 +29,7 @@
     "net_bps": 28.4,
     "max_drawdown_rs": 3871.5,
     "avg_holding_days": 5.8,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 1.38,
     "ci_95": [
       -6.6,
@@ -48,7 +48,7 @@
     "net_bps": 26.1,
     "max_drawdown_rs": 0.0,
     "avg_holding_days": 3.0,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 12.35,
     "ci_95": [
       24.0,
@@ -67,7 +67,7 @@
     "net_bps": 29.6,
     "max_drawdown_rs": 3871.5,
     "avg_holding_days": 7.2,
-    "sharpe": "n/a (too few trades)",
+    "sharpe_per_trade": "n/a (too few trades)",
     "t_stat": 0.91,
     "ci_95": [
       -22.4,
@@ -95,7 +95,19 @@
       "net_bps": 28.2,
       "reason": "revert",
       "days": 2,
-      "seg": "train"
+      "seg": "train",
+      "cost_entry": 219.24,
+      "cost_exit": 219.61,
+      "lots_a": 10.0,
+      "lots_b": 100.0,
+      "part_entry": 0.00127,
+      "part_exit": 0.00122,
+      "forced_fill": false,
+      "td_exit_a": 24,
+      "td_exit_b": 24,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-unverified"
     },
     {
       "pair": "TEN_PETAL",
@@ -117,7 +129,19 @@
       "net_bps": 24.0,
       "reason": "revert",
       "days": 4,
-      "seg": "train"
+      "seg": "train",
+      "cost_entry": 220.62,
+      "cost_exit": 220.89,
+      "lots_a": 10.0,
+      "lots_b": 100.0,
+      "part_entry": 0.00149,
+      "part_exit": 0.00127,
+      "forced_fill": false,
+      "td_exit_a": 12,
+      "td_exit_b": 12,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-unverified"
     },
     {
       "pair": "TEN_PETAL",
@@ -139,7 +163,19 @@
       "net_bps": -37.0,
       "reason": "time",
       "days": 11,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 228.03,
+      "cost_exit": 227.46,
+      "lots_a": 8.0,
+      "lots_b": 80.0,
+      "part_entry": 0.00036,
+      "part_exit": 0.0005,
+      "forced_fill": false,
+      "td_exit_a": 18,
+      "td_exit_b": 18,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-secondary"
     },
     {
       "pair": "TEN_PETAL",
@@ -161,7 +197,19 @@
       "net_bps": 14.8,
       "reason": "revert",
       "days": 6,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 217.16,
+      "cost_exit": 215.91,
+      "lots_a": 7.0,
+      "lots_b": 70.0,
+      "part_entry": 0.00046,
+      "part_exit": 0.00045,
+      "forced_fill": false,
+      "td_exit_a": 11,
+      "td_exit_b": 11,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-unverified"
     },
     {
       "pair": "TEN_PETAL",
@@ -183,7 +231,19 @@
       "net_bps": 119.1,
       "reason": "revert",
       "days": 1,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 221.25,
+      "cost_exit": 219.68,
+      "lots_a": 6.0,
+      "lots_b": 60.0,
+      "part_entry": 0.00013,
+      "part_exit": 9e-05,
+      "forced_fill": false,
+      "td_exit_a": 23,
+      "td_exit_b": 23,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-secondary"
     },
     {
       "pair": "TEN_PETAL",
@@ -205,7 +265,19 @@
       "net_bps": 21.5,
       "reason": "time",
       "days": 11,
-      "seg": "test"
+      "seg": "test",
+      "cost_entry": 227.48,
+      "cost_exit": 227.91,
+      "lots_a": 7.0,
+      "lots_b": 70.0,
+      "part_entry": 0.00032,
+      "part_exit": 0.0004,
+      "forced_fill": false,
+      "td_exit_a": 10,
+      "td_exit_b": 10,
+      "tender_td_a": 5,
+      "tender_td_b": 5,
+      "lifecycle": "conservative-unverified"
     }
   ],
   "equity_curve": [
@@ -287,9 +359,9 @@
     "pair_beta_to_gold": 0.13,
     "pair_n_trades": 4,
     "pair_note": "4 trades \u2014 unstable",
-    "pooled_correlation_to_gold": -0.1,
+    "pooled_correlation_to_gold": -0.05,
     "pooled_beta_to_gold": -0.02,
-    "pooled_n_trades": 20,
-    "summary_text": "Equal grams on both legs, so direct gold P&L is small (1.4% of gross across all pairs in Test). Correlation of trade returns with gold moves: -0.10 (pooled)."
+    "pooled_n_trades": 17,
+    "summary_text": "Equal grams on both legs, so direct gold P&L is small (1.5% of gross across all pairs in Test). Correlation of trade returns with gold moves: -0.05 (pooled)."
   }
 }
