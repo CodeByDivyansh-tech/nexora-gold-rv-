@@ -591,44 +591,54 @@ class CrashColumnsRenderer {
     gsap.killTweensOf(this.colCrash.scale);
     gsap.killTweensOf(this.colOther.scale);
 
-    const targetCrashH = 2.0;
-    const targetOtherH = 0.355;
+    const t = this.targets();
+    this.colCrash.scale.set(1.0, t.crashH, 1.0);
+    this.colCrash.position.y = t.crashSign * t.crashH * 0.5;
+    this.colOther.scale.set(1.0, t.otherH, 1.0);
+    this.colOther.position.y = t.otherSign * t.otherH * 0.5;
+  }
 
-    this.colCrash.scale.set(1.0, targetCrashH, 1.0);
-    this.colCrash.position.y = targetCrashH * 0.5;
-
-    this.colOther.scale.set(1.0, targetOtherH, 1.0);
-    this.colOther.position.y = -(targetOtherH * 0.5);
+  // heights and directions from the data (pitch/data.js sets window.GRV_CRASH); up = profit, down = loss
+  targets() {
+    const v = window.GRV_CRASH || { crash: 137985, other: -24387 };
+    const mx = Math.max(1, Math.abs(v.crash), Math.abs(v.other));
+    const paint = (mesh, val) => {
+      const up = val >= 0;
+      mesh.material.color.setHex(up ? 0x4FD1A1 : 0xFF8F85);
+      mesh.material.emissive.setHex(up ? 0x228B5E : 0xFF4D3D);
+    };
+    paint(this.colCrash, v.crash); paint(this.colOther, v.other);
+    return { crashH: Math.max(0.04, 2.0 * Math.abs(v.crash) / mx), crashSign: v.crash >= 0 ? 1 : -1,
+             otherH: Math.max(0.04, 2.0 * Math.abs(v.other) / mx), otherSign: v.other >= 0 ? 1 : -1 };
   }
 
   triggerAnimation() {
     if (!this.colCrash || !this.colOther) return;
 
-    const targetCrashH = 2.0;
-    const targetOtherH = 0.355; // 17.75% to scale
+    const t = this.targets();
 
     this.colCrash.scale.set(1.0, 0.001, 1.0);
-    this.colCrash.position.y = 0.001;
+    this.colCrash.position.y = 0.001 * t.crashSign;
 
     this.colOther.scale.set(1.0, 0.001, 1.0);
-    this.colOther.position.y = -0.001;
+    this.colOther.position.y = 0.001 * t.otherSign;
 
     gsap.to(this.colCrash.scale, {
-      y: targetCrashH,
+      y: t.crashH,
       duration: 1.5,
       ease: 'power3.out',
       onUpdate: () => {
-        this.colCrash.position.y = this.colCrash.scale.y * 0.5;
+        this.colCrash.position.y = t.crashSign * this.colCrash.scale.y * 0.5;
       }
     });
 
     gsap.to(this.colOther.scale, {
-      y: targetOtherH,
+      y: t.otherH,
       duration: 1.3,
       delay: 0.25,
       ease: 'power3.out',
       onUpdate: () => {
-        this.colOther.position.y = -(this.colOther.scale.y * 0.5);
+        this.colOther.position.y = t.otherSign * this.colOther.scale.y * 0.5;
       }
     });
   }

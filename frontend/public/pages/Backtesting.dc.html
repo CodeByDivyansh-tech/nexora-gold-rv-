@@ -171,7 +171,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 
           <section class="grv-card" id="test-year" aria-labelledby="slip-h" style="scroll-margin-top: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 2.5vw, 26px); display: flex; flex-direction: column; gap: 14px">
             <div style="display: flex; flex-direction: column; gap: 4px">
-              <h2 id="slip-h" style="margin: 0; font-size: 18px; font-weight: 600">Test year: take out one crash and it loses</h2>
+              <h2 id="slip-h" style="margin: 0; font-size: 18px; font-weight: 600">{{splitHead}}</h2>
               <span style="font-size: 13px; color: var(--muted); line-height: 1.5">Test-year result after costs, all six pairs, split by when each trade closed ({{pooledN}} trades).</span>
             </div>
             <p style="margin: 0; font-size: 13px; line-height: 1.6; border-left: 3px solid var(--gold); padding: 4px 0 4px 12px">{{testCaveat}}</p>
@@ -573,7 +573,10 @@ class Component extends DCLogic {
     const spB5 = spRC['5'];
     const fwDays = D.pure4.d.filter((d) => d > D.split.test_end).length;
     const fwText = spB5.forward_n === 0 && fwDays > 0 ? ' Since the test year ended (' + this.fd(D.split.test_end) + '), the frozen rule has made no trades in ' + fwDays + ' trading days of new data: no pair passed all five checks.' : spB5.forward_n > 0 ? ' Since the test year ended (' + this.fd(D.split.test_end) + '), the frozen rule has ' + (spB5.forward_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.forward_net_rs) + ' over ' + spB5.forward_n + ' trades: data nobody had when the rule was written.' : '';
-    const splitText = 'At our 5 bps assumption, the ' + spB5.crash_n + ' trades that closed during the crash made ' + spRsA(spB5.crash_net_rs) + '. The other ' + spB5.ex_crash_n + ' ' + (spB5.ex_crash_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.ex_crash_net_rs) + '. In training the same rule ' + (spB5.train_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.train_net_rs) + ' over ' + spB5.train_n + ' trades.' + fwText;
+    const splitHead = spB5.test_net_rs >= 0 && spB5.ex_crash_net_rs < 0 ? 'Test year: take out one crash and it loses'
+      : spB5.test_net_rs < 0 && spB5.crash_net_rs < 0 && spB5.ex_crash_net_rs < 0 ? 'Test year: it loses, in the crash and outside it'
+      : 'Test year: the crash and the rest';
+    const splitText = 'At our 5 bps assumption, the ' + spB5.crash_n + ' trades that closed during the crash ' + (spB5.crash_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.crash_net_rs) + '. The other ' + spB5.ex_crash_n + ' ' + (spB5.ex_crash_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.ex_crash_net_rs) + '. In training the same rule ' + (spB5.train_net_rs < 0 ? 'lost ' : 'made ') + spRsA(spB5.train_net_rs) + ' over ' + spB5.train_n + ' trades.' + fwText;
 
     const spTTxt = (v) => (v == null ? '–' : this.sgn(v, 2));
     const spCol = (v) => (v >= 0 ? 'var(--up)' : 'var(--down)');
@@ -956,7 +959,7 @@ class Component extends DCLogic {
     ].map((j) => ({ label: j.label, cls: ['#luck', '#slippage', '#rule'].indexOf(j.href) >= 0 ? 'grv-detail' : '', go: () => { const el = document.getElementById(j.href.slice(1)); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }));
 
     return {
-      ...shell, loading: false, ready: true, conclusion: D.conclusion, testCaveat, multiNote, switchNote, slipEv, jumps, pooledN: D.pooled['5'].n, slipBars, zeroY, splitText,
+      ...shell, loading: false, ready: true, conclusion: D.conclusion, splitHead, testCaveat, multiNote, switchNote, slipEv, jumps, pooledN: D.pooled['5'].n, slipBars, zeroY, splitText,
       crashShort: D.events.crashShort, ruleRows, ruleIntro, switchIntro, switchChips, chips, slips, kpis, mismatch, eq, hover, stress, stressNote, attr, attrNote, attrSub, settings, cmp, mp,
       slipText: slip + ' bps', rob, hist, hindsight, pf: this.portfolioView(st.PF, st.PFfail, D)
     };

@@ -57,7 +57,7 @@
     // Backtesting
     [/^Did it make money\?/, 'The test', 'We practised on two years of real prices, froze the rules and tested on the next year. The clean test is the earlier years 2011–2023, never used to choose the settings.'],
     [/^The verdict|^No persistent edge proven after costs/, 'The final answer', 'We could not prove the idea makes money reliably. Saying "no" honestly, with proof, is a real result.'],
-    [/^Test year: take out one crash and it loses/, 'The storm', 'Gold bars are trades during the Jan–Mar 2026 gold crash; grey bars are all the others. At our 5 bps cost, everything outside the crash adds up to a loss.'],
+    [/^Test year: (take out one crash and it loses|it loses, in the crash and outside it|the crash and the rest)/, 'The storm', 'Gold bars are trades closed during the Jan–Mar 2026 gold crash; grey bars are all the others, at each slippage level. Compare the two to see how much of the test year came from that one storm.'],
     [/^How sure can we be\?/, 'Luck check', 'We reshuffled the trades 10,000 times to see how much luck matters. A long bar means "not sure".'],
     [/^One rule for alerts and backtest/, 'One rule', 'The same five checks decide today\'s alerts and the past test, so nothing is hidden.'],
     [/^GOLDM · GOLDPETAL\nGOLDM · GOLD/, 'Choose what to test', 'Pick a pair and a slippage level. Every number below changes.'],
