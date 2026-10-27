@@ -1,0 +1,4 @@
+Date,Instrument Name,Symbol,Expiry Date,Option Type,Strike Price,Open,High,Low,Close,Previous Close,Volume(Lots),Volume(In 000's),Value(Lacs),Open Interest(Lots)
+"26 Oct 2026","FUTCOM","GOLDGUINEA   ","26FEB2027","-","0","118880.00","118880.00","117602.00","118223.00","117555.00","278","2.224 GRMS ","328.41","815"
+"23 Oct 2026","FUTCOM","GOLDGUINEA   ","26FEB2027","-","0","117717.00","118740.00","117152.00","117555.00","119037.00","733","5.864 GRMS ","863.77","799"
+"22 Oct 2026","FUTCOM","GOLDGUINEA   ","26FEB2027","-","0","120845.00","120845.00","118866.00","119037.00","121206.00","352","2.816 GRMS ","421.60","630"
