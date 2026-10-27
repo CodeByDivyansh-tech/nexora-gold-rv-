@@ -30,7 +30,7 @@
   },
   "check": {
     "from": "2003-11-20",
-    "to": "2026-10-21",
+    "to": "2026-10-26",
     "shared_rows": 55457,
     "mismatches": 0,
     "fields": [
@@ -45,7 +45,7 @@
     ],
     "only_in_book": 0,
     "only_in_book_contracts": 0,
-    "only_in_ours": 561
+    "only_in_ours": 633
   },
   "window": {
     "from": "2011-04-18",

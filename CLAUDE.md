@@ -59,8 +59,8 @@ Holidays have no rows; that is normal. Then branch, PR, wait for CI, merge (see 
 ## Rules (these came from real mistakes; do not break them)
 
 1. **Never present a part of the study as the whole.** The study runs 18 Apr 2011 → latest date.
-   Headlines, totals and dataset sizes cover every year (47,596 daily prices, 599 contracts, 4,141 days as of
-   21 Oct 2026). The 12-month test year and our own 3-year download may be shown, but always named as parts.
+   Headlines, totals and dataset sizes cover every year (47,668 daily prices, 599 contracts, 4,144 days as of
+   26 Oct 2026). The 12-month test year and our own 3-year download may be shown, but always named as parts.
    `frontend/tests/pages.test.mjs` has a guard test for this; keep it passing and extend it, never weaken it.
 2. **The test year (Oct 2025–Sep 2026) is not a clean test**: the five-check rule was written after its
    first results were seen. The clean test is 2011–2023. Data after 30 Sep 2026 is "after the test year".
