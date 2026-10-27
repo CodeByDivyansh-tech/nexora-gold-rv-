@@ -412,8 +412,8 @@ function L_N() { return D.longrun.n }
 
 // no book names on the site: page templates, scripts and the data they show (Oct-2026 request)
 {
-  const fs2 = await import('node:fs'), path2 = await import('node:path')
-  const root = path2.resolve(path2.dirname(new URL(import.meta.url).pathname), '../public')
+  const fs2 = await import('node:fs'), path2 = await import('node:path'), { fileURLToPath } = await import('node:url')
+  const root = path2.resolve(path2.dirname(fileURLToPath(import.meta.url)), '../public')
   const files = []
   const walk = (d) => { for (const f of fs2.readdirSync(d, { withFileTypes: true })) { const p = path2.join(d, f.name); if (f.isDirectory()) { if (f.name !== 'vendor') walk(p) } else if (/\.(html|js|json)$/.test(f.name)) files.push(p) } }
   walk(root)

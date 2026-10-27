@@ -1,0 +1,4 @@
+Date,Instrument Name,Symbol,Expiry Date,Option Type,Strike Price,Open,High,Low,Close,Previous Close,Volume(Lots),Volume(In 000's),Value(Lacs),Open Interest(Lots)
+"26 Oct 2026","FUTCOM","GOLDPETAL    ","30NOV2026","-","0","14328.00","14426.00","14296.00","14394.00","14297.00","141699","141.699 GRMS ","20351.02","178770"
+"23 Oct 2026","FUTCOM","GOLDPETAL    ","30NOV2026","-","0","14418.00","14418.00","14230.00","14297.00","14438.00","157131","157.131 GRMS ","22500.10","168860"
+"22 Oct 2026","FUTCOM","GOLDPETAL    ","30NOV2026","-","0","14708.00","14708.00","14405.00","14438.00","14721.00","139101","139.101 GRMS ","20205.83","171773"

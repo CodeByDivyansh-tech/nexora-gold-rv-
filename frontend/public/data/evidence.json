@@ -19,46 +19,46 @@
     "roll_contracts": 39,
     "roll_zero_share_pct": 62,
     "roll_median_bps": 0.0,
-    "cs_days": 3003,
+    "cs_days": 3021,
     "cs_negative_share_pct": 52,
     "cs_monthly_median_bps": 0.0,
-    "cs_clipped_mean_bps": 26.2
+    "cs_clipped_mean_bps": 26.0
    },
    "GOLDTEN": {
-    "half_tick_bps": 0.034,
+    "half_tick_bps": 0.035,
     "roll_contracts": 22,
     "roll_zero_share_pct": 73,
     "roll_median_bps": 0.0,
-    "cs_days": 1966,
+    "cs_days": 1984,
     "cs_negative_share_pct": 52,
     "cs_monthly_median_bps": 0.0,
-    "cs_clipped_mean_bps": 30.6
+    "cs_clipped_mean_bps": 30.5
    },
    "GOLDGUINEA": {
     "half_tick_bps": 0.043,
     "roll_contracts": 40,
     "roll_zero_share_pct": 85,
     "roll_median_bps": 0.0,
-    "cs_days": 3016,
+    "cs_days": 3034,
     "cs_negative_share_pct": 48,
     "cs_monthly_median_bps": 0.0,
-    "cs_clipped_mean_bps": 25.7
+    "cs_clipped_mean_bps": 25.6
    },
    "GOLDPETAL": {
-    "half_tick_bps": 0.343,
+    "half_tick_bps": 0.347,
     "roll_contracts": 40,
     "roll_zero_share_pct": 82,
     "roll_median_bps": 0.0,
-    "cs_days": 3529,
+    "cs_days": 3547,
     "cs_negative_share_pct": 47,
     "cs_monthly_median_bps": 0.0,
-    "cs_clipped_mean_bps": 25.8
+    "cs_clipped_mean_bps": 25.7
    }
   },
-  "floor_max_bps": 0.343,
+  "floor_max_bps": 0.347,
   "cs_clipped_range_bps": [
-   25.7,
-   30.6
+   25.6,
+   30.5
   ],
   "participation": {
    "fills": 200,
@@ -88,7 +88,7 @@
    }
   },
   "measurable_from_eod": false,
-  "summary": "Daily data cannot measure slippage. Both standard estimators find no spread on most contracts and months (it is smaller than a normal day's price noise), and with negative readings set to zero they give 26–31 bps for every contract alike, which is the day's volatility, not a spread. The hard floor is half a tick: at most 0.34 bps. Our trades were a median 0.06% of the day's volume. Training breaks even at 5.3 bps per order. Only real broker fills (a forward test) can settle the number."
+  "summary": "Daily data cannot measure slippage. Both standard estimators find no spread on most contracts and months (it is smaller than a normal day's price noise), and with negative readings set to zero they give 26–30 bps for every contract alike, which is the day's volatility, not a spread. The hard floor is half a tick: at most 0.35 bps. Our trades were a median 0.06% of the day's volume. Training breaks even at 5.3 bps per order. Only real broker fills (a forward test) can settle the number."
  },
  "multiple_testing": {
   "rule_versions_scored_on_test": 3,

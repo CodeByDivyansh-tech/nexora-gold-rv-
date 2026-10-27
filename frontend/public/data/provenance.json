@@ -4,17 +4,17 @@
    "file": "data/raw/contract_calendar.csv",
    "role": "derived",
    "what": "Built from the clean file by pipeline/download.py.",
-   "sha256": "30822f0b50128c0ec9999d1e5c3370519851700fbfc1d9ae1ab187f821bf4b3c",
-   "bytes": 11340,
+   "sha256": "1e2fa25692600adad4ba25d2ef1971210a7d6c6c5a594bcdc537756351e495ab",
+   "bytes": 11344,
    "rows": 150
   },
   {
    "file": "data/raw/gold_bhavcopy_clean.csv",
    "role": "derived",
    "what": "Built from the raw file + supplement by pipeline/download.py (rebuild reproduces it byte for byte).",
-   "sha256": "a5b82ff2fd471deb2c936fc1199b0d22573d851837e169c69e36a12757185014",
-   "bytes": 1536612,
-   "rows": 12579
+   "sha256": "e9fc5a142d0f018a361debacceaef76871af3868e10e9f28518484ef632f2eb2",
+   "bytes": 1545721,
+   "rows": 12651
   },
   {
    "file": "data/raw/mcx_bhavcopy_2003_2023.csv",
@@ -36,9 +36,9 @@
    "file": "data/raw/mcx_bhavcopy_raw_api.csv",
    "role": "raw",
    "what": "Our MCX rows exactly as received (MCX endpoint and hand-downloaded Bhavcopy CSVs). Source of truth for Oct 2023 on.",
-   "sha256": "9ea3ca33c916cd12e1898a484822634bcb9aa5b8a8e473fc551410f57598cb69",
-   "bytes": 1112479,
-   "rows": 12266
+   "sha256": "b1cbf815c66d1ad596be9401d33b81591bf23ec43c81d01b02bc5c081c4f5aa5",
+   "bytes": 1119255,
+   "rows": 12338
   },
   {
    "file": "data/raw/mcx_bhavcopy_supplement.csv",
@@ -52,9 +52,9 @@
    "file": "data/raw/retrieval_log.csv",
    "role": "raw",
    "what": "One line per MCX request or imported file: what was asked for and what came back.",
-   "sha256": "28187be805c1a5c9ed1318a3a315c21c4f62239e1b92184d2df05300fb4d94b0",
-   "bytes": 172320,
-   "rows": 804
+   "sha256": "9b1139eea640b3c702ead73bdb1c310d1094d0b1b6710bc934a47eb2d4248422",
+   "bytes": 179324,
+   "rows": 828
   },
   {
    "file": "data/raw/mcx_csv/GOLDGUINEA_26FEB2027_20261005-20261016.csv",
@@ -70,6 +70,14 @@
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "64dd54f1eed554f76f3f713bf64f9bb306add913bfe55ef755cf1a7df0b01917",
    "bytes": 621,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_26FEB2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "cb0b16d5b874ea74ff19a0d332882612cfc7dfed392323922c1405209173a8af",
+   "bytes": 623,
    "rows": 3
   },
   {
@@ -89,6 +97,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_29JAN2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "45ebb31145012f9566d4ff3ca37c734875b13deb487fad710f5a5bc58eeb6bac",
+   "bytes": 628,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDGUINEA_30NOV2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -105,6 +121,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_30NOV2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "d1247ab51b65fa5b450cd299e29e62e87c1ec71e50fb2aed006d9f73a467bbd7",
+   "bytes": 638,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDGUINEA_30OCT2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -117,6 +141,14 @@
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "0b49eb7790bb9222d045e96005d60e6ae3cadaed32c897a548a9801f40b853f8",
+   "bytes": 638,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_30OCT2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "71de8317dc22782a3bf9646481389ea3e78baff41d65150e175c8fcd6629b366",
    "bytes": 638,
    "rows": 3
   },
@@ -137,6 +169,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_31DEC2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "db263c14c19a45ec0ed285eb1264d6d4b5b0499d2ecdfc6385bc2fc6e6e7f419",
+   "bytes": 635,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDGUINEA_31MAR2027_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -150,6 +190,14 @@
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "656e43553816c2dbfc9944fa277b5afd218b6fe359fadc116f557a45efab13bf",
    "bytes": 614,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDGUINEA_31MAR2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "ae32e4b1901478e5daacddc0fad9949fd782fc7a804d52ddf947674788dc7459",
+   "bytes": 622,
    "rows": 3
   },
   {
@@ -169,6 +217,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDM_04DEC2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "f99b4a40b2d2ffdb16de344ee3097ff7438bf42e94dcad40c2fe029b6e73c1a0",
+   "bytes": 653,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDM_05APR2027_20261006-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -182,6 +238,14 @@
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "54f0d962162a6d89dd392002766c4a5a2b0231e683fa2376774faa2ab97e5233",
    "bytes": 616,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05APR2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "090dcb11be3da5546c4ea597ad6d4d8ea010229b76c49b8943e311657887c489",
+   "bytes": 624,
    "rows": 3
   },
   {
@@ -201,6 +265,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDM_05FEB2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "cbc11bd6c691e90efff2800578389f016eeac1c82d2048a9b3d3ef822d2973f5",
+   "bytes": 638,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDM_05JAN2027_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -213,6 +285,14 @@
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "ce5406c847315dc9e5ed6b868abdaf010fa900a860661319513e8b630e1bb0df",
+   "bytes": 641,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05JAN2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "ab1906178547b61fcbe701fde9c21f314504e5fd34279e67c9a5a6f8b35fec9f",
    "bytes": 641,
    "rows": 3
   },
@@ -233,6 +313,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDM_05MAR2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "de2d75e6e8b612e24c1a50d5fc54e106a0e2af9ff8af64f1f794ad1264ad137a",
+   "bytes": 629,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDM_05NOV2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -245,6 +333,14 @@
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "d8991f9c4e0e42077ef79fb4ba33beceefc1b685979b09796f5725888beb8808",
+   "bytes": 653,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDM_05NOV2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "1eb2cc103738e3246697831ee0db5ca429fd8a91c8a5e73ea31b83ccec35993b",
    "bytes": 653,
    "rows": 3
   },
@@ -273,6 +369,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDPETAL_26FEB2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "667004f424dcd02a2b26b0b69d41fb7e45bdb7379cd476064fa12353e5b13991",
+   "bytes": 624,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDPETAL_29JAN2027_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -286,6 +390,14 @@
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "b603bd99d952dfc53259c6b18ded2fd61058d15475dd70e37abf7784ed78beb0",
    "bytes": 621,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_29JAN2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "fcf1a767792765c6530686aeeaba64e3105df1969be8639c679941559b08d823",
+   "bytes": 624,
    "rows": 3
   },
   {
@@ -305,6 +417,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDPETAL_30NOV2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "ab54a9836ff5b87f8a350c4640302e0c70d7220ca358e369a200124270763844",
+   "bytes": 638,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDPETAL_30OCT2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -321,6 +441,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDPETAL_30OCT2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "818b5a1f7164e20eda14909b9ac200e02ccc82a7297ed4411b9efad44b76aec3",
+   "bytes": 638,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDPETAL_31DEC2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -333,6 +461,14 @@
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "1f449b46550cf938faca043db40069303978a3eba5e1005418a252e72a1d4ec8",
+   "bytes": 626,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDPETAL_31DEC2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "571b5bdd772e5e4f60a63b6effa1a6c3a6de7fe8a34af2bed1dae416690ecb8d",
    "bytes": 626,
    "rows": 3
   },
@@ -353,6 +489,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDPETAL_31MAR2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "61147274a73dfd7a3b027b558728730301a200719f2b91551b78901140df91e9",
+   "bytes": 616,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDTEN_26FEB2027_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -366,6 +510,14 @@
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "56b6f61eb16aa5b591032ba8453b754fe940afd92880628813d4ab93a9197f19",
    "bytes": 627,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_26FEB2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "380c572b51a89e1ea6697babbd25b6ededfe02d5ccd156c0b4d7a48703d7eea8",
+   "bytes": 632,
    "rows": 3
   },
   {
@@ -385,6 +537,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDTEN_29JAN2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "417532533ded134318e9e64e058370934af14e7a560fd12ee73d100a2014e67f",
+   "bytes": 635,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDTEN_30NOV2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -398,6 +558,14 @@
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "f3767bf623e9aed055fcd6e325a4b1a2743140e617fcac9c8c983f295e4f289a",
    "bytes": 640,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_30NOV2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "55f729c127caa0281b184a8d976c59991863f24a210dab9119ba9ff2d481c3e0",
+   "bytes": 647,
    "rows": 3
   },
   {
@@ -417,6 +585,14 @@
    "rows": 3
   },
   {
+   "file": "data/raw/mcx_csv/GOLDTEN_30OCT2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "2ccfa1ebee18fb777c1dc42502657944ae7301d27f983c0905c52252100f9b26",
+   "bytes": 647,
+   "rows": 3
+  },
+  {
    "file": "data/raw/mcx_csv/GOLDTEN_31DEC2026_20261005-20261016.csv",
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
@@ -429,6 +605,14 @@
    "role": "raw",
    "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
    "sha256": "824a70b5d6bd202d79a70036ced218fca43c9d9da068d9308ae0899247d61460",
+   "bytes": 635,
+   "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_31DEC2026_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "b15355eb6c7e516a7198192ad06e1a035882611fa8311b1728506ed291667b3a",
    "bytes": 635,
    "rows": 3
   },
@@ -447,12 +631,20 @@
    "sha256": "20ad43ff079f7e00fbf13f0497a0cf9ca0c6675abffa866b0da615abebc075c6",
    "bytes": 620,
    "rows": 3
+  },
+  {
+   "file": "data/raw/mcx_csv/GOLDTEN_31MAR2027_20261022-20261026.csv",
+   "role": "raw",
+   "what": "Original MCX Bhavcopy CSV as downloaded by the team (archived by import_csv).",
+   "sha256": "519e3a2fe592910802b7a135ed011ac8f90652bf394284a1c6186bf2fe4dae8b",
+   "bytes": 623,
+   "rows": 3
   }
  ],
  "hash_note": "SHA-256 shows each file is byte-for-byte the file the site was built from (identity and integrity). It does not show where the data came from or that it is correct.",
  "ingestion": {
-  "requests_or_files": 804,
-  "rows_received": 57322,
+  "requests_or_files": 828,
+  "rows_received": 57394,
   "rows_outside_range_or_after_expiry": 0,
   "rows_rejected_not_futures": 0,
   "note": "Counts as recorded in data/raw/retrieval_log.csv. Entries logged before Oct 2026 were written with 0 for dropped rows by the old code; the true number for those requests was not kept."
@@ -593,8 +785,8 @@
   "note": "No row is marked official: MCX's website refuses automated requests, so no MCX circular or specification sheet could be read directly. Secondary means broker notices or exchange summaries; assumed means no source was found and today's specification is carried back."
  },
  "carry": {
-  "days": 781,
+  "days": 784,
   "unstable_days": 104,
-  "median_pct": 8.01
+  "median_pct": 8.03
  }
 }
