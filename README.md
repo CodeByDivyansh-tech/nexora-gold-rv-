@@ -31,7 +31,7 @@ the result), so this holdout is no longer strictly unseen.
 How we know the data is right: every request is logged (`data/raw/retrieval_log.csv`) and each request's row
 count matches the rows we keep. As an extra check, a second copy of the same MCX rows, which another team shared
 with us, agrees with our download on all **55,457 rows** it has, every field, 0 mismatches (`history.json → check`).
-That check is separate from the raw-vs-clean check of our Oct 2023 onward download (12,579 rows, section 1.5).
+That check is separate from the raw-vs-clean check of our Oct 2023 onward download (12,651 rows, section 1.5).
 
 | At 5 bps slippage | Trades | Net after costs | t-stat | Losing years |
 |---|---|---|---|---|
@@ -102,9 +102,9 @@ Only real broker fills (a forward test) can settle it.
 
 | | |
 |---|---|
-| **Coverage (whole study)** | 18 Apr 2011 → 21 Oct 2026: **47,596 daily prices, 599 contracts, 4,141 trading days**, every one an official MCX Bhavcopy settlement (`site-data.json → longrun`) |
+| **Coverage (whole study)** | 18 Apr 2011 → 26 Oct 2026: **47,668 daily prices, 599 contracts, 4,144 trading days**, every one an official MCX Bhavcopy settlement (`site-data.json → longrun`) |
 | **Part 1: our MCX download, 2011–2023** | 18 Apr 2011 → 9 Oct 2023: 35,017 daily prices, 457 contracts, 3,359 trading days (the clean test). Downloaded from MCX's Bhavcopy service on 21 Oct 2026: every GOLDM, GOLDGUINEA and GOLDPETAL contract that expired Feb 2004 → Dec 2023 (569 contracts, 43,728 rows, in `data/raw/mcx_bhavcopy_2003_2023.csv`; the years before 2011 feed only the long price charts) |
-| **Part 2: our MCX download, Oct 2023 on** | 10 Oct 2023 → 21 Oct 2026: 12,579 daily prices, 150 contracts, 782 trading days (training, test year and after). Every row the second copy has in this window is present (a test checks this) |
+| **Part 2: our MCX download, Oct 2023 on** | 10 Oct 2023 → 26 Oct 2026: 12,651 daily prices, 150 contracts, 785 trading days (training, test year and after). Every row the second copy has in this window is present (a test checks this) |
 | **Fixed in Oct 2026** | Our MCX download had skipped 8 contracts: the Oct, Nov and Dec 2023 expiries of GOLDM, GOLDGUINEA and GOLDPETAL (289 traded rows, the busiest contracts in those months). We downloaded them from MCX later, with 1 Oct 2026, and keep them in `data/raw/mcx_bhavcopy_supplement.csv`. Effect: training 37 → 38 trades, −₹19,056 → −₹16,514; settings, test year, 2011–2023 check and alerts unchanged |
 | **Checked and fine** | No missing days inside any contract's life; no broken high/low/close; the 6%+ days (Jan–Mar 2026, 19 Mar, 13 May 2026) moved all four contracts together, so they are real; GOLDM's Nov-2024 contract expired early, on 31 Oct 2024 |
 | **Exchange quirk** | 169 rows where MCX's "previous close" differs from the prior day's close, mostly thin contracts and no-trade days; the pipeline never uses that field for signals |
@@ -154,7 +154,7 @@ gold-rv/
 │   ├── mcx_bhavcopy_raw_api.csv   # rows exactly as the MCX endpoint returns them (source of truth)
 │   ├── mcx_bhavcopy_supplement.csv # 313 official MCX rows our first download missed, downloaded from MCX later
 │   ├── mcx_bhavcopy_2003_2023.csv  # 43,728 MCX rows: every 2004-2023 contract, downloaded from MCX (the clean test + long charts)
-│   ├── gold_bhavcopy_clean.csv    # 12,579 rows (our download, Oct 2023 on), derived from the raw file + supplement
+│   ├── gold_bhavcopy_clean.csv    # 12,651 rows (our download, Oct 2023 on), derived from the raw file + supplement
 │   ├── contract_calendar.csv      # contract lifecycles, derived from the clean file
 │   ├── mcx_csv/                   # every MCX Bhavcopy CSV imported by hand (pipeline/import_csv.py), kept as received
 │   ├── retrieval_log.csv          # one line per MCX request (780)

@@ -40,16 +40,16 @@
   "unusual_small": {
    "n": 826,
    "halfway_pct": 55,
-   "median_closed_bps": 13.7,
+   "median_closed_bps": 13.9,
    "mean_closed_bps": 1.1,
    "median_gap_bps": 64.4,
    "median_days_to_half": 2.0
   },
   "ordinary": {
-   "n": 7203,
+   "n": 7211,
    "halfway_pct": 79,
    "median_closed_bps": -11.0,
-   "mean_closed_bps": -21.8,
+   "mean_closed_bps": -21.7,
    "median_gap_bps": 11.3,
    "median_days_to_half": 2.0
   }
