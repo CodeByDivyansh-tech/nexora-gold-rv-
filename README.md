@@ -10,7 +10,7 @@
 A relative-value (RV) research terminal across MCX Gold derivatives (`GOLDM`, `GOLDTEN`, `GOLDGUINEA`, `GOLDPETAL`).
 • **Live site**: [gold-rv.vercel.app](https://gold-rv.vercel.app) · **3D intro**: [/intro/](https://gold-rv.vercel.app/intro/) · **Demo video**: [/demo/](https://gold-rv.vercel.app/demo/) (3:54, every page on a laptop screen) · **Pitch**: [interactive 3D deck](https://gold-rv.vercel.app/pitch/)
 
-**Team NEXORA**: Divyansh (data and quant pipeline) · Ishant Bhaudhira (frontend) · Noni Gopal Das (research and pitch)
+**Team NEXORA**: Divyansh (data and quant pipeline) · Ishant Bhadauria (frontend) · Noni Gopal Das (research and pitch)
 
 ---
 
