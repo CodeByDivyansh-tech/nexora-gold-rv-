@@ -1,6 +1,6 @@
 /**
  * Gold RV Intelligence — Cinematic 3D Presentation Pitch
- * Team NEXORA (Divyansh, Ishant Bhaudhira, Noni Gopal Das)
+ * Team NEXORA (Divyansh, Ishant Bhadauria, Noni Gopal Das)
  * Hack in Hills '26 · Problem Statement 03
  *
  * Built with Three.js r160 (local vendor), GSAP 3.12.5 (local vendor), Web Speech API.
